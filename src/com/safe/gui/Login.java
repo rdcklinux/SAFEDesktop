@@ -25,12 +25,13 @@ public class Login extends javax.swing.JFrame {
         roleMap.put("ROLE_ADMIN", "Administrador");
         roleMap.put("ROLE_SUPERVISOR", "Supervisor");
         roleMap.put("ROLE_ENGINER", "Ingeniero");
+        token = new TokenManager(roleMap);
+        
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int px = (screenSize.width / 2) - ( this.getWidth() / 2);
         int py = (screenSize.height / 2) - ( this.getHeight() / 2);
         this.setLocation(new java.awt.Point(px, py));
         
-        token = new TokenManager(roleMap);
         this.main = new Main(this, token);
     }
     
