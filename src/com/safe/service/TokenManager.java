@@ -41,7 +41,7 @@ public class TokenManager {
         }
         
         if(roles.keySet().contains(role)) {
-            
+           //TODO: realizar operaciones para el usuario activo 
         } else {
             expire();
         }

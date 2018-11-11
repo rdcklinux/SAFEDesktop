@@ -27,7 +27,7 @@ public class SessionManager implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent evt) {
-         this.main.logout();
+         this.main.logout("La sesión ha finalizado por inactividad.");
     }
     
     public void start(){

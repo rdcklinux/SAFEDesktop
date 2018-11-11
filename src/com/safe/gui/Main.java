@@ -58,12 +58,12 @@ public class Main extends javax.swing.JFrame {
         session.start();
     }
     
-    public void logout(){
+    public void logout(String reason){
         session.stop();
         this.setVisible(false);
         setJMenuBar(null);                
         this.loginForm.getPasswordField().setText("");
-        this.loginForm.getLabelMessage().setText("La sesión ha finalizado.");
+        this.loginForm.getLabelMessage().setText(reason);
         this.loginForm.setVisible(true);
     }
     
@@ -96,7 +96,7 @@ public class Main extends javax.swing.JFrame {
         item.setText("Cerrar Sesión");
         item.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logout();
+                logout("Su sesión se ha cerrado con exito.");
             }
         });
         jMenuProfile.add(item);                    
@@ -306,6 +306,8 @@ public class Main extends javax.swing.JFrame {
 
         jMenuAdmin.add(jMenuMedico);
 
+        jMenuEnginer.setOpaque(false);
+
         jMenuTerrenoEng.setText("Evaluaciones en Terreno");
         jMenuEnginer.add(jMenuTerrenoEng);
 
@@ -335,14 +337,16 @@ public class Main extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(236, 236, 236)
-                .addComponent(jLabel2)
-                .addGap(78, 78, 78)
-                .addComponent(jLabelProfile)
-                .addContainerGap(232, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(236, 236, 236)
+                        .addComponent(jLabel2)
+                        .addGap(78, 78, 78)
+                        .addComponent(jLabelProfile)
+                        .addGap(0, 220, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
