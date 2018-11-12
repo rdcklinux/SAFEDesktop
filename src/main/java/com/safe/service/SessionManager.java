@@ -17,7 +17,7 @@ import javax.swing.Timer;
 public class SessionManager implements ActionListener {
     
     private final Main main;
-    private final int sessionExpireTime = 1000;
+    private final int sessionExpireTime = 60000;
     private final Timer timer;
     
     public SessionManager(Main main, int sessionTime){

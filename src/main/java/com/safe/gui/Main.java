@@ -37,11 +37,10 @@ public class Main extends javax.swing.JFrame {
         int sessionTime;
         try {
             sessionTime = (int)Integer.parseInt(getConfig().getProperty("safe.sessionMinuteTime"));
-            System.out.println("Se establece la session a: " + sessionTime);
         } catch (IOException e) {
-            sessionTime = 10 * 60;
-            System.out.println("Error al leer el tiempo de session. se establece como 10 minutos");
+            sessionTime = 30;
         }
+        System.out.println("Se establece la session a " + sessionTime + " minutos");
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int px = (screenSize.width / 2) - ( this.getWidth() / 2);
