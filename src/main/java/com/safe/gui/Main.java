@@ -26,8 +26,8 @@ public class Main extends javax.swing.JFrame {
     java.awt.Component horizontalGlue;
     /**
      * Creates new form Main
-     * @param loginForm
-     * @param token
+     * @param loginForm LoginFomr
+     * @param token token service
      */
     public Main(Login loginForm, TokenManager token) {
         initComponents();        
@@ -378,18 +378,7 @@ public class Main extends javax.swing.JFrame {
     private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
         System.out.println("Listo!");
     }//GEN-LAST:event_formWindowStateChanged
-    
-    /**
-     * @param args the command line arguments
-    
-    public static void Main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
-        });
-    }
-     */
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
