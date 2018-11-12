@@ -1,1 +1,1 @@
-# Aplicacion Desktop SAFE prevensión de riesgos
+# Aplicación SAFE Desktop prevención de riesgos
