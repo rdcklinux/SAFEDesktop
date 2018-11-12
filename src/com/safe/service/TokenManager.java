@@ -18,28 +18,34 @@ public class TokenManager {
     
     private final HashMap<String, String> roles;
     private String role;
-    private UserDAL userDAL;
+    private final UserDAL userDAL;
      
-     public TokenManager(HashMap roles){
-         this.roles = roles;
-         userDAL = new UserDAL();
-     }
+    public TokenManager(HashMap roles){
+        this.roles = roles;
+        userDAL = new UserDAL();
+    }
     
     public boolean getSuccessAuthentication(String username, String password){
         try {
             usuario = userDAL.getUserForRunAndPassword(username, password);
         }catch(UnirestException e) {
-            expire();            
+            expire();        
             return false;
         }
         isAuthenticated = (username.equals(usuario.getRunusuario()) && password.equals(usuario.getClaveusuario()));
-        switch((int)usuario.getPerfilidperfil()){
-            case 1: this.role = "ROLE_ADMIN";
-            break;
-            case 2: this.role = "ROLE_SUPERVISOR";
-            break;
-            case 3: this.role = "ROLE_ENGINER";
-            break;
+        switch ((int)usuario.getPerfilidperfil()) {
+            case 1:
+                this.role = "ROLE_ADMIN";
+                break;
+            case 2:
+                this.role = "ROLE_SUPERVISOR";
+                break;
+            case 3:
+                this.role = "ROLE_ENGINER";
+                break;
+            default:
+                this.role = null;
+                break;
         }
         
         if(roles.keySet().contains(role)) {

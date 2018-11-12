@@ -40,7 +40,7 @@ public class Main extends javax.swing.JFrame {
             System.out.println("Se establece la session a: " + sessionTime);
         } catch (IOException e) {
             sessionTime = 10 * 60;
-            System.out.println("Error al leer la el tiempo de session. se establece como 10 minutos");
+            System.out.println("Error al leer el tiempo de session. se establece como 10 minutos");
         }
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
