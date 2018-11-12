@@ -49,112 +49,133 @@ public class Usuario implements Serializable{
         return idusuario;
     }
 
-    public void setIdusuario(long idusuario) {
+    public Usuario setIdusuario(long idusuario) {
         this.idusuario = idusuario;
+        
+        return this;
     }
 
     public String getRunusuario() {
         return runusuario;
     }
 
-    public void setRunusuario(String runusuario) {
+    public Usuario setRunusuario(String runusuario) {
         this.runusuario = runusuario;
+        
+        return this;
     }
 
     public String getNombresusuario() {
         return nombresusuario;
     }
 
-    public void setNombresusuario(String nombresusuario) {
+    public Usuario setNombresusuario(String nombresusuario) {
         this.nombresusuario = nombresusuario;
+        
+        return this;
     }
 
     public String getAppaterno() {
         return appaterno;
     }
 
-    public void setAppaterno(String appaterno) {
+    public Usuario setAppaterno(String appaterno) {
         this.appaterno = appaterno;
+        
+        return this;        
     }
 
     public String getApmaterno() {
         return apmaterno;
     }
 
-    public void setApmaterno(String apmaterno) {
+    public Usuario setApmaterno(String apmaterno) {
         this.apmaterno = apmaterno;
+        
+        return this;
     }
 
     public Date getFnacimientousuario() {
         return fnacimientousuario;
     }
 
-    public void setFnacimientousuario(Date fnacimientousuario) {
+    public Usuario setFnacimientousuario(Date fnacimientousuario) {
         this.fnacimientousuario = fnacimientousuario;
+        
+        return this;
     }
 
     public String getSexousuario() {
         return sexousuario;
     }
 
-    public void setSexousuario(String sexousuario) {
+    public Usuario setSexousuario(String sexousuario) {
         this.sexousuario = sexousuario;
+        
+        return this;
     }
 
     public String getTelusuario() {
         return telusuario;
     }
 
-    public void setTelusuario(String telusuario) {
+    public Usuario setTelusuario(String telusuario) {
         this.telusuario = telusuario;
+        
+        return this;
     }
 
     public String getMailusuario() {
         return mailusuario;
     }
 
-    public void setMailusuario(String mailusuario) {
+    public Usuario setMailusuario(String mailusuario) {
         this.mailusuario = mailusuario;
+        
+        return this;
     }
 
     public long getEstadousuario() {
         return estadousuario;
     }
 
-    public void setEstadousuario(long estadousuario) {
+    public Usuario setEstadousuario(long estadousuario) {
         this.estadousuario = estadousuario;
+        
+        return this;
     }
 
     public String getClaveusuario() {
         return claveusuario;
     }
 
-    public void setClaveusuario(String claveusuario) {
+    public Usuario setClaveusuario(String claveusuario) {
         this.claveusuario = claveusuario;
+        
+        return this;
     }
 
     public long getPerfilidperfil() {
         return perfilidperfil;
     }
 
-    public void setPerfilidperfil(long perfilidperfil) {
+    public Usuario setPerfilidperfil(long perfilidperfil) {
         this.perfilidperfil = perfilidperfil;
+        
+        return this;
     }
 
     public long getClienteidcliente() {
         return clienteidcliente;
     }
 
-    public void setClienteidcliente(long clienteidcliente) {
+    public Usuario setClienteidcliente(long clienteidcliente) {
         this.clienteidcliente = clienteidcliente;
+        
+        return this;
     }
     
     public String getFullName(){
         return nombresusuario + " " + appaterno + " " + apmaterno;
     }
-
-    @Override
-    public String toString() {
-        return "Usuarios{" + "idusuario=" + idusuario + ", runusuario=" + runusuario + ", nombresusuario=" + nombresusuario + ", appaterno=" + appaterno + ", apmaterno=" + apmaterno + ", fnacimientousuario=" + fnacimientousuario + ", sexousuario=" + sexousuario + ", telusuario=" + telusuario + ", mailusuario=" + mailusuario + ", estadousuario=" + estadousuario + ", claveusuario=" + claveusuario + ", perfilidperfil=" + perfilidperfil + ", clienteidcliente=" + clienteidcliente + '}';
-    }   
 }

@@ -39,7 +39,7 @@ public class Main extends javax.swing.JFrame {
             sessionTime = (int)Integer.parseInt(getConfig().getProperty("safe.sessionMinuteTime"));
             System.out.println("Se establece la session a: " + sessionTime);
         } catch (IOException e) {
-            sessionTime = 10;
+            sessionTime = 10 * 60;
             System.out.println("Error al leer la el tiempo de session. se establece como 10 minutos");
         }
 
