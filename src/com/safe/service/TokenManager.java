@@ -20,7 +20,7 @@ public class TokenManager {
     private String role;
     private final UserDAL userDAL;
      
-    public TokenManager(HashMap roles){
+    public TokenManager(HashMap<String, String> roles){
         this.roles = roles;
         userDAL = new UserDAL();
     }
