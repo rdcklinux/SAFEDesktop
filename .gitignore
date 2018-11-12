@@ -1,5 +1,4 @@
-/build/
-/dist/
 /target/
 /bin/
 .project
+.vscode/
