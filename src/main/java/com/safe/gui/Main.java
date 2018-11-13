@@ -7,11 +7,14 @@ package com.safe.gui;
 
 import com.safe.service.TokenManager;
 import com.safe.service.SessionManager;
+import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
+import java.awt.Container;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import javax.swing.JPanel;
 
 /**
  *
@@ -45,8 +48,20 @@ public class Main extends javax.swing.JFrame {
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int px = (screenSize.width / 2) - ( this.getWidth() / 2);
         int py = (screenSize.height / 2) - ( this.getHeight() / 2);
+        
+        setLayout(new BorderLayout());
         this.setLocation(new java.awt.Point(px, py));
         session = new SessionManager(this, sessionTime);
+    }
+    
+    private void changePanel(JPanel panel){
+        Container root = getRootPane().getContentPane();
+        if(root.getComponentCount() > 0){
+            if(root.getComponent(0) == panel) return;
+            root.remove(root.getComponent(0));
+        }        
+        root.add(panel);
+        panel.repaint();
     }
     
     public void signin(){
@@ -55,6 +70,7 @@ public class Main extends javax.swing.JFrame {
         this.setVisible(true);
         this.loginForm.setVisible(false);
         session.start();
+        changePanel(jPanelWelcome);
     }
     
     public void logout(String reason){
@@ -92,13 +108,22 @@ public class Main extends javax.swing.JFrame {
         jMenuProfile = new javax.swing.JMenu();
         horizontalGlue = javax.swing.Box.createHorizontalGlue();
         javax.swing.JMenuItem item = new javax.swing.JMenuItem();
+        item.setText("Inicio");
+        item.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changePanel(jPanelWelcome);
+            }
+        });
+        jMenuProfile.add(item);
+        
+        item = new javax.swing.JMenuItem();
         item.setText("Cerrar Sesión");
         item.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logout("Su sesión se ha cerrado con exito.");
             }
         });
-        jMenuProfile.add(item);                    
+        jMenuProfile.add(item);                  
         jMenuProfile.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
     }
     
@@ -129,6 +154,10 @@ public class Main extends javax.swing.JFrame {
 
         jMenuSupervisor = new javax.swing.JMenuBar();
         jMenuTerreno = new javax.swing.JMenu();
+        jMenuTerCrear = new javax.swing.JMenuItem();
+        jMenuTerListar = new javax.swing.JMenuItem();
+        jMenuTerEditar = new javax.swing.JMenuItem();
+        jMenuTerEliminar = new javax.swing.JMenuItem();
         jMenuPlanCap = new javax.swing.JMenu();
         jMenuPlanSalud = new javax.swing.JMenu();
         jMenuExpositor = new javax.swing.JMenu();
@@ -164,15 +193,54 @@ public class Main extends javax.swing.JFrame {
         jMenuMedEliminar = new javax.swing.JMenuItem();
         jMenuEnginer = new javax.swing.JMenuBar();
         jMenuTerrenoEng = new javax.swing.JMenu();
+        jMenuTerEngListar = new javax.swing.JMenuItem();
+        jPanelWelcome = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabelProfile = new javax.swing.JLabel();
+        jPanelTerrenoList = new javax.swing.JPanel();
+        jComboBoxEstado = new javax.swing.JComboBox<>();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jComboBoxTipo = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         jMenuSupervisor.setOpaque(false);
 
         jMenuTerreno.setText("Evaluación En Terreno");
         jMenuTerreno.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuTerreno.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jMenuTerCrear.setText("Crear");
+        jMenuTerCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuTerCrearActionPerformed(evt);
+            }
+        });
+        jMenuTerreno.add(jMenuTerCrear);
+
+        jMenuTerListar.setText("Listar");
+        jMenuTerListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuTerListarActionPerformed(evt);
+            }
+        });
+        jMenuTerreno.add(jMenuTerListar);
+
+        jMenuTerEditar.setText("Editar");
+        jMenuTerEditar.setEnabled(false);
+        jMenuTerreno.add(jMenuTerEditar);
+
+        jMenuTerEliminar.setText("Eliminar");
+        jMenuTerEliminar.setEnabled(false);
+        jMenuTerreno.add(jMenuTerEliminar);
+
         jMenuSupervisor.add(jMenuTerreno);
 
         jMenuPlanCap.setText("Plan Capacitación");
@@ -308,10 +376,177 @@ public class Main extends javax.swing.JFrame {
         jMenuEnginer.setOpaque(false);
 
         jMenuTerrenoEng.setText("Evaluaciones en Terreno");
+        jMenuTerrenoEng.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuTerrenoEngMouseClicked(evt);
+            }
+        });
+
+        jMenuTerEngListar.setText("Listar");
+        jMenuTerEngListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuTerEngListarActionPerformed(evt);
+            }
+        });
+        jMenuTerrenoEng.add(jMenuTerEngListar);
+
         jMenuEnginer.add(jMenuTerrenoEng);
+
+        jPanelWelcome.setPreferredSize(new java.awt.Dimension(720, 400));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Bienvenido");
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setText("Perfil de usuario:");
+
+        jLabelProfile.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelProfile.setText("Administrador");
+
+        javax.swing.GroupLayout jPanelWelcomeLayout = new javax.swing.GroupLayout(jPanelWelcome);
+        jPanelWelcome.setLayout(jPanelWelcomeLayout);
+        jPanelWelcomeLayout.setHorizontalGroup(
+            jPanelWelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelWelcomeLayout.createSequentialGroup()
+                .addGap(242, 242, 242)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jLabelProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(237, 237, 237))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanelWelcomeLayout.setVerticalGroup(
+            jPanelWelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelWelcomeLayout.createSequentialGroup()
+                .addContainerGap(133, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+                .addGroup(jPanelWelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelProfile)
+                    .addComponent(jLabel2))
+                .addGap(35, 35, 35))
+        );
+
+        jPanelTerrenoList.setPreferredSize(new java.awt.Dimension(720, 400));
+
+        jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione estado", "Item 2", "Item 3", "Item 4" }));
+
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        jFormattedTextField1.setToolTipText("dd/mm/yyyy");
+
+        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Filtro de Estado");
+        jLabel3.setToolTipText("");
+
+        jLabel4.setText("Filtro de Fecha");
+        jLabel4.setToolTipText("");
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Listado de evaluaciones en terreno");
+        jLabel5.setToolTipText("");
+
+        jLabel6.setText("Filtro tipo visita");
+        jLabel6.setToolTipText("");
+
+        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione tipo visita", "Item 2", "Item 3", "Item 4" }));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Creado el", "Derivado el", "Técnico", "Cliente", "Tipo", "Estado", "Gestionar", "PDF"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jPanelTerrenoListLayout = new javax.swing.GroupLayout(jPanelTerrenoList);
+        jPanelTerrenoList.setLayout(jPanelTerrenoListLayout);
+        jPanelTerrenoListLayout.setHorizontalGroup(
+            jPanelTerrenoListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTerrenoListLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelTerrenoListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanelTerrenoListLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelTerrenoListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelTerrenoListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jComboBoxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanelTerrenoListLayout.createSequentialGroup()
+                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1)))))
+                .addContainerGap())
+        );
+        jPanelTerrenoListLayout.setVerticalGroup(
+            jPanelTerrenoListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTerrenoListLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelTerrenoListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelTerrenoListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel6)
+                    .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(80, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de administración SAFE");
+        setPreferredSize(new java.awt.Dimension(720, 400));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 formMouseMoved(evt);
@@ -323,41 +558,15 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Bienvenido");
-
-        jLabel2.setText("Perfil de usuario:");
-
-        jLabelProfile.setText("Administrador");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(236, 236, 236)
-                        .addComponent(jLabel2)
-                        .addGap(78, 78, 78)
-                        .addComponent(jLabelProfile)
-                        .addGap(0, 220, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addGap(0, 720, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabelProfile))
-                .addContainerGap(173, Short.MAX_VALUE))
+            .addGap(0, 400, Short.MAX_VALUE)
         );
 
         pack();
@@ -379,9 +588,38 @@ public class Main extends javax.swing.JFrame {
         System.out.println("Listo!");
     }//GEN-LAST:event_formWindowStateChanged
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuTerCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerCrearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuTerCrearActionPerformed
+
+    private void jMenuTerListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerListarActionPerformed
+        changePanel(jPanelTerrenoList);
+    }//GEN-LAST:event_jMenuTerListarActionPerformed
+
+    private void jMenuTerrenoEngMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuTerrenoEngMouseClicked
+
+    }//GEN-LAST:event_jMenuTerrenoEngMouseClicked
+
+    private void jMenuTerEngListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerEngListarActionPerformed
+        changePanel(jPanelTerrenoList);
+    }//GEN-LAST:event_jMenuTerEngListarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBoxEstado;
+    private javax.swing.JComboBox<String> jComboBoxTipo;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelProfile;
     private javax.swing.JMenuBar jMenuAdmin;
     private javax.swing.JMenu jMenuCal;
@@ -413,6 +651,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuPlanCap;
     private javax.swing.JMenu jMenuPlanSalud;
     private javax.swing.JMenuBar jMenuSupervisor;
+    private javax.swing.JMenuItem jMenuTerCrear;
+    private javax.swing.JMenuItem jMenuTerEditar;
+    private javax.swing.JMenuItem jMenuTerEliminar;
+    private javax.swing.JMenuItem jMenuTerEngListar;
+    private javax.swing.JMenuItem jMenuTerListar;
     private javax.swing.JMenu jMenuTerreno;
     private javax.swing.JMenu jMenuTerrenoEng;
     private javax.swing.JMenuItem jMenuUsrCrear;
@@ -420,5 +663,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuUsrEliminar;
     private javax.swing.JMenuItem jMenuUsrListar;
     private javax.swing.JMenu jMenuUsuario;
+    private javax.swing.JPanel jPanelTerrenoList;
+    private javax.swing.JPanel jPanelWelcome;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

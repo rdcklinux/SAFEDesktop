@@ -33,10 +33,24 @@ public class Login extends javax.swing.JFrame {
         this.setLocation(new java.awt.Point(px, py));
         
         this.main = new Main(this, token);
+        java.awt.event.KeyAdapter adapter = new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+                    submitLogin();
+                }
+            }
+        };
+        jTextUserField.addKeyListener(adapter);
+        jPasswordField.addKeyListener(adapter);
     }
     
     public javax.swing.JPasswordField getPasswordField(){
         return jPasswordField;
+    }
+    
+    private void submitLogin(){
+        jButtonLogin.doClick();
     }
 
     /**
@@ -67,12 +81,6 @@ public class Login extends javax.swing.JFrame {
         jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLoginActionPerformed(evt);
-            }
-        });
-
-        jTextUserField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextUserFieldActionPerformed(evt);
             }
         });
 
@@ -149,10 +157,6 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextUserFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextUserFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextUserFieldActionPerformed
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         jLabelMessage.setText(" ");
