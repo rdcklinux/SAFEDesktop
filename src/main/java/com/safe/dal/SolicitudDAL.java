@@ -34,6 +34,7 @@ public class SolicitudDAL extends DAL {
             Usuario tecnico = new Usuario();
             tecnico.setNombresusuario(item.getString("tecnico"));
             solicitud.setTecnico(tecnico);
+            solicitud.setClientenombre(item.getString("clientenombre"));
             solicitud.setTipovisitteridtipovister(item.getInt("tipo"));
             solicitud.setEstadosolievalter(item.getInt("estado"));
             solicitud.setClienteidcliente(item.getInt("clienteidcliente"));

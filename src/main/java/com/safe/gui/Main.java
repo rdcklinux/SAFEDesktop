@@ -6,8 +6,9 @@
 package com.safe.gui;
 
 import com.safe.entity.Cliente;
-import com.safe.gui.component.ButtonTable;
+import com.safe.gui.component.ButtonTableComponent;
 import com.safe.entity.SoliEvalTer;
+import com.safe.gui.component.WindowComponenet;
 import com.safe.service.ClienteService;
 import com.safe.service.TokenManager;
 import com.safe.service.SessionManager;
@@ -59,13 +60,15 @@ public class Main extends javax.swing.JFrame {
             sessionTime = 30;
         }
         System.out.println("Se establece la session a " + sessionTime + " minutos");
-
+        /*
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int px = (screenSize.width / 2) - ( this.getWidth() / 2);
         int py = (screenSize.height / 2) - ( this.getHeight() / 2);
-        
+        */
         setLayout(new BorderLayout());
-        this.setLocation(new java.awt.Point(px, py));
+        //this.setLocation(new java.awt.Point(px, py));
+        WindowComponenet.centerWindow(this);
+        
         session = new SessionManager(this, sessionTime);
     }
     
@@ -600,7 +603,7 @@ public class Main extends javax.swing.JFrame {
         );
 
         jDialog1.setAlwaysOnTop(true);
-        jDialog1.setMinimumSize(new java.awt.Dimension(680, 330));
+        jDialog1.setMinimumSize(new java.awt.Dimension(680, 400));
         jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -657,7 +660,7 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jLabelTipoVisita)
                             .addComponent(jLabelRut)))
                     .addComponent(jLabelDireccionVisita, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17)
                     .addComponent(jLabel18))
@@ -665,15 +668,15 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                     .addComponent(jScrollPane3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(239, 239, 239)
+                .addGap(264, 264, 264)
                 .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -695,7 +698,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addContainerGap())
         );
@@ -983,8 +986,8 @@ public class Main extends javax.swing.JFrame {
         ArrayList<SoliEvalTer> solicitudes = terreno.getCollection();
         if(solicitudes != null ){
             DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-            jTable1.getColumnModel().getColumn(6).setCellRenderer(new ButtonTable("+"));
-            jTable1.getColumnModel().getColumn(7).setCellRenderer(new ButtonTable("P"));
+            jTable1.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("+"));
+            jTable1.getColumnModel().getColumn(7).setCellRenderer(new ButtonTableComponent("P"));
             jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -996,6 +999,7 @@ public class Main extends javax.swing.JFrame {
                         jLabelRut.setText(cliente.getRutcliente());
                         jLabelTipoVisita.setText(SolicitudService.TIPOS[(int)solicitud.getTipovisitteridtipovister()]);
                         jLabelDireccionVisita.setText(solicitud.getDireccionvisita());
+                        WindowComponenet.centerWindow(jDialog1);
                         jDialog1.setVisible(true);
                     }else if(col == 7){                        
                         String url =jTable1.getValueAt(row, col).toString();
@@ -1010,7 +1014,7 @@ public class Main extends javax.swing.JFrame {
                     df.format(s.getFechacreacion()),
                     df.format(s.getFechaderivacion()),
                     s.getTecnico().getNombresusuario(),
-                    "DERCO",
+                    s.getClientenombre(),
                     SolicitudService.TIPOS[(int)s.getTipovisitteridtipovister()],
                     SolicitudService.ESTADOS[(int)s.getEstadosolievalter()],
                     s,

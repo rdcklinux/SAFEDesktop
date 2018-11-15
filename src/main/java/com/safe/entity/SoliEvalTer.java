@@ -31,6 +31,8 @@ public class SoliEvalTer implements Serializable{
     
     
     private long estadosolievalter;
+    
+    private String clientenombre;
 
     public long getIdsolicitud() {
         return idsolicitud;
@@ -110,6 +112,14 @@ public class SoliEvalTer implements Serializable{
 
     public void setTecnico(Usuario tecnico) {
         this.tecnico = tecnico;
+    }
+    
+    public String getClientenombre() {
+        return clientenombre;
+    }
+
+    public void setClientenombre(String clientenombre) {
+        this.clientenombre = clientenombre;
     }
 
     @Override

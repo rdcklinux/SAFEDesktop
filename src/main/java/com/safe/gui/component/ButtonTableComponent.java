@@ -14,11 +14,11 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author familia
  */
-public class ButtonTable extends JButton implements  TableCellRenderer
+public class ButtonTableComponent extends JButton implements  TableCellRenderer
 {
 
   //CONSTRUCTOR
-  public ButtonTable(String label) {
+  public ButtonTableComponent(String label) {
     //SET BUTTON PROPERTIES
     setOpaque(true);
     setText(label);
