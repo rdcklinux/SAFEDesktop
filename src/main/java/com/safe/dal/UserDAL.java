@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class UserDAL extends DAL {
     
     
-    public Usuario getUserForRunAndPassword(String username, String password) throws UnirestException {        
+    public Usuario getUserForRunAndPassword(String username, String password) throws UnirestException {
         String url = getURI("usuario/%s.json");        
         Usuario usuario;
         HttpResponse<JsonNode> jsonResponse = Unirest.get(String.format(url, username)).asJson();

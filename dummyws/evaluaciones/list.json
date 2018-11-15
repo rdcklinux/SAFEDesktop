@@ -1,0 +1,4 @@
+[
+    {"creado": "2018-10-10", "derivado":"2018-10-12", "tecnico":"Raul Salas", "tipo":"1", "estado":"1","pdf":"http://localhost:7001/pdfs/a.pdf"},
+    {"creado": "2018-09-13", "derivado":"2018-10-12", "tecnico":"Raul Salas", "tipo":"1", "estado":"1","pdf":"http://localhost:7001/pdfs/b.pdf"}
+]

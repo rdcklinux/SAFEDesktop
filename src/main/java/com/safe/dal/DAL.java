@@ -18,4 +18,6 @@ public abstract class DAL {
     protected String getURI(String path){
         return schema + "://" + domain + ':' + port + '/' + path;
     }
+    
+    
 }
