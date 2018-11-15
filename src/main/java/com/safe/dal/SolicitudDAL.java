@@ -14,14 +14,11 @@ import com.safe.entity.Usuario;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import sun.text.resources.FormatData;
 
 
-public class TerrenoDAL extends DAL {
+public class SolicitudDAL extends DAL {
     
     public ArrayList<SoliEvalTer> getAllEvaluaciones() throws UnirestException, ParseException {
         String url = getURI("evaluaciones/list.json");
@@ -39,6 +36,8 @@ public class TerrenoDAL extends DAL {
             solicitud.setTecnico(tecnico);
             solicitud.setTipovisitteridtipovister(item.getInt("tipo"));
             solicitud.setEstadosolievalter(item.getInt("estado"));
+            solicitud.setClienteidcliente(item.getInt("clienteidcliente"));
+            solicitud.setDireccionvisita(item.getString("direccion"));
             solicitud.setPdf(item.getString("pdf"));
             collection.add(solicitud);
         }

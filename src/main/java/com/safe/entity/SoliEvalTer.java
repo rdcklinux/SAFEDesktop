@@ -17,30 +17,6 @@ public class SoliEvalTer implements Serializable{
     private Usuario tecnico;
     
     private String pdf;
-
-    public String getPdf() {
-        return pdf;
-    }
-
-    public void setPdf(String pdf) {
-        this.pdf = pdf;
-    }
-
-    public Date getFechaderivacion() {
-        return fechaderivacion;
-    }
-
-    public void setFechaderivacion(Date fechaderivacion) {
-        this.fechaderivacion = fechaderivacion;
-    }
-
-    public Usuario getTecnico() {
-        return tecnico;
-    }
-
-    public void setTecnico(Usuario tecnico) {
-        this.tecnico = tecnico;
-    }
     
     private String direccionvisita;
     
@@ -110,6 +86,30 @@ public class SoliEvalTer implements Serializable{
 
     public void setEstadosolievalter(long estadosolievalter) {
         this.estadosolievalter = estadosolievalter;
+    }
+    
+    public String getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(String pdf) {
+        this.pdf = pdf;
+    }
+
+    public Date getFechaderivacion() {
+        return fechaderivacion;
+    }
+
+    public void setFechaderivacion(Date fechaderivacion) {
+        this.fechaderivacion = fechaderivacion;
+    }
+
+    public Usuario getTecnico() {
+        return tecnico;
+    }
+
+    public void setTecnico(Usuario tecnico) {
+        this.tecnico = tecnico;
     }
 
     @Override

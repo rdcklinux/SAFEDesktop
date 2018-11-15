@@ -5,19 +5,47 @@
  */
 package com.safe.dal;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.mashape.unirest.http.ObjectMapper;
+import com.mashape.unirest.http.Unirest;
+import java.io.IOException;
+
 /**
  *
  * @author familia
  */
 public abstract class DAL {
     
-    private String schema = "http";
-    private String domain = "localhost";
-    private int port = 7001;
+    private final String schema = "http";
+    private final String domain = "localhost";
+    private final int port = 7001;
     
     protected String getURI(String path){
         return schema + "://" + domain + ':' + port + '/' + path;
     }
     
-    
+    protected final void initObjectMapper(){
+        Unirest.setObjectMapper(new ObjectMapper() {
+            private final com.fasterxml.jackson.databind.ObjectMapper jacksonObjectMapper
+                        = new com.fasterxml.jackson.databind.ObjectMapper();
+
+            @Override
+            public <T> T readValue(String value, Class<T> valueType) {
+                try {
+                    return jacksonObjectMapper.readValue(value, valueType);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public String writeValue(Object value) {
+                try {
+                    return jacksonObjectMapper.writeValueAsString(value);
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
 }

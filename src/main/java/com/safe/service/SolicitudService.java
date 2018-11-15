@@ -6,7 +6,7 @@
 package com.safe.service;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.safe.dal.TerrenoDAL;
+import com.safe.dal.SolicitudDAL;
 import com.safe.entity.SoliEvalTer;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author familia
  */
-public class Terreno {
+public class SolicitudService {
     
     public static String[] TIPOS = {
         "",
@@ -33,7 +33,7 @@ public class Terreno {
     };
     
     public ArrayList<SoliEvalTer> getCollection(){
-        TerrenoDAL terrenoDAL = new TerrenoDAL();
+        SolicitudDAL terrenoDAL = new SolicitudDAL();
         ArrayList<SoliEvalTer> collection;
         try {
             collection = terrenoDAL.getAllEvaluaciones();

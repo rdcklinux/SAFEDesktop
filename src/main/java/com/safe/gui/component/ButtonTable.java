@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.safe.gui;
+package com.safe.gui.component;
 
 import java.awt.Component;
 import javax.swing.JButton;
@@ -14,7 +14,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author familia
  */
-class ButtonTable extends JButton implements  TableCellRenderer
+public class ButtonTable extends JButton implements  TableCellRenderer
 {
 
   //CONSTRUCTOR

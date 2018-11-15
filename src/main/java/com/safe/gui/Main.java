@@ -5,10 +5,13 @@
  */
 package com.safe.gui;
 
+import com.safe.entity.Cliente;
+import com.safe.gui.component.ButtonTable;
 import com.safe.entity.SoliEvalTer;
+import com.safe.service.ClienteService;
 import com.safe.service.TokenManager;
 import com.safe.service.SessionManager;
-import com.safe.service.Terreno;
+import com.safe.service.SolicitudService;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
@@ -33,8 +36,12 @@ public class Main extends javax.swing.JFrame {
     private final TokenManager token;
     private final Login loginForm;
     private final SessionManager session;
+    private final ClienteService clienteService = new ClienteService();
+    
     private javax.swing.JMenu jMenuProfile;
-    java.awt.Component horizontalGlue;
+    private java.awt.Component horizontalGlue;
+    
+    
     /**
      * Creates new form Main
      * @param loginForm LoginFomr
@@ -211,7 +218,6 @@ public class Main extends javax.swing.JFrame {
         jMenuEnginer = new javax.swing.JMenuBar();
         jMenuTerrenoEng = new javax.swing.JMenu();
         jMenuTerEngListar = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jPanelWelcome = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -251,7 +257,6 @@ public class Main extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabelDireccionVisita1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
@@ -445,14 +450,6 @@ public class Main extends javax.swing.JFrame {
         });
         jMenuTerrenoEng.add(jMenuTerEngListar);
 
-        jMenuItem1.setText("Gestionar");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenuTerrenoEng.add(jMenuItem1);
-
         jMenuEnginer.add(jMenuTerrenoEng);
 
         jPanelWelcome.setPreferredSize(new java.awt.Dimension(720, 400));
@@ -493,12 +490,13 @@ public class Main extends javax.swing.JFrame {
 
         jPanelTerrenoList.setPreferredSize(new java.awt.Dimension(720, 400));
 
-        jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione estado", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel(com.safe.service.SolicitudService.ESTADOS));
 
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
         jFormattedTextField1.setToolTipText("dd/mm/yyyy");
 
         jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jFormattedTextField2.setToolTipText("dd/mm/yyyy");
 
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -521,7 +519,7 @@ public class Main extends javax.swing.JFrame {
         jLabel6.setText("Filtro tipo visita");
         jLabel6.setToolTipText("");
 
-        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione tipo visita", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel(com.safe.service.SolicitudService.TIPOS));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -630,13 +628,9 @@ public class Main extends javax.swing.JFrame {
         jLabel18.setText("Observaciones");
 
         jTextAreaDescVisita.setEditable(false);
-        jTextAreaDescVisita.setColumns(20);
-        jTextAreaDescVisita.setRows(5);
         jScrollPane3.setViewportView(jTextAreaDescVisita);
 
         jTextAreaObsVisita.setEditable(false);
-        jTextAreaObsVisita.setColumns(20);
-        jTextAreaObsVisita.setRows(5);
         jScrollPane4.setViewportView(jTextAreaObsVisita);
 
         jButton3.setText("Volver");
@@ -663,15 +657,18 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jLabelTipoVisita)
                             .addComponent(jLabelRut)))
                     .addComponent(jLabelDireccionVisita, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17)
-                    .addComponent(jLabel18)
-                    .addComponent(jButton3))
+                    .addComponent(jLabel18))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(239, 239, 239)
+                .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -679,10 +676,6 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
@@ -697,8 +690,12 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelDireccionVisita)
-                            .addComponent(jLabel18))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                            .addComponent(jLabel18)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addContainerGap())
         );
@@ -714,8 +711,6 @@ public class Main extends javax.swing.JFrame {
         jLabel19.setText("Descripción visita");
 
         jLabel20.setText("Observaciones");
-
-        jLabelDireccionVisita1.setText("DIRECCION");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -746,10 +741,8 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabelDireccionVisita1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel19)
                             .addComponent(jLabel20))
@@ -780,9 +773,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelDireccionVisita1))
+                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addGap(4, 4, 4)
@@ -988,7 +979,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuTerEngListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerEngListarActionPerformed
         changePanel(jPanelTerrenoList);
-        Terreno terreno = new Terreno();
+        SolicitudService terreno = new SolicitudService();
         ArrayList<SoliEvalTer> solicitudes = terreno.getCollection();
         if(solicitudes != null ){
             DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
@@ -1000,6 +991,11 @@ public class Main extends javax.swing.JFrame {
                     int row = jTable1.rowAtPoint(evt.getPoint());
                     int col = jTable1.columnAtPoint(evt.getPoint());
                     if (col == 6) {
+                        SoliEvalTer solicitud = (SoliEvalTer)jTable1.getValueAt(row, col);
+                        Cliente cliente = clienteService.get((int)solicitud.getClienteidcliente());
+                        jLabelRut.setText(cliente.getRutcliente());
+                        jLabelTipoVisita.setText(SolicitudService.TIPOS[(int)solicitud.getTipovisitteridtipovister()]);
+                        jLabelDireccionVisita.setText(solicitud.getDireccionvisita());
                         jDialog1.setVisible(true);
                     }else if(col == 7){                        
                         String url =jTable1.getValueAt(row, col).toString();
@@ -1010,24 +1006,20 @@ public class Main extends javax.swing.JFrame {
             DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
             model.setRowCount(0);            
             for(SoliEvalTer s: solicitudes){
-                String[] item = {
+                Object[] item = {
                     df.format(s.getFechacreacion()),
                     df.format(s.getFechaderivacion()),
                     s.getTecnico().getNombresusuario(),
                     "DERCO",
-                    Terreno.TIPOS[(int)s.getTipovisitteridtipovister()],
-                    Terreno.ESTADOS[(int)s.getEstadosolievalter()],
-                    "",
+                    SolicitudService.TIPOS[(int)s.getTipovisitteridtipovister()],
+                    SolicitudService.ESTADOS[(int)s.getEstadosolievalter()],
+                    s,
                     s.getPdf(),
                 };
                 model.addRow(item);
             }
         }
     }//GEN-LAST:event_jMenuTerEngListarActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -1072,7 +1064,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelDireccionVisita;
-    private javax.swing.JLabel jLabelDireccionVisita1;
     private javax.swing.JLabel jLabelProfile;
     private javax.swing.JLabel jLabelRut;
     private javax.swing.JLabel jLabelTipoVisita;
@@ -1095,7 +1086,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuExmEliminar;
     private javax.swing.JMenuItem jMenuExmListar;
     private javax.swing.JMenu jMenuExpositor;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuMedCrear;
     private javax.swing.JMenuItem jMenuMedEditar;
     private javax.swing.JMenuItem jMenuMedEditar1;
