@@ -21,7 +21,7 @@ public abstract class DAL {
     private final int port = 7001;
     
     protected String getURI(String path){
-        return schema + "://" + domain + ':' + port + '/' + path;
+        return schema + "://" + domain + ':' + port + "/app_safe/" + path;
     }
     
     protected final void initObjectMapper(){
