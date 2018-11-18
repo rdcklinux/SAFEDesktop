@@ -19,8 +19,8 @@ public class ClienteService {
     
     private ClienteDAL clienteDAL;
     
-    public ClienteService(){
-        clienteDAL = new ClienteDAL();
+    public ClienteService(String domain){
+        clienteDAL = new ClienteDAL(domain);
     }
     
     public Cliente get(int id){

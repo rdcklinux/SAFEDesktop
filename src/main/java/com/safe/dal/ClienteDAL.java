@@ -15,19 +15,19 @@ import com.safe.entity.Cliente;
  * @author developer
  */
 public class ClienteDAL extends DAL {
-    public ClienteDAL(){
+    
+    public ClienteDAL(String domain){
+        this.domain = domain;
         initObjectMapper();
     }
     
     public Cliente byId(int id) throws UnirestException{
         
-        String url = getURI("cliente/%d.json");
-        //HttpResponse<JsonNode> jsonResponse = Unirest.get(String.format(url, id)).asObject(Cliente.class);
-        //JSONObject obj = jsonResponse.getBody().getObject();
-        HttpResponse<Cliente> response = Unirest.get(String.format(url, id)).asObject(Cliente.class);
-        Cliente cliente = response.getBody();
+        String url = getURI("cliente/readOneCliente/%d");
+        HttpResponse<Cliente[]> response = Unirest.get(String.format(url, id)).asObject(Cliente[].class);
+        Cliente[] clientes = response.getBody();
         
         
-        return cliente;
+        return clientes[0];
     }
 }

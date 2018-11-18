@@ -19,17 +19,19 @@ public class Login extends javax.swing.JFrame {
     private final TokenManager token;
     /**
      * Creates new form login
+     * @param args
      */
-    public Login() {
+    public Login(String args[]) {
         initComponents();
         HashMap<String, String> roleMap = new HashMap<String, String>();
         roleMap.put("ROLE_ADMIN", "Administrador");
         roleMap.put("ROLE_SUPERVISOR", "Supervisor");
         roleMap.put("ROLE_ENGINER", "Ingeniero");
-        token = new TokenManager(roleMap);
+        String domain = args[0];
+        token = new TokenManager(roleMap, domain);
         
         WindowComponenet.centerWindow(this);
-        this.main = new Main(this, token);
+        this.main = new Main(this, token, args);
         java.awt.event.KeyAdapter adapter = new java.awt.event.KeyAdapter() {
             @Override
             public void keyPressed(java.awt.event.KeyEvent e) {
@@ -197,12 +199,15 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-
+        //</editor-fold>      
+        String defaults[] = {"localhost"};        
+        try {
+            defaults[0] = args[0];
+        } catch (java.lang.ArrayIndexOutOfBoundsException e){}
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new Login(defaults).setVisible(true);
             }
         });
     }

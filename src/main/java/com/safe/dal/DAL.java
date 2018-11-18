@@ -17,7 +17,7 @@ import java.io.IOException;
 public abstract class DAL {
     
     private final String schema = "http";
-    private final String domain = "localhost";
+    protected String domain = "localhost";
     private final int port = 7001;
     
     protected String getURI(String path){

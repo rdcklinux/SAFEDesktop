@@ -20,9 +20,9 @@ public class TokenManager {
     private String role;
     private final UserDAL userDAL;
      
-    public TokenManager(HashMap<String, String> roles){
+    public TokenManager(HashMap<String, String> roles, String domain){
         this.roles = roles;
-        userDAL = new UserDAL();
+        userDAL = new UserDAL(domain);
     }
     
     public boolean getSuccessAuthentication(String username, String password){

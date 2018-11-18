@@ -10,9 +10,9 @@ public class SoliEvalTer implements Serializable{
     private long idsolicitud;
     
     
-    private Date fechacreacion;
+    private String fechacreacion;
     
-    private Date fechaderivacion;
+    private String fechaderivacion;
     
     private Usuario tecnico;
     
@@ -42,11 +42,11 @@ public class SoliEvalTer implements Serializable{
         this.idsolicitud = idsolicitud;
     }
 
-    public Date getFechacreacion() {
+    public String getFechacreacion() {
         return fechacreacion;
     }
 
-    public void setFechacreacion(Date fechacreacion) {
+    public void setFechacreacion(String fechacreacion) {
         this.fechacreacion = fechacreacion;
     }
 
@@ -98,11 +98,11 @@ public class SoliEvalTer implements Serializable{
         this.pdf = pdf;
     }
 
-    public Date getFechaderivacion() {
+    public String getFechaderivacion() {
         return fechaderivacion;
     }
 
-    public void setFechaderivacion(Date fechaderivacion) {
+    public void setFechaderivacion(String fechaderivacion) {
         this.fechaderivacion = fechaderivacion;
     }
 

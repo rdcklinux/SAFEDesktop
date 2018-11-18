@@ -6,43 +6,24 @@
 package com.safe.dal;
 
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.safe.entity.SoliEvalTer;
 import com.safe.entity.Usuario;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 public class SolicitudDAL extends DAL {
     
-    public ArrayList<SoliEvalTer> getAllEvaluaciones() throws UnirestException, ParseException {
-        String url = getURI("evaluaciones/list.json");
-        HttpResponse<JsonNode> jsonResponse = Unirest.get(url).asJson();
-        JSONArray array = jsonResponse.getBody().getArray();
-        ArrayList<SoliEvalTer> collection = new ArrayList<>();
-        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
-        for(int i=0; i<array.length(); i++){
-            SoliEvalTer solicitud = new SoliEvalTer();
-            JSONObject item = array.getJSONObject(i);
-            solicitud.setFechacreacion(dt.parse(item.getString("creado")));
-            solicitud.setFechaderivacion(dt.parse(item.getString("derivado")));
-            Usuario tecnico = new Usuario();
-            tecnico.setNombresusuario(item.getString("tecnico"));
-            solicitud.setTecnico(tecnico);
-            solicitud.setClientenombre(item.getString("clientenombre"));
-            solicitud.setTipovisitteridtipovister(item.getInt("tipo"));
-            solicitud.setEstadosolievalter(item.getInt("estado"));
-            solicitud.setClienteidcliente(item.getInt("clienteidcliente"));
-            solicitud.setDireccionvisita(item.getString("direccion"));
-            solicitud.setPdf(item.getString("pdf"));
-            collection.add(solicitud);
-        }
-        
-        return collection;
+    public SolicitudDAL(String domain){
+        this.domain = domain;
+    }
+    
+    public SoliEvalTer[] getAllEvaluaciones() throws UnirestException, ParseException {
+        String url = getURI("SolicitudEvalTerreno/all");
+        HttpResponse<SoliEvalTer[]> response = Unirest.get(url).asObject(SoliEvalTer[].class);
+        SoliEvalTer[] solicitudes = response.getBody();
+        return solicitudes;
     }
 }

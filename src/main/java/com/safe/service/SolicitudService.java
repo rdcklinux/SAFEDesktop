@@ -8,6 +8,7 @@ package com.safe.service;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.safe.dal.SolicitudDAL;
 import com.safe.entity.SoliEvalTer;
+import com.safe.entity.Usuario;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ import java.util.ArrayList;
  * @author familia
  */
 public class SolicitudService {
+    private final SolicitudDAL solicitudDAL;
     
     public static String[] TIPOS = {
         "",
@@ -32,17 +34,29 @@ public class SolicitudService {
         "Rechazada con Observaciones",
     };
     
-    public ArrayList<SoliEvalTer> getCollection(){
-        SolicitudDAL terrenoDAL = new SolicitudDAL();
-        ArrayList<SoliEvalTer> collection;
+    public SolicitudService(String domain){
+        solicitudDAL = new SolicitudDAL(domain);
+    }
+    
+    public SoliEvalTer[] getCollection(){
+        
+        SoliEvalTer[] solicitudes;
         try {
-            collection = terrenoDAL.getAllEvaluaciones();
+            solicitudes = solicitudDAL.getAllEvaluaciones();
+            for(SoliEvalTer solicitud: solicitudes){
+                Usuario tecnico = new Usuario();
+                tecnico.setNombresusuario("TECNICO:NULL");
+                solicitud.setTecnico(tecnico);
+                solicitud.setClientenombre("CLIENTE:NULL");
+                solicitud.setPdf("http://localhost/NULL.pdf");
+                solicitud.setFechaderivacion("2018-10-01");
+            }
         }catch(UnirestException ex){
-            collection = null;
+            solicitudes = null;
         } catch (ParseException ex) {
-            collection = null;
+            solicitudes = null;
         }
         
-        return collection;
+        return solicitudes;
     }
 }

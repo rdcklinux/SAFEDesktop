@@ -22,7 +22,7 @@ public class Usuario implements Serializable{
     private String apmaterno;
     
     
-    private Date fnacimientousuario;
+    private String fnacimientousuario;
     
     
     private String sexousuario;
@@ -95,11 +95,11 @@ public class Usuario implements Serializable{
         return this;
     }
 
-    public Date getFnacimientousuario() {
+    public String getFnacimientousuario() {
         return fnacimientousuario;
     }
 
-    public Usuario setFnacimientousuario(Date fnacimientousuario) {
+    public Usuario setFnacimientousuario(String fnacimientousuario) {
         this.fnacimientousuario = fnacimientousuario;
         
         return this;

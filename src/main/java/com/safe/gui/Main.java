@@ -37,22 +37,26 @@ public class Main extends javax.swing.JFrame {
     private final TokenManager token;
     private final Login loginForm;
     private final SessionManager session;
-    private final ClienteService clienteService = new ClienteService();
+    private final ClienteService clienteService;
     
     private javax.swing.JMenu jMenuProfile;
     private java.awt.Component horizontalGlue;
+    private final String domain;
     
     
     /**
      * Creates new form Main
      * @param loginForm LoginFomr
      * @param token token service
+     * @param args
      */
-    public Main(Login loginForm, TokenManager token) {
+    public Main(Login loginForm, TokenManager token, String args[]) {
         initComponents();        
         initUserMenu();
         this.token = token;
         this.loginForm = loginForm;
+        this.domain = args[0];
+        clienteService = new ClienteService(this.domain);
         int sessionTime;
         try {
             sessionTime = (int)Integer.parseInt(getConfig().getProperty("safe.sessionMinuteTime"));
@@ -969,8 +973,8 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuTerEngListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerEngListarActionPerformed
         changePanel(jPanelTerrenoList);
-        SolicitudService terreno = new SolicitudService();
-        ArrayList<SoliEvalTer> solicitudes = terreno.getCollection();
+        SolicitudService terreno = new SolicitudService(domain);
+        SoliEvalTer[] solicitudes = terreno.getCollection();
         if(solicitudes != null ){
             DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
             jTable1.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("+"));
@@ -993,13 +997,12 @@ public class Main extends javax.swing.JFrame {
                         openWebUrl(url);
                     }
                 }
-            });
-            DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-            model.setRowCount(0);            
+            });            
+            model.setRowCount(0);
             for(SoliEvalTer s: solicitudes){
                 Object[] item = {
-                    df.format(s.getFechacreacion()),
-                    df.format(s.getFechaderivacion()),
+                    s.getFechacreacion(),
+                    s.getFechaderivacion(),
                     s.getTecnico().getNombresusuario(),
                     s.getClientenombre(),
                     SolicitudService.TIPOS[(int)s.getTipovisitteridtipovister()],
