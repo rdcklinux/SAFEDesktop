@@ -30,4 +30,12 @@ public class ClienteDAL extends DAL {
         
         return clientes[0];
     }
+    
+    public Cliente[] all() throws UnirestException{
+        String url = getURI("cliente/list");
+        HttpResponse<Cliente[]> response = Unirest.get(String.format(url)).asObject(Cliente[].class);
+        Cliente[] clientes = response.getBody();
+                
+        return clientes;
+    }
 }

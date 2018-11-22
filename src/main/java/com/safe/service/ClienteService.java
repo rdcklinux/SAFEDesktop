@@ -33,4 +33,15 @@ public class ClienteService {
         
         return cliente;
     }
+    
+    public Cliente[] getCollection(){
+        Cliente[] clientes = null;
+        try {
+            clientes = clienteDAL.all();
+        } catch (UnirestException ex) {
+            Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return clientes;
+    }
 }

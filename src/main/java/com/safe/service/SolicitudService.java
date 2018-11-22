@@ -10,7 +10,6 @@ import com.safe.dal.SolicitudDAL;
 import com.safe.entity.SoliEvalTer;
 import com.safe.entity.Usuario;
 import java.text.ParseException;
-import java.util.ArrayList;
 
 /**
  *
