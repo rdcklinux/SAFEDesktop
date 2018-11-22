@@ -44,4 +44,31 @@ public class ClienteService {
         
         return clientes;
     }
+    
+    public long save(Cliente cliente) {
+        long id = 0;
+        if(cliente.getIdcliente() > 0){
+            try {
+                id = clienteDAL.update(cliente);
+            } catch (UnirestException ex) {
+                Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else {
+            try {
+                id = clienteDAL.create(cliente);
+            } catch (UnirestException ex) {
+                Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return id;
+    }
+    
+    public void delete(long id) {
+        try {
+            clienteDAL.delete(id);
+        } catch (UnirestException ex) {
+            Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
