@@ -20,25 +20,53 @@ public class UserDAL extends DAL {
         this.domain = domain;
         initObjectMapper();
     }
-    
-    public Usuario getUserForRunAndPassword(String username, String password) throws UnirestException {
-        String url = getURI("usuarios/readOneUsuario/%s");
-        HttpResponse<Usuario[]> response = Unirest.get(String.format(url, username)).asObject(Usuario[].class);
-        Usuario[] usuario = response.getBody();
+          
+    public Usuario byRun(String run) throws UnirestException {
         
-        /*
-        HttpResponse<JsonNode> jsonResponse = Unirest.get(String.format(url, username)).asJson();
-        JSONObject obj = jsonResponse.getBody().getObject();
-        usuario = new Usuario();
-        usuario
-            .setRunusuario(obj.getString("RUN_USUARIO"))
-            .setClaveusuario(obj.getString("CLAVE_USUARIO"))
-            .setAppaterno(obj.getString("AP_PATERNO"))
-            .setApmaterno(obj.getString("AP_MATERNO"))
-            .setNombresusuario(obj.getString("NOMBRES_USUARIO"))
-            .setPerfilidperfil(obj.getLong("PERFIL_ID_PERFIL"))
-        ;
-        */
-        return usuario[0];
+        String url = getURI("usuarios/readOneUsuario/%s");
+        HttpResponse<Usuario[]> response = Unirest.get(String.format(url, run)).asObject(Usuario[].class);
+        Usuario[] usuarios = response.getBody();
+        
+        return usuarios[0];
+    }
+    
+    public Usuario[] all() throws UnirestException {
+        String url = getURI("usuarios/getAllUsuarios/");
+        HttpResponse<Usuario[]> response = Unirest.get(String.format(url)).asObject(Usuario[].class);
+        Usuario[] usuarios = response.getBody();
+                
+        return usuarios;
+    }
+    
+    public long create(Usuario usuario) throws UnirestException {
+        String url = getURI("usuarios/createUsuarioSP");
+        HttpResponse<String> result = Unirest.post(url)
+        .header("accept", "application/json")
+        .header("Content-Type", "application/json")
+        .body(usuario).asString();
+        
+        //TODO: debe retornar un ID de cliente
+        return usuario.getIdusuario();
+    }
+    
+    public long update(Usuario usuario) throws UnirestException {
+        String url = getURI("usuarios/upUsuario");
+        HttpResponse<String> postResponse = Unirest.put(String.format(url))
+        .header("accept", "application/json")
+        .header("Content-Type", "application/json")
+        .body(usuario)
+        .asString();
+        
+        return usuario.getIdusuario();
+    }
+    
+    public void delete(long id) throws UnirestException {
+        String url = getURI("usuarios/deleteCliente/%d/0");
+        
+        HttpResponse<String> postResponse = Unirest.put(String.format(url, id))
+        .header("accept", "application/json")
+        .header("Content-Type", "application/json")
+        .body(String.class)
+        .asString();
     }
 }

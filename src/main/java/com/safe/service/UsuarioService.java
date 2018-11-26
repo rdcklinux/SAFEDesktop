@@ -6,38 +6,61 @@
 package com.safe.service;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.safe.dal.ClienteDAL;
-import com.safe.entity.Cliente;
+import com.safe.dal.UserDAL;
+import com.safe.entity.Usuario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author developer
+ * @author familia
  */
-public class ClienteService {
+public class UsuarioService {
+
+    private final UserDAL userDAL;
     
-    private ClienteDAL clienteDAL;
+    public static String[] ESTADOS = {
+        "Todos",
+        "Activo",
+        "Registro pendiente",
+        "Desactivado",
+    };
     
-    public ClienteService(String domain){
-        clienteDAL = new ClienteDAL(domain);
+    public static String[] PERFIL = {
+        "",
+        "Administrador",
+        "Supervisor",
+        "Prevencionista",
+        "Trabajador",
+        "Técnico",
+        "Cliente",
+        "Médico",
+    };
+    
+     public static String[] GENERO = {        
+        "Masculino",
+        "Femenino",
+    };
+    
+    public UsuarioService(String domain){
+        userDAL = new UserDAL(domain);
     }
     
-    public Cliente getOne(int id){
-        Cliente cliente = null;
+    public Usuario getOne(String run){
+        Usuario usuario = null;
         try {
-            cliente = clienteDAL.byId(id);
+            usuario = userDAL.byRun(run);
         } catch (UnirestException ex) {
             Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return cliente;
+        return usuario;
     }
     
-    public Cliente[] getCollection(){
-        Cliente[] clientes = null;
+    public Usuario[] getCollection(){
+        Usuario[] clientes = null;
         try {
-            clientes = clienteDAL.all();
+            clientes = userDAL.all();
         } catch (UnirestException ex) {
             Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -45,17 +68,17 @@ public class ClienteService {
         return clientes;
     }
     
-    public long save(Cliente cliente) {
+    public long save(Usuario usuario) {
         long id = 0;
-        if(cliente.getIdcliente() > 0){
+        if(usuario.getIdusuario() > 0){
             try {
-                id = clienteDAL.update(cliente);
+                id = userDAL.update(usuario);
             } catch (UnirestException ex) {
                 Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else {
             try {
-                id = clienteDAL.create(cliente);
+                id = userDAL.create(usuario);
             } catch (UnirestException ex) {
                 Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -66,7 +89,7 @@ public class ClienteService {
     
     public void delete(long id) {
         try {
-            clienteDAL.delete(id);
+            userDAL.delete(id);
         } catch (UnirestException ex) {
             Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
         }

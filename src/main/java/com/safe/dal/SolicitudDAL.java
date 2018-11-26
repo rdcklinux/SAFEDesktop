@@ -9,9 +9,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.safe.entity.SoliEvalTer;
-import com.safe.entity.Usuario;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 
 public class SolicitudDAL extends DAL {
@@ -21,7 +19,7 @@ public class SolicitudDAL extends DAL {
     }
     
     public SoliEvalTer[] getAllEvaluaciones() throws UnirestException, ParseException {
-        String url = getURI("SolicitudEvalTerreno/all");
+        String url = getURI("SolicitudEvalTerreno/getAllSoliEvalTer/");
         HttpResponse<SoliEvalTer[]> response = Unirest.get(url).asObject(SoliEvalTer[].class);
         SoliEvalTer[] solicitudes = response.getBody();
         return solicitudes;

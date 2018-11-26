@@ -27,7 +27,7 @@ public class TokenManager {
     
     public boolean getSuccessAuthentication(String username, String password){
         try {
-            usuario = userDAL.getUserForRunAndPassword(username, password);
+            usuario = userDAL.byRun(username);
         }catch(UnirestException e) {
             expire();        
             return false;

@@ -3,7 +3,7 @@ package com.safe.entity;
 
 import java.io.Serializable;
 
-public class Capacitacion implements Serializable{
+public class Capacitacion implements Serializable {
    
     private long idcap;
     

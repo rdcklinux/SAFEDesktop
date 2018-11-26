@@ -6,7 +6,6 @@
 package com.safe.dal;
 
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.safe.entity.Cliente;
@@ -33,7 +32,7 @@ public class ClienteDAL extends DAL {
     }
     
     public Cliente[] all() throws UnirestException{
-        String url = getURI("cliente/list");
+        String url = getURI("cliente/getAllCliente/");
         HttpResponse<Cliente[]> response = Unirest.get(String.format(url)).asObject(Cliente[].class);
         Cliente[] clientes = response.getBody();
                 
