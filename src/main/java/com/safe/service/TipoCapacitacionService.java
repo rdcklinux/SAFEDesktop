@@ -7,7 +7,8 @@ package com.safe.service;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.safe.dal.CapacitacionDAL;
-import com.safe.entity.Capacitacion;
+import com.safe.dal.TipoCapacitacionDAL;
+import com.safe.entity.TipoCapacitacion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class TipoCapacitacionService {
     
-    private final CapacitacionDAL capacitacionDAL;
+    private final TipoCapacitacionDAL tipoCapacitacionDAL;
     
     public static String[] ESTADOS = {
         "Todos",
@@ -26,42 +27,42 @@ public class TipoCapacitacionService {
     };
     
     public TipoCapacitacionService(String domain){
-        capacitacionDAL = new CapacitacionDAL(domain);
+        tipoCapacitacionDAL = new TipoCapacitacionDAL(domain);
     }
     
-    public Capacitacion getOne(int id){
-        Capacitacion capacitacion = null;
+    public TipoCapacitacion getOne(int id){
+        TipoCapacitacion tipo = null;
         try {
-            capacitacion = capacitacionDAL.byId(id);
+            tipo = tipoCapacitacionDAL.byId(id);
         } catch (UnirestException ex) {
             Logger.getLogger(TipoCapacitacionService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return capacitacion;
+        return tipo;
     }
     
-    public Capacitacion[] getCollection(){
-        Capacitacion[] capacitaciones = null;
+    public TipoCapacitacion[] getCollection(){
+        TipoCapacitacion[] tipos = null;
         try {
-            capacitaciones = capacitacionDAL.all();
+            tipos = tipoCapacitacionDAL.all();
         } catch (UnirestException ex) {
             Logger.getLogger(TipoCapacitacionService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return capacitaciones;
+        return tipos;
     }
     
-    public long save(Capacitacion capacitacion) {
+    public long save(TipoCapacitacion tipo) {
         long id = 0;
-        if(capacitacion.getIdcap()> 0){
+        if(tipo.getIdtipocap() > 0){
             try {
-                id = capacitacionDAL.update(capacitacion);
+                id = tipoCapacitacionDAL.update(tipo);
             } catch (UnirestException ex) {
                 Logger.getLogger(TipoCapacitacionService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else {
             try {
-                id = capacitacionDAL.create(capacitacion);
+                id = tipoCapacitacionDAL.create(tipo);
             } catch (UnirestException ex) {
                 Logger.getLogger(TipoCapacitacionService.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -72,7 +73,7 @@ public class TipoCapacitacionService {
     
     public void delete(long id) {
         try {
-            capacitacionDAL.delete(id);
+            tipoCapacitacionDAL.delete(id);
         } catch (UnirestException ex) {
             Logger.getLogger(TipoCapacitacionService.class.getName()).log(Level.SEVERE, null, ex);
         }
