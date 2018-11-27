@@ -1,4 +1,0 @@
-[
-    {"creado": "2018-10-10", "derivado":"2018-10-12", "tecnico":"Raul Salas", "tipo":"1", "estado":"1","clienteidcliente":"1","clientenombre":"Minera Primavera","direccion":"Alerce #222","pdf":"http://localhost:7001/pdfs/a.pdf"},
-    {"creado": "2018-09-13", "derivado":"2018-10-12", "tecnico":"Raul Salas", "tipo":"2", "estado":"2","clienteidcliente":"1","clientenombre":"Minera Primavera","direccion":"Pericoto #333","pdf":"http://localhost:7001/pdfs/b.pdf"}
-]
