@@ -8,6 +8,7 @@ package com.safe.gui;
 import com.safe.gui.component.WindowComponenet;
 import com.safe.service.TokenManager;
 import java.util.HashMap;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -17,6 +18,9 @@ public class Login extends javax.swing.JFrame {
     
     private final Main main;
     private final TokenManager token;
+    private boolean debug = false;
+    private String dbgUsername = "";
+    private String dbgUserRole = "";
     /**
      * Creates new form login
      * @param args
@@ -28,6 +32,10 @@ public class Login extends javax.swing.JFrame {
         roleMap.put("ROLE_SUPERVISOR", "Supervisor");
         roleMap.put("ROLE_ENGINER", "Ingeniero");
         String domain = args[0];
+        String hash = DigestUtils.sha256Hex(args[2]);
+        debug = args[1].equals("debug") && hash.equals("19d3d93ff8f7331ded0923f780dda4e81c8765c08abd924264b1a80f491ba243");
+        dbgUsername = args[3];
+        dbgUserRole = args[4];
         token = new TokenManager(roleMap, domain);
         
         WindowComponenet.centerWindow(this);
@@ -159,9 +167,10 @@ public class Login extends javax.swing.JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         jLabelMessage.setText(" ");
-        String user = jTextUserField.getText();
+        String user = debug ? dbgUsername : jTextUserField.getText();
         String password = String.valueOf(jPasswordField.getPassword());
         token.getSuccessAuthentication(user, password);
+        if(debug) token.authenticateDebug(dbgUserRole);
         if(token.isAuthenticated()){
             main.signin();
         } else {
@@ -199,12 +208,28 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>      
-        String defaults[] = {"localhost"};        
-        try {
+        //</editor-fold>
+        String defaults[] = {"localhost", "", "", "", ""};        
+        try { //domain
             defaults[0] = args[0];
         } catch (java.lang.ArrayIndexOutOfBoundsException e){}
-        /* Create and display the form */
+        
+        try { //debug mode
+            defaults[1] = args[1];
+        } catch (java.lang.ArrayIndexOutOfBoundsException e){}
+        
+        try { // debug key
+            defaults[2] = args[2];
+        } catch (java.lang.ArrayIndexOutOfBoundsException e){}
+        
+        try { //user's username
+            defaults[3] = args[3];
+        } catch (java.lang.ArrayIndexOutOfBoundsException e){}
+        
+        try { //user's role
+            defaults[4] = args[4];
+        } catch (java.lang.ArrayIndexOutOfBoundsException e){}
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login(defaults).setVisible(true);

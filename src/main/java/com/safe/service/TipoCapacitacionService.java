@@ -42,7 +42,7 @@ public class TipoCapacitacionService {
     }
     
     public TipoCapacitacion[] getCollection(){
-        TipoCapacitacion[] tipos = null;
+        TipoCapacitacion[] tipos = {};
         try {
             tipos = tipoCapacitacionDAL.all();
         } catch (UnirestException ex) {

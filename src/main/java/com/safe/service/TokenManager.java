@@ -74,6 +74,11 @@ public class TokenManager {
         return role;
     }
     
+    public void authenticateDebug(String userRole){
+        role = userRole;
+        isAuthenticated = true;
+    }
+    
     public String getRoleName(){
         return roles.get(role);
     }
