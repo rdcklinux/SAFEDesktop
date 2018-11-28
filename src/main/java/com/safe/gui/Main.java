@@ -160,7 +160,6 @@ public class Main extends javax.swing.JFrame {
                         jTextField14.setText(usuario.getNombresusuario());
                         jTextField15.setText(usuario.getAppaterno());
                         jTextField16.setText(usuario.getApmaterno());
-                        ;
                         try {
                             SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             jFormattedTextField3.setText(date.format(dt.parse(usuario.getFnacimientousuario())));
@@ -177,6 +176,7 @@ public class Main extends javax.swing.JFrame {
                         jButton10.setName(String.valueOf(usuario.getIdusuario()));
                         jButton12.setName(String.valueOf(usuario.getIdusuario()));
                         jButton12.setEnabled(true);
+                        jLabelUsuarioTitle.setText("Editar Usuario");
                         changePanel(usuarioForm);
                     
                 }
@@ -3564,6 +3564,7 @@ public class Main extends javax.swing.JFrame {
         jButton12.setEnabled(false);
         jButton10.setName(null);
         jButton10.setName(null);
+        jLabelUsuarioTitle.setText("Crear Usuario");
         changePanel(usuarioForm);
     }//GEN-LAST:event_jMenuUsrCrearActionPerformed
 
