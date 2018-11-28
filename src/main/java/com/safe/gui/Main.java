@@ -3490,8 +3490,7 @@ public class Main extends javax.swing.JFrame {
         usuario.setAppaterno(jTextField15.getText());
         usuario.setApmaterno(jTextField16.getText());        
         try {
-            SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            usuario.setFnacimientousuario(dt.format(date.parse(jFormattedTextField3.getText())));
+            usuario.setFnacimientousuario(date.format(date.parse(jFormattedTextField3.getText())));
         } catch (ParseException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
