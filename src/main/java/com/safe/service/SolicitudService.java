@@ -19,13 +19,13 @@ public class SolicitudService {
     private final SolicitudDAL solicitudDAL;
     
     public static String[] TIPOS = {
-        "",
+        "Todos",
         "Instalación",
         "Persona",
     };
     
     public static String[] ESTADOS = {
-        "",
+        "Todos",
         "Creada",
         "Pendiente Revisión Supervisor",
         "Pendiente Revisión Ingeniero",

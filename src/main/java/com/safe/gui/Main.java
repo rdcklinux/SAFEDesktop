@@ -511,6 +511,22 @@ public class Main extends javax.swing.JFrame {
         jButton19 = new javax.swing.JButton();
         jLabel64 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox<>();
+        tipoExamenMain = new javax.swing.JInternalFrame();
+        jButton45 = new javax.swing.JButton();
+        jLabel132 = new javax.swing.JLabel();
+        jLabel133 = new javax.swing.JLabel();
+        jScrollPane27 = new javax.swing.JScrollPane();
+        jTable21 = new javax.swing.JTable();
+        jTextField40 = new javax.swing.JTextField();
+        tipoExamenForm = new javax.swing.JInternalFrame();
+        jLabelTipoExamenTitle = new javax.swing.JLabel();
+        jLabel134 = new javax.swing.JLabel();
+        jTextField41 = new javax.swing.JTextField();
+        jButton46 = new javax.swing.JButton();
+        jButton47 = new javax.swing.JButton();
+        jButton48 = new javax.swing.JButton();
+        jLabel135 = new javax.swing.JLabel();
+        jComboBox18 = new javax.swing.JComboBox<>();
         evaluacionMain = new javax.swing.JInternalFrame();
         jComboBoxEstado2 = new javax.swing.JComboBox<>();
         jFormattedTextField4 = new javax.swing.JFormattedTextField();
@@ -637,22 +653,8 @@ public class Main extends javax.swing.JFrame {
         jLabel77 = new javax.swing.JLabel();
         jScrollPane17 = new javax.swing.JScrollPane();
         jTable12 = new javax.swing.JTable();
-        tipoExamenMain = new javax.swing.JInternalFrame();
-        jButton45 = new javax.swing.JButton();
-        jLabel132 = new javax.swing.JLabel();
-        jLabel133 = new javax.swing.JLabel();
-        jScrollPane27 = new javax.swing.JScrollPane();
-        jTable21 = new javax.swing.JTable();
-        jTextField40 = new javax.swing.JTextField();
-        tipoExamenForm = new javax.swing.JInternalFrame();
-        jLabelTipoExamenTitle = new javax.swing.JLabel();
-        jLabel134 = new javax.swing.JLabel();
-        jTextField41 = new javax.swing.JTextField();
-        jButton46 = new javax.swing.JButton();
-        jButton47 = new javax.swing.JButton();
-        jButton48 = new javax.swing.JButton();
-        jLabel135 = new javax.swing.JLabel();
-        jComboBox18 = new javax.swing.JComboBox<>();
+        jLabel136 = new javax.swing.JLabel();
+        jLabel137 = new javax.swing.JLabel();
         planSaludMain = new javax.swing.JInternalFrame();
         jFormattedTextField14 = new javax.swing.JFormattedTextField();
         jFormattedTextField15 = new javax.swing.JFormattedTextField();
@@ -1717,6 +1719,169 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        tipoExamenMain.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        tipoExamenMain.setClosable(true);
+        tipoExamenMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        tipoExamenMain.setTitle("Capacitaciones");
+        tipoExamenMain.setOpaque(false);
+        tipoExamenMain.setVisible(true);
+
+        jButton45.setText("Buscar");
+        jButton45.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton45ActionPerformed(evt);
+            }
+        });
+
+        jLabel132.setText("Nombre tipo examen");
+        jLabel132.setToolTipText("");
+
+        jLabel133.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel133.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel133.setText("Listado de Tipos de Examen");
+        jLabel133.setToolTipText("");
+
+        jTable21.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Estado", "Editar"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable21.getTableHeader().setReorderingAllowed(false);
+        jScrollPane27.setViewportView(jTable21);
+        jTable21.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        javax.swing.GroupLayout tipoExamenMainLayout = new javax.swing.GroupLayout(tipoExamenMain.getContentPane());
+        tipoExamenMain.getContentPane().setLayout(tipoExamenMainLayout);
+        tipoExamenMainLayout.setHorizontalGroup(
+            tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tipoExamenMainLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel132, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField40, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton45)
+                .addGap(8, 8, 8))
+            .addGroup(tipoExamenMainLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel133, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane27, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        tipoExamenMainLayout.setVerticalGroup(
+            tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tipoExamenMainLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel133)
+                .addGap(18, 18, 18)
+                .addGroup(tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel132)
+                    .addComponent(jButton45)
+                    .addComponent(jTextField40, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane27, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+
+        tipoExamenForm.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        tipoExamenForm.setVisible(true);
+
+        jLabelTipoExamenTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabelTipoExamenTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTipoExamenTitle.setText("Crear tipo de examen");
+
+        jLabel134.setText("Nombre");
+
+        jButton46.setText("Guardar");
+        jButton46.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton46ActionPerformed(evt);
+            }
+        });
+
+        jButton47.setText("Cancelar");
+        jButton47.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton47ActionPerformed(evt);
+            }
+        });
+
+        jButton48.setText("Eliminar");
+        jButton48.setEnabled(false);
+        jButton48.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton48ActionPerformed(evt);
+            }
+        });
+
+        jLabel135.setText("Estado");
+
+        jComboBox18.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.TipoExamenService.ESTADOS, 1, 3)));
+
+        javax.swing.GroupLayout tipoExamenFormLayout = new javax.swing.GroupLayout(tipoExamenForm.getContentPane());
+        tipoExamenForm.getContentPane().setLayout(tipoExamenFormLayout);
+        tipoExamenFormLayout.setHorizontalGroup(
+            tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tipoExamenFormLayout.createSequentialGroup()
+                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tipoExamenFormLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel134)
+                            .addComponent(jLabel135))
+                        .addGap(92, 92, 92)
+                        .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField41)
+                            .addComponent(jComboBox18, 0, 175, Short.MAX_VALUE)))
+                    .addGroup(tipoExamenFormLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton48)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton46)
+                .addContainerGap())
+            .addComponent(jLabelTipoExamenTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        tipoExamenFormLayout.setVerticalGroup(
+            tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tipoExamenFormLayout.createSequentialGroup()
+                .addComponent(jLabelTipoExamenTitle)
+                .addGap(23, 23, 23)
+                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel134)
+                    .addComponent(jTextField41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel135)
+                    .addComponent(jComboBox18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton46)
+                    .addComponent(jButton47)
+                    .addComponent(jButton48))
+                .addContainerGap())
+        );
+
         evaluacionMain.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         evaluacionMain.setClosable(true);
         evaluacionMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -1946,14 +2111,13 @@ public class Main extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(237, 237, 237)
-                        .addComponent(jButton3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2044,7 +2208,7 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jTable2);
 
-        jLabel8.setText("Observaciones de supervisor");
+        jLabel8.setText("Observaciones del supervisor");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -2452,7 +2616,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel58)
                         .addComponent(jLabel59)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2717,7 +2881,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane16, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                .addComponent(jScrollPane16, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2770,7 +2934,7 @@ public class Main extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel10Layout.createSequentialGroup()
@@ -2780,10 +2944,17 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel76)
                         .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel77))
-                    .addContainerGap(360, Short.MAX_VALUE)))
+                    .addContainerGap(376, Short.MAX_VALUE)))
         );
 
         jTabbedPane2.addTab("Certificados", jPanel10);
+
+        jLabel136.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel136.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel136.setText("Gestion de plan de capacitación");
+
+        jLabel137.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel137.setText("\"Nombre de la empresa\"");
 
         javax.swing.GroupLayout planCapacitacionFormLayout = new javax.swing.GroupLayout(planCapacitacionForm.getContentPane());
         planCapacitacionForm.getContentPane().setLayout(planCapacitacionFormLayout);
@@ -2793,176 +2964,18 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jTabbedPane2)
                 .addContainerGap())
+            .addComponent(jLabel136, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel137, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         planCapacitacionFormLayout.setVerticalGroup(
             planCapacitacionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, planCapacitacionFormLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        tipoExamenMain.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        tipoExamenMain.setClosable(true);
-        tipoExamenMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-        tipoExamenMain.setTitle("Capacitaciones");
-        tipoExamenMain.setOpaque(false);
-        tipoExamenMain.setVisible(true);
-
-        jButton45.setText("Buscar");
-        jButton45.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton45ActionPerformed(evt);
-            }
-        });
-
-        jLabel132.setText("Nombre tipo examen");
-        jLabel132.setToolTipText("");
-
-        jLabel133.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel133.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel133.setText("Listado de Tipos de Examen");
-        jLabel133.setToolTipText("");
-
-        jTable21.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nombre", "Estado", "Editar"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable21.getTableHeader().setReorderingAllowed(false);
-        jScrollPane27.setViewportView(jTable21);
-        jTable21.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-        javax.swing.GroupLayout tipoExamenMainLayout = new javax.swing.GroupLayout(tipoExamenMain.getContentPane());
-        tipoExamenMain.getContentPane().setLayout(tipoExamenMainLayout);
-        tipoExamenMainLayout.setHorizontalGroup(
-            tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tipoExamenMainLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel132, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(planCapacitacionFormLayout.createSequentialGroup()
+                .addComponent(jLabel136)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField40, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel137)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton45)
-                .addGap(8, 8, 8))
-            .addGroup(tipoExamenMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel133, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane27, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        tipoExamenMainLayout.setVerticalGroup(
-            tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tipoExamenMainLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel133)
-                .addGap(18, 18, 18)
-                .addGroup(tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel132)
-                    .addComponent(jButton45)
-                    .addComponent(jTextField40, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane27, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
-        );
-
-        tipoExamenForm.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        tipoExamenForm.setVisible(true);
-
-        jLabelTipoExamenTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabelTipoExamenTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTipoExamenTitle.setText("Crear tipo de examen");
-
-        jLabel134.setText("Nombre");
-
-        jButton46.setText("Guardar");
-        jButton46.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton46ActionPerformed(evt);
-            }
-        });
-
-        jButton47.setText("Cancelar");
-        jButton47.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton47ActionPerformed(evt);
-            }
-        });
-
-        jButton48.setText("Eliminar");
-        jButton48.setEnabled(false);
-        jButton48.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton48ActionPerformed(evt);
-            }
-        });
-
-        jLabel135.setText("Estado");
-
-        jComboBox18.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.TipoExamenService.ESTADOS, 1, 3)));
-
-        javax.swing.GroupLayout tipoExamenFormLayout = new javax.swing.GroupLayout(tipoExamenForm.getContentPane());
-        tipoExamenForm.getContentPane().setLayout(tipoExamenFormLayout);
-        tipoExamenFormLayout.setHorizontalGroup(
-            tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tipoExamenFormLayout.createSequentialGroup()
-                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tipoExamenFormLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel134)
-                            .addComponent(jLabel135))
-                        .addGap(92, 92, 92)
-                        .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField41)
-                            .addComponent(jComboBox18, 0, 175, Short.MAX_VALUE)))
-                    .addGroup(tipoExamenFormLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton48)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton47)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton46)
-                .addContainerGap())
-            .addComponent(jLabelTipoExamenTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        tipoExamenFormLayout.setVerticalGroup(
-            tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tipoExamenFormLayout.createSequentialGroup()
-                .addComponent(jLabelTipoExamenTitle)
-                .addGap(23, 23, 23)
-                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel134)
-                    .addComponent(jTextField41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel135)
-                    .addComponent(jComboBox18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton46)
-                    .addComponent(jButton47)
-                    .addComponent(jButton48))
-                .addContainerGap())
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         planSaludMain.setBorder(javax.swing.BorderFactory.createCompoundBorder());
@@ -3543,14 +3556,14 @@ public class Main extends javax.swing.JFrame {
         );
         planSaludFormLayout.setVerticalGroup(
             planSaludFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, planSaludFormLayout.createSequentialGroup()
+            .addGroup(planSaludFormLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel107)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel108)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         expositorMain.setBorder(javax.swing.BorderFactory.createCompoundBorder());
@@ -4220,18 +4233,34 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuTerrenoEngMouseClicked
 
     private void jMenuTerEngListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerEngListarActionPerformed
-        changePanel(evaluacionMain);
+        //listar solicitudes de evaluaciones en terreno
         SolicitudService terreno = new SolicitudService(domain);
         SoliEvalTer[] solicitudes = terreno.getCollection();
         if(solicitudes != null ){
-            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();            
+            DefaultTableModel model = (DefaultTableModel)jTable7.getModel();            
             model.setRowCount(0);
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String createdAt, derivatedAt;
+            Cliente cliente;
             for(SoliEvalTer s: solicitudes){
+                cliente = clienteService.getOne((int)s.getClienteidcliente());
+                try {
+                    createdAt = date.format(df.parse(s.getFechacreacion()));
+                } catch (ParseException ex) {
+                    createdAt = "";
+                }
+                try {
+                    derivatedAt = date.format(df.parse(s.getFechaderivacion()));
+                } catch (ParseException ex) {
+                    derivatedAt = "";
+                }
+                
                 Object[] item = {
-                    s.getFechacreacion(),
-                    s.getFechaderivacion(),
+                    createdAt,
+                    derivatedAt,
+                    //"TECNICO", //TODO: falta tecnico ,
                     s.getTecnico().getNombresusuario(),
-                    s.getClientenombre(),
+                    cliente.getRazonsocial(),
                     SolicitudService.TIPOS[(int)s.getTipovisitteridtipovister()],
                     SolicitudService.ESTADOS[(int)s.getEstadosolievalter()],
                     s,
@@ -4240,6 +4269,7 @@ public class Main extends javax.swing.JFrame {
                 model.addRow(item);
             }
         }
+        changePanel(evaluacionMain);
     }//GEN-LAST:event_jMenuTerEngListarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -4991,6 +5021,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel133;
     private javax.swing.JLabel jLabel134;
     private javax.swing.JLabel jLabel135;
+    private javax.swing.JLabel jLabel136;
+    private javax.swing.JLabel jLabel137;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
