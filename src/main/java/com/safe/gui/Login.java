@@ -18,9 +18,10 @@ public class Login extends javax.swing.JFrame {
     
     private final Main main;
     private final TokenManager token;
-    private boolean debug = false;
-    private String dbgUsername = "";
-    private String dbgUserRole = "";
+    private boolean impersonate = false;
+    private String impersonateUsername = "";
+    private String impersonateUserRole = "";
+    private static final String SHA256KEY = "19d3d93ff8f7331ded0923f780dda4e81c8765c08abd924264b1a80f491ba243";
     /**
      * Creates new form login
      * @param args
@@ -33,9 +34,9 @@ public class Login extends javax.swing.JFrame {
         roleMap.put("ROLE_ENGINEER", "Ingeniero");
         String domain = args[0];
         String hash = DigestUtils.sha256Hex(args[2]);
-        debug = args[1].equals("debug") && hash.equals("19d3d93ff8f7331ded0923f780dda4e81c8765c08abd924264b1a80f491ba243");
-        dbgUsername = args[3];
-        dbgUserRole = args[4];
+        impersonate = args[1].equals("impersonate") && hash.equals(SHA256KEY);
+        impersonateUsername = args[3];
+        impersonateUserRole = args[4];
         token = new TokenManager(roleMap, domain);
         
         WindowComponenet.centerWindow(this);
@@ -167,10 +168,10 @@ public class Login extends javax.swing.JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         jLabelMessage.setText(" ");
-        String user = debug ? dbgUsername : jTextUserField.getText();
+        String user = impersonate ? impersonateUsername : jTextUserField.getText();
         String password = String.valueOf(jPasswordField.getPassword());
         token.getSuccessAuthentication(user, password);
-        if(debug) token.authenticateDebug(dbgUserRole);
+        if(impersonate) token.authenticateDebug(impersonateUserRole);
         if(token.isAuthenticated()){
             main.signin();
         } else {
@@ -214,11 +215,11 @@ public class Login extends javax.swing.JFrame {
             defaults[0] = args[0];
         } catch (java.lang.ArrayIndexOutOfBoundsException e){}
         
-        try { //debug mode
+        try { //impersonate mode
             defaults[1] = args[1];
         } catch (java.lang.ArrayIndexOutOfBoundsException e){}
         
-        try { // debug key
+        try { // impersonate key
             defaults[2] = args[2];
         } catch (java.lang.ArrayIndexOutOfBoundsException e){}
         
