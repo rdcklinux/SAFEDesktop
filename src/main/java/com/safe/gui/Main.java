@@ -145,6 +145,7 @@ public class Main extends javax.swing.JFrame {
                     jButton6.setName(String.valueOf(cliente.getIdcliente()));
                     jButton8.setName(String.valueOf(cliente.getIdcliente()));
                     jButton8.setEnabled(true);
+                    jLabelClienteTitle.setText("Editar empresa");
                     changePanel(clienteForm);
                 }
             }
@@ -180,7 +181,7 @@ public class Main extends javax.swing.JFrame {
                         jButton10.setName(usuario.getRunusuario());
                         jButton12.setName(usuario.getRunusuario());
                         jButton12.setEnabled(true);
-                        jLabelUsuarioTitle.setText("Editar Usuario");
+                        jLabelUsuarioTitle.setText("Editar usuario");
                         changePanel(usuarioForm);
                     
                 }
@@ -204,6 +205,7 @@ public class Main extends javax.swing.JFrame {
                         jButton17.setName(String.valueOf(tipo.getIdtipocap()));
                         jButton19.setName(String.valueOf(tipo.getIdtipocap()));
                         jButton19.setEnabled(true);
+                        jLabelTipoCapacitacionTitle.setText("Editar tipo de capacitación");
                         changePanel(tipoCapacitacionForm);
                 }
             }
@@ -225,6 +227,7 @@ public class Main extends javax.swing.JFrame {
                         jButton46.setName(String.valueOf(tipo.getIdtipoexam()));
                         jButton48.setName(String.valueOf(tipo.getIdtipoexam()));
                         jButton48.setEnabled(true);
+                        jLabelTipoExamenTitle.setText("Editar tipo de examen");
                         changePanel(tipoExamenForm);
                 }
             }
@@ -1112,7 +1115,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabelClienteTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabelClienteTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelClienteTitle.setText("Creación de empresa");
+        jLabelClienteTitle.setText("Crear empresa");
 
         jLabel19.setText("Razón Social");
 
@@ -1380,7 +1383,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabelUsuarioTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabelUsuarioTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelUsuarioTitle.setText("Creacion de usuario");
+        jLabelUsuarioTitle.setText("Crear usuario");
 
         jLabel32.setText("RUN");
 
@@ -1639,7 +1642,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabelTipoCapacitacionTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabelTipoCapacitacionTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTipoCapacitacionTitle.setText("Creacion de tipo de capacitación");
+        jLabelTipoCapacitacionTitle.setText("Crear tipo de capacitación");
 
         jLabel55.setText("Nombre");
 
@@ -2887,7 +2890,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabelTipoExamenTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabelTipoExamenTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTipoExamenTitle.setText("Creacion de tipo de examen");
+        jLabelTipoExamenTitle.setText("Crear tipo de examen");
 
         jLabel134.setText("Nombre");
 
@@ -4187,6 +4190,7 @@ public class Main extends javax.swing.JFrame {
         jButton8.setEnabled(false);
         jButton6.setName(null);
         jButton8.setName(null);
+        jLabelClienteTitle.setText("Crear empresa");
         changePanel(clienteForm);
     }//GEN-LAST:event_jMenuEmpCrearActionPerformed
 
@@ -4334,8 +4338,9 @@ public class Main extends javax.swing.JFrame {
         long idcliente = clienteService.save(cliente);
         jButton6.setName(String.valueOf(idcliente));
         jButton8.setName(String.valueOf(idcliente));
-        jLabelClienteTitle.setText("Editar Empresa");
+        jLabelClienteTitle.setText("Editar empresa");
         jButton8.setEnabled(true);
+        JOptionPane.showMessageDialog(null, "Empresa se ha guardado correctamente.");
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -4393,8 +4398,9 @@ public class Main extends javax.swing.JFrame {
         usuarioService.save(usuario);
         jButton10.setName(usuario.getRunusuario());
         jButton12.setName(usuario.getRunusuario());
-        jLabelUsuarioTitle.setText("Editar Usuario");
+        jLabelUsuarioTitle.setText("Editar usuario");
         jButton12.setEnabled(true);
+        JOptionPane.showMessageDialog(null, "Usuario se ha guardado correctamente.");
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
@@ -4453,7 +4459,7 @@ public class Main extends javax.swing.JFrame {
         jButton12.setEnabled(false);
         jButton10.setName(null);
         jButton10.setName(null);
-        jLabelUsuarioTitle.setText("Crear Usuario");
+        jLabelUsuarioTitle.setText("Crear usuario");
         changePanel(usuarioForm);
     }//GEN-LAST:event_jMenuUsrCrearActionPerformed
 
@@ -4483,7 +4489,7 @@ public class Main extends javax.swing.JFrame {
             public boolean include(Entry entry) {
               if(entry.getValue(0) == null) return false;
               String r = (String) entry.getValue(0);
-              return r.contains(nombre) || nombre.equals("");
+              return r.toLowerCase().contains(nombre.toLowerCase()) || nombre.equals("");
             }
         };
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTable6.getModel());
@@ -4522,8 +4528,9 @@ public class Main extends javax.swing.JFrame {
         long id = tipoCapacitacionService.save(tipo);
         jButton17.setName(String.valueOf(id));
         jButton19.setName(String.valueOf(id));
-        jLabelTipoCapacitacionTitle.setText("Editar tipo capacitación");
+        jLabelTipoCapacitacionTitle.setText("Editar tipo de capacitación");
         jButton19.setEnabled(true);
+        JOptionPane.showMessageDialog(null, "Tipo de capacitación se ha guardado correctamente.");
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -4534,7 +4541,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // Eliminar capacitacion
-        int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea eliminar esta capacitación?","Eliminar",JOptionPane.YES_NO_OPTION);
+        int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea eliminar este tipo de capacitación?","Eliminar",JOptionPane.YES_NO_OPTION);
         if(dialogResult == JOptionPane.YES_OPTION){
             if(jButton19.getName() != null && jButton19.getName().length() > 0) {
                 tipoCapacitacionService.delete(Long.parseLong(jButton19.getName()));
@@ -4552,6 +4559,7 @@ public class Main extends javax.swing.JFrame {
         jButton19.setEnabled(false);
         jButton19.setName(null);
         jButton17.setName(null);
+        jLabelTipoCapacitacionTitle.setText("Crear tipo de capacitación");
         changePanel(tipoCapacitacionForm);
     }//GEN-LAST:event_jMenuTipoCapCrearActionPerformed
 
@@ -4721,11 +4729,24 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton43ActionPerformed
 
     private void jButton45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton45ActionPerformed
-        // TODO add your handling code here:
+        // buscar tipo examen
+        String nombre = jTextField40.getText();
+        jTable21.setRowSorter(null);
+        RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
+            @Override
+            public boolean include(Entry entry) {
+              if(entry.getValue(0) == null) return false;
+              String r = (String) entry.getValue(0);
+              return r.toLowerCase().contains(nombre.toLowerCase()) || nombre.equals("");
+            }
+        };
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTable21.getModel());
+        sorter.setRowFilter(filter);
+        jTable21.setRowSorter(sorter);
     }//GEN-LAST:event_jButton45ActionPerformed
 
     private void jButton46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton46ActionPerformed
-        // crear o guardar tipo examen
+        // guardar tipo examen
         TipoExamen tipo = new TipoExamen();
         if(jButton46.getName() != null && jButton46.getName().length() > 0) {
             tipo = (TipoExamen)selectedEntity;
@@ -4737,8 +4758,9 @@ public class Main extends javax.swing.JFrame {
         long id = tipoExamenService.save(tipo);
         jButton46.setName(String.valueOf(id));
         jButton48.setName(String.valueOf(id));
-        jLabelTipoExamenTitle.setText("Editar tipo examen");
+        jLabelTipoExamenTitle.setText("Editar tipo de examen");
         jButton48.setEnabled(true);
+        JOptionPane.showMessageDialog(null, "Tipo de examen se ha guardado correctamente.");
     }//GEN-LAST:event_jButton46ActionPerformed
 
     private void jButton47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton47ActionPerformed
@@ -4780,6 +4802,13 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuExmCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExmCrearActionPerformed
         // Nuevo tipo examen
+        jTextField41.setText("");
+        jComboBox18.setSelectedIndex(0);
+        jButton48.setEnabled(false);
+        jButton48.setName(null);
+        jButton46.setName(null);
+        
+        jLabelTipoExamenTitle.setText("Crear tipo de examen");
         changePanel(tipoExamenForm);
     }//GEN-LAST:event_jMenuExmCrearActionPerformed
 

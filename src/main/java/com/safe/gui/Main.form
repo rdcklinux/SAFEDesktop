@@ -590,7 +590,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Creaci&#xf3;n de empresa"/>
+            <Property name="text" type="java.lang.String" value="Crear empresa"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel19">
@@ -1048,7 +1048,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Creacion de usuario"/>
+            <Property name="text" type="java.lang.String" value="Crear usuario"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel32">
@@ -1386,7 +1386,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Creacion de tipo de capacitaci&#xf3;n"/>
+            <Property name="text" type="java.lang.String" value="Crear tipo de capacitaci&#xf3;n"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel55">
@@ -3729,7 +3729,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Creacion de tipo de examen"/>
+            <Property name="text" type="java.lang.String" value="Crear tipo de examen"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel134">
