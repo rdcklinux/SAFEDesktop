@@ -41,7 +41,7 @@ public class TokenManager {
                 this.role = "ROLE_SUPERVISOR";
                 break;
             case 3:
-                this.role = "ROLE_ENGINER";
+                this.role = "ROLE_ENGINEER";
                 break;
             default:
                 this.role = null;

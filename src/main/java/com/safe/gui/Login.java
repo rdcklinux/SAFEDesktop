@@ -30,7 +30,7 @@ public class Login extends javax.swing.JFrame {
         HashMap<String, String> roleMap = new HashMap<String, String>();
         roleMap.put("ROLE_ADMIN", "Administrador");
         roleMap.put("ROLE_SUPERVISOR", "Supervisor");
-        roleMap.put("ROLE_ENGINER", "Ingeniero");
+        roleMap.put("ROLE_ENGINEER", "Ingeniero");
         String domain = args[0];
         String hash = DigestUtils.sha256Hex(args[2]);
         debug = args[1].equals("debug") && hash.equals("19d3d93ff8f7331ded0923f780dda4e81c8765c08abd924264b1a80f491ba243");

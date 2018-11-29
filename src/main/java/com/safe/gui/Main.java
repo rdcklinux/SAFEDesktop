@@ -110,7 +110,7 @@ public class Main extends javax.swing.JFrame {
                     jLabelRut.setText(cliente.getRutcliente());
                     jLabelTipoVisita.setText(SolicitudService.TIPOS[(int)solicitud.getTipovisitteridtipovister()]);
                     jLabelDireccionVisita.setText(solicitud.getDireccionvisita());                        
-                    changePanel(jInternalFrame3);
+                    changePanel(evaluacionForm);
                 }else if(col == 7){                        
                     String url =jTable7.getValueAt(row, col).toString();
                     openWebUrl(url);
@@ -273,7 +273,7 @@ public class Main extends javax.swing.JFrame {
             break;            
             case "ROLE_SUPERVISOR": currentMenu = jMenuSupervisor;
             break;
-            case "ROLE_ENGINER": currentMenu =jMenuEnginer;
+            case "ROLE_ENGINEER": currentMenu =jMenuEngineer;
             break;
         }
         jMenuProfile.setText(token.getUser().getFullName());
@@ -365,19 +365,6 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuSupervisor = new javax.swing.JMenuBar();
-        jMenuTerreno = new javax.swing.JMenu();
-        jMenuTerListar = new javax.swing.JMenuItem();
-        jMenuTerCrear = new javax.swing.JMenuItem();
-        jMenuPlanCap = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuPlanSalud = new javax.swing.JMenu();
-        jMenuExpositor = new javax.swing.JMenu();
-        jMenuMedico = new javax.swing.JMenu();
-        jMenuMedListar1 = new javax.swing.JMenuItem();
-        jMenuMedEditar1 = new javax.swing.JMenuItem();
-        jMenuCal = new javax.swing.JMenu();
         jMenuAdmin = new javax.swing.JMenuBar();
         jMenuEmpresa = new javax.swing.JMenu();
         jMenuEmpListar = new javax.swing.JMenuItem();
@@ -391,7 +378,25 @@ public class Main extends javax.swing.JFrame {
         jMenuExamen = new javax.swing.JMenu();
         jMenuExmListar = new javax.swing.JMenuItem();
         jMenuExmCrear = new javax.swing.JMenuItem();
-        jMenuEnginer = new javax.swing.JMenuBar();
+        jMenuSupervisor = new javax.swing.JMenuBar();
+        jMenuTerreno = new javax.swing.JMenu();
+        jMenuTerListar = new javax.swing.JMenuItem();
+        jMenuTerCrear = new javax.swing.JMenuItem();
+        jMenuPlanCap = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuPlanSalud = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuExpositor = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuMedico = new javax.swing.JMenu();
+        jMenuMedListar1 = new javax.swing.JMenuItem();
+        jMenuMedCrear1 = new javax.swing.JMenuItem();
+        jMenuCal = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuEngineer = new javax.swing.JMenuBar();
         jMenuTerrenoEng = new javax.swing.JMenu();
         jMenuTerEngListar = new javax.swing.JMenuItem();
         clienteMain = new javax.swing.JInternalFrame();
@@ -479,7 +484,7 @@ public class Main extends javax.swing.JFrame {
         jButton19 = new javax.swing.JButton();
         jLabel64 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox<>();
-        jInternalFrame2 = new javax.swing.JInternalFrame();
+        evaluacionMain = new javax.swing.JInternalFrame();
         jComboBoxEstado2 = new javax.swing.JComboBox<>();
         jFormattedTextField4 = new javax.swing.JFormattedTextField();
         jFormattedTextField5 = new javax.swing.JFormattedTextField();
@@ -491,7 +496,7 @@ public class Main extends javax.swing.JFrame {
         jComboBoxTipo1 = new javax.swing.JComboBox<>();
         jScrollPane10 = new javax.swing.JScrollPane();
         jTable7 = new javax.swing.JTable();
-        jInternalFrame3 = new javax.swing.JInternalFrame();
+        evaluacionForm = new javax.swing.JInternalFrame();
         jLabel9 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -605,6 +610,22 @@ public class Main extends javax.swing.JFrame {
         jLabel77 = new javax.swing.JLabel();
         jScrollPane17 = new javax.swing.JScrollPane();
         jTable12 = new javax.swing.JTable();
+        tipoExamenMain = new javax.swing.JInternalFrame();
+        jButton45 = new javax.swing.JButton();
+        jLabel132 = new javax.swing.JLabel();
+        jLabel133 = new javax.swing.JLabel();
+        jScrollPane27 = new javax.swing.JScrollPane();
+        jTable21 = new javax.swing.JTable();
+        jTextField40 = new javax.swing.JTextField();
+        tipoExamenForm = new javax.swing.JInternalFrame();
+        jLabelTipoCapacitacionTitle1 = new javax.swing.JLabel();
+        jLabel134 = new javax.swing.JLabel();
+        jTextField41 = new javax.swing.JTextField();
+        jButton46 = new javax.swing.JButton();
+        jButton47 = new javax.swing.JButton();
+        jButton48 = new javax.swing.JButton();
+        jLabel135 = new javax.swing.JLabel();
+        jComboBox18 = new javax.swing.JComboBox<>();
         planSaludMain = new javax.swing.JInternalFrame();
         jFormattedTextField14 = new javax.swing.JFormattedTextField();
         jFormattedTextField15 = new javax.swing.JFormattedTextField();
@@ -749,75 +770,6 @@ public class Main extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabelProfile = new javax.swing.JLabel();
 
-        jMenuSupervisor.setOpaque(false);
-
-        jMenuTerreno.setText("Evaluación En Terreno");
-        jMenuTerreno.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuTerreno.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        jMenuTerListar.setText("Listar");
-        jMenuTerListar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuTerListarActionPerformed(evt);
-            }
-        });
-        jMenuTerreno.add(jMenuTerListar);
-
-        jMenuTerCrear.setText("Crear");
-        jMenuTerCrear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuTerCrearActionPerformed(evt);
-            }
-        });
-        jMenuTerreno.add(jMenuTerCrear);
-
-        jMenuSupervisor.add(jMenuTerreno);
-
-        jMenuPlanCap.setText("Plan Capacitación");
-        jMenuPlanCap.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        jMenuItem1.setText("Listar");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenuPlanCap.add(jMenuItem1);
-
-        jMenuItem2.setText("Crear");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenuPlanCap.add(jMenuItem2);
-
-        jMenuSupervisor.add(jMenuPlanCap);
-
-        jMenuPlanSalud.setText("Plan de Salud");
-        jMenuPlanSalud.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuSupervisor.add(jMenuPlanSalud);
-
-        jMenuExpositor.setText("Expositores");
-        jMenuExpositor.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuSupervisor.add(jMenuExpositor);
-
-        jMenuMedico.setText("Médicos");
-        jMenuMedico.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        jMenuMedListar1.setText("Listar");
-        jMenuMedico.add(jMenuMedListar1);
-
-        jMenuMedEditar1.setText("Editar");
-        jMenuMedEditar1.setEnabled(false);
-        jMenuMedico.add(jMenuMedEditar1);
-
-        jMenuSupervisor.add(jMenuMedico);
-
-        jMenuCal.setText("Calendario");
-        jMenuCal.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuSupervisor.add(jMenuCal);
-
         jMenuAdmin.setOpaque(false);
 
         jMenuEmpresa.setText("Empresas");
@@ -883,14 +835,145 @@ public class Main extends javax.swing.JFrame {
         jMenuExamen.setText("Exámenes");
 
         jMenuExmListar.setText("Listar");
+        jMenuExmListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuExmListarActionPerformed(evt);
+            }
+        });
         jMenuExamen.add(jMenuExmListar);
 
         jMenuExmCrear.setText("Crear");
+        jMenuExmCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuExmCrearActionPerformed(evt);
+            }
+        });
         jMenuExamen.add(jMenuExmCrear);
 
         jMenuAdmin.add(jMenuExamen);
 
-        jMenuEnginer.setOpaque(false);
+        jMenuSupervisor.setOpaque(false);
+
+        jMenuTerreno.setText("Evaluación En Terreno");
+        jMenuTerreno.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuTerreno.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jMenuTerListar.setText("Listar");
+        jMenuTerListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuTerListarActionPerformed(evt);
+            }
+        });
+        jMenuTerreno.add(jMenuTerListar);
+
+        jMenuTerCrear.setText("Crear");
+        jMenuTerCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuTerCrearActionPerformed(evt);
+            }
+        });
+        jMenuTerreno.add(jMenuTerCrear);
+
+        jMenuSupervisor.add(jMenuTerreno);
+
+        jMenuPlanCap.setText("Plan Capacitación");
+        jMenuPlanCap.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jMenuItem1.setText("Listar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenuPlanCap.add(jMenuItem1);
+
+        jMenuItem2.setText("Crear");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenuPlanCap.add(jMenuItem2);
+
+        jMenuSupervisor.add(jMenuPlanCap);
+
+        jMenuPlanSalud.setText("Plan de Salud");
+        jMenuPlanSalud.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jMenuItem3.setText("Listar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenuPlanSalud.add(jMenuItem3);
+
+        jMenuItem4.setText("Crear");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenuPlanSalud.add(jMenuItem4);
+
+        jMenuSupervisor.add(jMenuPlanSalud);
+
+        jMenuExpositor.setText("Expositores");
+        jMenuExpositor.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jMenuItem5.setText("Listar");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenuExpositor.add(jMenuItem5);
+
+        jMenuItem6.setText("Crear");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenuExpositor.add(jMenuItem6);
+
+        jMenuSupervisor.add(jMenuExpositor);
+
+        jMenuMedico.setText("Médicos");
+        jMenuMedico.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jMenuMedListar1.setText("Listar");
+        jMenuMedListar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuMedListar1ActionPerformed(evt);
+            }
+        });
+        jMenuMedico.add(jMenuMedListar1);
+
+        jMenuMedCrear1.setText("Crear");
+        jMenuMedCrear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuMedCrear1ActionPerformed(evt);
+            }
+        });
+        jMenuMedico.add(jMenuMedCrear1);
+
+        jMenuSupervisor.add(jMenuMedico);
+
+        jMenuCal.setText("Calendario");
+        jMenuCal.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jMenuItem7.setText("Ver");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenuCal.add(jMenuItem7);
+
+        jMenuSupervisor.add(jMenuCal);
+
+        jMenuEngineer.setOpaque(false);
 
         jMenuTerrenoEng.setText("Evaluaciones en Terreno");
         jMenuTerrenoEng.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -907,7 +990,7 @@ public class Main extends javax.swing.JFrame {
         });
         jMenuTerrenoEng.add(jMenuTerEngListar);
 
-        jMenuEnginer.add(jMenuTerrenoEng);
+        jMenuEngineer.add(jMenuTerrenoEng);
 
         clienteMain.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         clienteMain.setClosable(true);
@@ -1004,7 +1087,8 @@ public class Main extends javax.swing.JFrame {
         clienteForm.setVisible(true);
 
         jLabelClienteTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabelClienteTitle.setText("Creacion de empresa");
+        jLabelClienteTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelClienteTitle.setText("Creación de empresa");
 
         jLabel19.setText("Razón Social");
 
@@ -1058,13 +1142,12 @@ public class Main extends javax.swing.JFrame {
         clienteForm.getContentPane().setLayout(clienteFormLayout);
         clienteFormLayout.setHorizontalGroup(
             clienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(clienteFormLayout.createSequentialGroup()
-                .addGap(274, 274, 274)
-                .addComponent(jLabelClienteTitle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(clienteFormLayout.createSequentialGroup()
-                .addGroup(clienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, clienteFormLayout.createSequentialGroup()
+                .addGroup(clienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(clienteFormLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelClienteTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, clienteFormLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(clienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(clienteFormLayout.createSequentialGroup()
@@ -1107,7 +1190,7 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(jLabel27)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, clienteFormLayout.createSequentialGroup()
+                    .addGroup(clienteFormLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1272,6 +1355,7 @@ public class Main extends javax.swing.JFrame {
         usuarioForm.setVisible(true);
 
         jLabelUsuarioTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabelUsuarioTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelUsuarioTitle.setText("Creacion de usuario");
 
         jLabel32.setText("RUN");
@@ -1388,12 +1472,9 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton10))
-                    .addGroup(usuarioFormLayout.createSequentialGroup()
-                        .addGap(274, 274, 274)
-                        .addComponent(jLabelUsuarioTitle)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton10)))
                 .addContainerGap())
+            .addComponent(jLabelUsuarioTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         usuarioFormLayout.setVerticalGroup(
             usuarioFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1527,6 +1608,7 @@ public class Main extends javax.swing.JFrame {
         tipoCapacitacionForm.setVisible(true);
 
         jLabelTipoCapacitacionTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabelTipoCapacitacionTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTipoCapacitacionTitle.setText("Creacion de tipo de capacitación");
 
         jLabel55.setText("Nombre");
@@ -1580,10 +1662,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton17)
                 .addContainerGap())
-            .addGroup(tipoCapacitacionFormLayout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addComponent(jLabelTipoCapacitacionTitle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabelTipoCapacitacionTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         tipoCapacitacionFormLayout.setVerticalGroup(
             tipoCapacitacionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1605,10 +1684,10 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jInternalFrame2.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        jInternalFrame2.setClosable(true);
-        jInternalFrame2.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-        jInternalFrame2.setVisible(true);
+        evaluacionMain.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        evaluacionMain.setClosable(true);
+        evaluacionMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        evaluacionMain.setVisible(true);
 
         jComboBoxEstado2.setModel(new javax.swing.DefaultComboBoxModel(com.safe.service.SolicitudService.ESTADOS));
         jComboBoxEstado2.addActionListener(new java.awt.event.ActionListener() {
@@ -1677,27 +1756,27 @@ public class Main extends javax.swing.JFrame {
             jTable7.getColumnModel().getColumn(7).setHeaderValue("PDF");
         }
 
-        javax.swing.GroupLayout jInternalFrame2Layout = new javax.swing.GroupLayout(jInternalFrame2.getContentPane());
-        jInternalFrame2.getContentPane().setLayout(jInternalFrame2Layout);
-        jInternalFrame2Layout.setHorizontalGroup(
-            jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jInternalFrame2Layout.createSequentialGroup()
+        javax.swing.GroupLayout evaluacionMainLayout = new javax.swing.GroupLayout(evaluacionMain.getContentPane());
+        evaluacionMain.getContentPane().setLayout(evaluacionMainLayout);
+        evaluacionMainLayout.setHorizontalGroup(
+            evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(evaluacionMainLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane10)
                     .addComponent(jLabel44, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jInternalFrame2Layout.createSequentialGroup()
+                    .addGroup(evaluacionMainLayout.createSequentialGroup()
                         .addComponent(jLabel45)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxTipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jComboBoxEstado2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jInternalFrame2Layout.createSequentialGroup()
+                            .addGroup(evaluacionMainLayout.createSequentialGroup()
                                 .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1705,19 +1784,19 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(jButton13)))))
                 .addContainerGap())
         );
-        jInternalFrame2Layout.setVerticalGroup(
-            jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jInternalFrame2Layout.createSequentialGroup()
+        evaluacionMainLayout.setVerticalGroup(
+            evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(evaluacionMainLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel44)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton13)
                     .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel41))
                 .addGap(18, 18, 18)
-                .addGroup(jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxEstado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel37)
                     .addComponent(jLabel45)
@@ -1727,10 +1806,10 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(80, Short.MAX_VALUE))
         );
 
-        jInternalFrame3.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        jInternalFrame3.setClosable(true);
-        jInternalFrame3.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-        jInternalFrame3.setVisible(true);
+        evaluacionForm.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        evaluacionForm.setClosable(true);
+        evaluacionForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        evaluacionForm.setVisible(true);
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -2011,20 +2090,20 @@ public class Main extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Observaciones Ingeniero", jPanel4);
 
-        javax.swing.GroupLayout jInternalFrame3Layout = new javax.swing.GroupLayout(jInternalFrame3.getContentPane());
-        jInternalFrame3.getContentPane().setLayout(jInternalFrame3Layout);
-        jInternalFrame3Layout.setHorizontalGroup(
-            jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jInternalFrame3Layout.createSequentialGroup()
+        javax.swing.GroupLayout evaluacionFormLayout = new javax.swing.GroupLayout(evaluacionForm.getContentPane());
+        evaluacionForm.getContentPane().setLayout(evaluacionFormLayout);
+        evaluacionFormLayout.setHorizontalGroup(
+            evaluacionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(evaluacionFormLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(evaluacionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
-        jInternalFrame3Layout.setVerticalGroup(
-            jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jInternalFrame3Layout.createSequentialGroup()
+        evaluacionFormLayout.setVerticalGroup(
+            evaluacionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(evaluacionFormLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2687,6 +2766,169 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, planCapacitacionFormLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        tipoExamenMain.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        tipoExamenMain.setClosable(true);
+        tipoExamenMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        tipoExamenMain.setTitle("Capacitaciones");
+        tipoExamenMain.setOpaque(false);
+        tipoExamenMain.setVisible(true);
+
+        jButton45.setText("Buscar");
+        jButton45.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton45ActionPerformed(evt);
+            }
+        });
+
+        jLabel132.setText("Nombre tipo examen");
+        jLabel132.setToolTipText("");
+
+        jLabel133.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel133.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel133.setText("Listado de Tipos de Examen");
+        jLabel133.setToolTipText("");
+
+        jTable21.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Estado", "Editar"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable21.getTableHeader().setReorderingAllowed(false);
+        jScrollPane27.setViewportView(jTable21);
+        jTable21.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        javax.swing.GroupLayout tipoExamenMainLayout = new javax.swing.GroupLayout(tipoExamenMain.getContentPane());
+        tipoExamenMain.getContentPane().setLayout(tipoExamenMainLayout);
+        tipoExamenMainLayout.setHorizontalGroup(
+            tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tipoExamenMainLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel132, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField40, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton45)
+                .addGap(8, 8, 8))
+            .addGroup(tipoExamenMainLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel133, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane27, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        tipoExamenMainLayout.setVerticalGroup(
+            tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tipoExamenMainLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel133)
+                .addGap(18, 18, 18)
+                .addGroup(tipoExamenMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel132)
+                    .addComponent(jButton45)
+                    .addComponent(jTextField40, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane27, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+
+        tipoExamenForm.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        tipoExamenForm.setVisible(true);
+
+        jLabelTipoCapacitacionTitle1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabelTipoCapacitacionTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTipoCapacitacionTitle1.setText("Creacion de tipo de examen");
+
+        jLabel134.setText("Nombre");
+
+        jButton46.setText("Guardar");
+        jButton46.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton46ActionPerformed(evt);
+            }
+        });
+
+        jButton47.setText("Cancelar");
+        jButton47.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton47ActionPerformed(evt);
+            }
+        });
+
+        jButton48.setText("Eliminar");
+        jButton48.setEnabled(false);
+        jButton48.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton48ActionPerformed(evt);
+            }
+        });
+
+        jLabel135.setText("Estado");
+
+        jComboBox18.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.TipoCapacitacionService.ESTADOS, 1, 3)));
+
+        javax.swing.GroupLayout tipoExamenFormLayout = new javax.swing.GroupLayout(tipoExamenForm.getContentPane());
+        tipoExamenForm.getContentPane().setLayout(tipoExamenFormLayout);
+        tipoExamenFormLayout.setHorizontalGroup(
+            tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tipoExamenFormLayout.createSequentialGroup()
+                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tipoExamenFormLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel134)
+                            .addComponent(jLabel135))
+                        .addGap(92, 92, 92)
+                        .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField41)
+                            .addComponent(jComboBox18, 0, 175, Short.MAX_VALUE)))
+                    .addGroup(tipoExamenFormLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton48)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton46)
+                .addContainerGap())
+            .addComponent(jLabelTipoCapacitacionTitle1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        tipoExamenFormLayout.setVerticalGroup(
+            tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tipoExamenFormLayout.createSequentialGroup()
+                .addComponent(jLabelTipoCapacitacionTitle1)
+                .addGap(23, 23, 23)
+                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel134)
+                    .addComponent(jTextField41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel135)
+                    .addComponent(jComboBox18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton46)
+                    .addComponent(jButton47)
+                    .addComponent(jButton48))
                 .addContainerGap())
         );
 
@@ -3391,6 +3633,7 @@ public class Main extends javax.swing.JFrame {
         expositorForm.setVisible(true);
 
         jLabelUsuarioTitle1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabelUsuarioTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelUsuarioTitle1.setText("Creación de expositor");
 
         jLabel113.setText("RUN");
@@ -3463,12 +3706,9 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton38)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton37))
-                    .addGroup(expositorFormLayout.createSequentialGroup()
-                        .addGap(274, 274, 274)
-                        .addComponent(jLabelUsuarioTitle1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton37)))
                 .addContainerGap())
+            .addComponent(jLabelUsuarioTitle1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         expositorFormLayout.setVerticalGroup(
             expositorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3615,6 +3855,7 @@ public class Main extends javax.swing.JFrame {
         medicoForm.setVisible(true);
 
         jLabelUsuarioTitle2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabelUsuarioTitle2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelUsuarioTitle2.setText("Creación de médico");
 
         jLabel117.setText("RUN");
@@ -3673,7 +3914,7 @@ public class Main extends javax.swing.JFrame {
                             .addGroup(medicoFormLayout.createSequentialGroup()
                                 .addComponent(jLabel125)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField38)))
+                                .addComponent(jTextField38, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addGroup(medicoFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(medicoFormLayout.createSequentialGroup()
@@ -3695,12 +3936,9 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton42)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton41))
-                    .addGroup(medicoFormLayout.createSequentialGroup()
-                        .addGap(274, 274, 274)
-                        .addComponent(jLabelUsuarioTitle2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton41)))
                 .addContainerGap())
+            .addComponent(jLabelUsuarioTitle2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         medicoFormLayout.setVerticalGroup(
             medicoFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3935,11 +4173,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuTerCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerCrearActionPerformed
-        // TODO add your handling code here:
+        // Nueva evaluación ????
+        changePanel(evaluacionForm);
     }//GEN-LAST:event_jMenuTerCrearActionPerformed
 
     private void jMenuTerListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerListarActionPerformed
-        changePanel(jInternalFrame2);
+        changePanel(evaluacionMain);
     }//GEN-LAST:event_jMenuTerListarActionPerformed
 
     private void jMenuTerrenoEngMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuTerrenoEngMouseClicked
@@ -3947,7 +4186,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuTerrenoEngMouseClicked
 
     private void jMenuTerEngListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerEngListarActionPerformed
-        changePanel(jInternalFrame2);
+        changePanel(evaluacionMain);
         SolicitudService terreno = new SolicitudService(domain);
         SoliEvalTer[] solicitudes = terreno.getCollection();
         if(solicitudes != null ){
@@ -4450,10 +4689,73 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton43ActionPerformed
 
+    private void jButton45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton45ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton45ActionPerformed
+
+    private void jButton46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton46ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton46ActionPerformed
+
+    private void jButton47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton47ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton47ActionPerformed
+
+    private void jButton48ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton48ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton48ActionPerformed
+
+    private void jMenuExmListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExmListarActionPerformed
+        // Listado de exámenes
+        changePanel(tipoExamenMain);
+    }//GEN-LAST:event_jMenuExmListarActionPerformed
+
+    private void jMenuExmCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExmCrearActionPerformed
+        // Nuevo tipo examen
+        changePanel(tipoExamenForm);
+    }//GEN-LAST:event_jMenuExmCrearActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // listar planes de salud
+        changePanel(planSaludMain);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // crear plan de salud
+        changePanel(planSaludForm);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // listado de expositores
+        changePanel(expositorMain);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // crear expositor
+        changePanel(expositorForm);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuMedCrear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMedCrear1ActionPerformed
+        // crear médico
+        changePanel(medicoForm);
+    }//GEN-LAST:event_jMenuMedCrear1ActionPerformed
+
+    private void jMenuMedListar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMedListar1ActionPerformed
+        // listado de médicos
+        changePanel(medicoMain);
+    }//GEN-LAST:event_jMenuMedListar1ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // mostrar calendario
+        changePanel(calendarMain);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame calendarMain;
     private javax.swing.JInternalFrame clienteForm;
     private javax.swing.JInternalFrame clienteMain;
+    private javax.swing.JInternalFrame evaluacionForm;
+    private javax.swing.JInternalFrame evaluacionMain;
     private javax.swing.JInternalFrame expositorForm;
     private javax.swing.JInternalFrame expositorMain;
     private javax.swing.JButton jButton1;
@@ -4495,6 +4797,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton42;
     private javax.swing.JButton jButton43;
     private javax.swing.JButton jButton44;
+    private javax.swing.JButton jButton45;
+    private javax.swing.JButton jButton46;
+    private javax.swing.JButton jButton47;
+    private javax.swing.JButton jButton48;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -4510,6 +4816,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox15;
     private javax.swing.JComboBox<String> jComboBox16;
     private javax.swing.JComboBox<String> jComboBox17;
+    private javax.swing.JComboBox<String> jComboBox18;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
@@ -4542,8 +4849,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextField7;
     private javax.swing.JFormattedTextField jFormattedTextField8;
     private javax.swing.JFormattedTextField jFormattedTextField9;
-    private javax.swing.JInternalFrame jInternalFrame2;
-    private javax.swing.JInternalFrame jInternalFrame3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel100;
@@ -4581,6 +4886,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel130;
     private javax.swing.JLabel jLabel131;
+    private javax.swing.JLabel jLabel132;
+    private javax.swing.JLabel jLabel133;
+    private javax.swing.JLabel jLabel134;
+    private javax.swing.JLabel jLabel135;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -4680,6 +4989,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelProfile;
     private javax.swing.JLabel jLabelRut;
     private javax.swing.JLabel jLabelTipoCapacitacionTitle;
+    private javax.swing.JLabel jLabelTipoCapacitacionTitle1;
     private javax.swing.JLabel jLabelTipoVisita;
     private javax.swing.JLabel jLabelUsuarioTitle;
     private javax.swing.JLabel jLabelUsuarioTitle1;
@@ -4692,14 +5002,19 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuEmpCrear;
     private javax.swing.JMenuItem jMenuEmpListar;
     private javax.swing.JMenu jMenuEmpresa;
-    private javax.swing.JMenuBar jMenuEnginer;
+    private javax.swing.JMenuBar jMenuEngineer;
     private javax.swing.JMenu jMenuExamen;
     private javax.swing.JMenuItem jMenuExmCrear;
     private javax.swing.JMenuItem jMenuExmListar;
     private javax.swing.JMenu jMenuExpositor;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuMedEditar1;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuMedCrear1;
     private javax.swing.JMenuItem jMenuMedListar1;
     private javax.swing.JMenu jMenuMedico;
     private javax.swing.JMenu jMenuPlanCap;
@@ -4747,6 +5062,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane24;
     private javax.swing.JScrollPane jScrollPane25;
     private javax.swing.JScrollPane jScrollPane26;
+    private javax.swing.JScrollPane jScrollPane27;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
@@ -4770,6 +5086,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable jTable19;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable20;
+    private javax.swing.JTable jTable21;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
@@ -4817,6 +5134,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField38;
     private javax.swing.JTextField jTextField39;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField40;
+    private javax.swing.JTextField jTextField41;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
@@ -4832,6 +5151,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JInternalFrame planSaludMain;
     private javax.swing.JInternalFrame tipoCapacitacionForm;
     private javax.swing.JInternalFrame tipoCapacitacionMain;
+    private javax.swing.JInternalFrame tipoExamenForm;
+    private javax.swing.JInternalFrame tipoExamenMain;
     private javax.swing.JInternalFrame usuarioForm;
     private javax.swing.JInternalFrame usuarioMain;
     // End of variables declaration//GEN-END:variables

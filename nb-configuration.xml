@@ -15,4 +15,12 @@ Any value defined here will override the pom.xml file value but is only applicab
 -->
         <org-netbeans-modules-javascript2-requirejs.enabled>true</org-netbeans-modules-javascript2-requirejs.enabled>
     </properties>
+    <config-data xmlns="http://www.netbeans.org/ns/maven-config-data/1">
+        <configurations>
+            <configuration id="NORMAL" profiles=""/>
+            <configuration id="ROLE_ADMIN" profiles=""/>
+            <configuration id="ROLE_SUPERVISOR" profiles=""/>
+            <configuration id="ROLE_ENGINEER" profiles=""/>
+        </configurations>
+    </config-data>
 </project-shared-configuration>
