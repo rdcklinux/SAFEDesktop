@@ -23,7 +23,7 @@ public class TipoExamenDAL extends DAL {
     
     public TipoExamen byId(int id) throws UnirestException{
         
-        String url = getURI("capacitacion/readOneCapacitacion/%d");
+        String url = getURI("tipoExa/readOneTipoExa/%d");
         HttpResponse<TipoExamen[]> response = Unirest.get(String.format(url, id)).asObject(TipoExamen[].class);
         TipoExamen[] tipos = response.getBody();
         
@@ -32,7 +32,7 @@ public class TipoExamenDAL extends DAL {
     }
     
     public TipoExamen[] all() throws UnirestException{
-        String url = getURI("capacitacion/getAllCapacitacion/");
+        String url = getURI("tipoExa/getAllTipoExa/");
         HttpResponse<TipoExamen[]> response = Unirest.get(String.format(url)).asObject(TipoExamen[].class);
         TipoExamen[] tipos = response.getBody();
                 
@@ -40,18 +40,18 @@ public class TipoExamenDAL extends DAL {
     }
     
     public long create(TipoExamen tipo) throws UnirestException {
-        String url = getURI("capacitacion/createCapacitacionSP");
-        HttpResponse<String> result = Unirest.post(url)
+        String url = getURI("tipoExa/createTipoExaSP");
+        HttpResponse<TipoExamen[]> tipos = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(tipo).asString();
+        .body(tipo).asObject(TipoExamen[].class);
         
-        //TODO: debe retornar un ID de cliente
-        return tipo.getIdtipoexam();
+        //TODO: debe retornar un ID
+        return tipos.getBody()[0].getIdtipoexam();
     }
     
     public long update(TipoExamen tipo) throws UnirestException {
-        String url = getURI("capacitacion/upCapacitacion");
+        String url = getURI("tipoExa/upTipoExa");
         HttpResponse<String> postResponse = Unirest.put(String.format(url))
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
@@ -62,7 +62,7 @@ public class TipoExamenDAL extends DAL {
     }
     
     public void delete(long id) throws UnirestException {
-        String url = getURI("capacitacion/deleteCapacitacion/%d/0");
+        String url = getURI("tipoExa/deleteTipoExa/%d/0");
         
         HttpResponse<String> postResponse = Unirest.put(String.format(url, id))
         .header("accept", "application/json")

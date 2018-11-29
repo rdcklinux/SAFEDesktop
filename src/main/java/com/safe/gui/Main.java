@@ -11,6 +11,7 @@ import com.safe.entity.PlanCapacitacion;
 import com.safe.gui.component.ButtonTableComponent;
 import com.safe.entity.SoliEvalTer;
 import com.safe.entity.TipoCapacitacion;
+import com.safe.entity.TipoExamen;
 import com.safe.entity.Usuario;
 import com.safe.gui.component.WindowComponenet;
 import com.safe.service.CapacitacionService;
@@ -20,6 +21,7 @@ import com.safe.service.PlanCapacitacionService;
 import com.safe.service.TokenManager;
 import com.safe.service.SessionManager;
 import com.safe.service.SolicitudService;
+import com.safe.service.TipoExamenService;
 import com.safe.service.UsuarioService;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -55,6 +57,7 @@ public class Main extends javax.swing.JFrame {
     private final ClienteService clienteService;
     private final UsuarioService usuarioService;
     private final TipoCapacitacionService tipoCapacitacionService;
+    private final TipoExamenService tipoExamenService;
     private final CapacitacionService capacitacionService;
     private final PlanCapacitacionService planCapacitacionService;
     
@@ -82,6 +85,7 @@ public class Main extends javax.swing.JFrame {
         clienteService = new ClienteService(this.domain);
         usuarioService = new UsuarioService(this.domain);
         tipoCapacitacionService = new TipoCapacitacionService(this.domain);
+        tipoExamenService = new TipoExamenService(this.domain);
         capacitacionService = new CapacitacionService(this.domain);
         planCapacitacionService = new PlanCapacitacionService(this.domain);
         int sessionTime;
@@ -173,8 +177,8 @@ public class Main extends javax.swing.JFrame {
                         jComboBox2.setSelectedIndex((int)usuario.getEstadousuario() - 1);
                         jComboBox3.setSelectedItem(usuario.getSexousuario());
                         
-                        jButton10.setName(String.valueOf(usuario.getIdusuario()));
-                        jButton12.setName(String.valueOf(usuario.getIdusuario()));
+                        jButton10.setName(usuario.getRunusuario());
+                        jButton12.setName(usuario.getRunusuario());
                         jButton12.setEnabled(true);
                         jLabelUsuarioTitle.setText("Editar Usuario");
                         changePanel(usuarioForm);
@@ -183,7 +187,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jTable5.getColumnModel().getColumn(7).setCellRenderer(new ButtonTableComponent("[+]"));
-        /* //TODO: esto es para tipo de capacitacion
+        
         jTable6.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -191,22 +195,42 @@ public class Main extends javax.swing.JFrame {
                 int col = jTable6.columnAtPoint(evt.getPoint());
                 if(col == 2){
                    
-                        Capacitacion capacitacion = (Capacitacion)jTable6.getValueAt(row, col);
-                        selectedEntity = capacitacion;
+                        TipoCapacitacion tipo = (TipoCapacitacion)jTable6.getValueAt(row, col);
+                        selectedEntity = tipo;
                         
-                        jTextField30.setText(capacitacion.getNombrecapacitacion());                        
-                        jComboBox5.setSelectedIndex((int)capacitacion.getEstadocapacitacion() - 1);
+                        jTextField30.setText(tipo.getDescripcap());                        
+                        jComboBox5.setSelectedIndex((int)tipo.getEstado()- 1);
                         
-                        jButton17.setName(String.valueOf(capacitacion.getIdcap()));
-                        jButton19.setName(String.valueOf(capacitacion.getIdcap()));
+                        jButton17.setName(String.valueOf(tipo.getIdtipocap()));
+                        jButton19.setName(String.valueOf(tipo.getIdtipocap()));
                         jButton19.setEnabled(true);
                         changePanel(tipoCapacitacionForm);
-                    
                 }
             }
         });
         jTable6.getColumnModel().getColumn(2).setCellRenderer(new ButtonTableComponent("[+]"));
-        */
+        
+        jTable21.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = jTable21.rowAtPoint(evt.getPoint());
+                int col = jTable21.columnAtPoint(evt.getPoint());
+                if(col == 2){
+                        TipoExamen tipo = (TipoExamen)jTable21.getValueAt(row, col);
+                        selectedEntity = tipo;
+                        
+                        jTextField41.setText(tipo.getDescrip_exam());                        
+                        jComboBox18.setSelectedIndex((int)tipo.getEstado()- 1);
+                        
+                        jButton46.setName(String.valueOf(tipo.getIdtipoexam()));
+                        jButton48.setName(String.valueOf(tipo.getIdtipoexam()));
+                        jButton48.setEnabled(true);
+                        changePanel(tipoExamenForm);
+                }
+            }
+        });
+        jTable21.getColumnModel().getColumn(2).setCellRenderer(new ButtonTableComponent("[+]"));
+        
         
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -372,9 +396,9 @@ public class Main extends javax.swing.JFrame {
         jMenuUsuario = new javax.swing.JMenu();
         jMenuUsrListar = new javax.swing.JMenuItem();
         jMenuUsrCrear = new javax.swing.JMenuItem();
-        jMenuCapacitacion = new javax.swing.JMenu();
-        jMenuCapListar = new javax.swing.JMenuItem();
-        jMenuCapCrear = new javax.swing.JMenuItem();
+        jMenuTipoCapacitacion = new javax.swing.JMenu();
+        jMenuTipoCapListar = new javax.swing.JMenuItem();
+        jMenuTipoCapCrear = new javax.swing.JMenuItem();
         jMenuExamen = new javax.swing.JMenu();
         jMenuExmListar = new javax.swing.JMenuItem();
         jMenuExmCrear = new javax.swing.JMenuItem();
@@ -618,7 +642,7 @@ public class Main extends javax.swing.JFrame {
         jTable21 = new javax.swing.JTable();
         jTextField40 = new javax.swing.JTextField();
         tipoExamenForm = new javax.swing.JInternalFrame();
-        jLabelTipoCapacitacionTitle1 = new javax.swing.JLabel();
+        jLabelTipoExamenTitle = new javax.swing.JLabel();
         jLabel134 = new javax.swing.JLabel();
         jTextField41 = new javax.swing.JTextField();
         jButton46 = new javax.swing.JButton();
@@ -812,25 +836,25 @@ public class Main extends javax.swing.JFrame {
 
         jMenuAdmin.add(jMenuUsuario);
 
-        jMenuCapacitacion.setText("Capacitaciones");
+        jMenuTipoCapacitacion.setText("Capacitaciones");
 
-        jMenuCapListar.setText("Listar");
-        jMenuCapListar.addActionListener(new java.awt.event.ActionListener() {
+        jMenuTipoCapListar.setText("Listar");
+        jMenuTipoCapListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuCapListarActionPerformed(evt);
+                jMenuTipoCapListarActionPerformed(evt);
             }
         });
-        jMenuCapacitacion.add(jMenuCapListar);
+        jMenuTipoCapacitacion.add(jMenuTipoCapListar);
 
-        jMenuCapCrear.setText("Crear");
-        jMenuCapCrear.addActionListener(new java.awt.event.ActionListener() {
+        jMenuTipoCapCrear.setText("Crear");
+        jMenuTipoCapCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuCapCrearActionPerformed(evt);
+                jMenuTipoCapCrearActionPerformed(evt);
             }
         });
-        jMenuCapacitacion.add(jMenuCapCrear);
+        jMenuTipoCapacitacion.add(jMenuTipoCapCrear);
 
-        jMenuAdmin.add(jMenuCapacitacion);
+        jMenuAdmin.add(jMenuTipoCapacitacion);
 
         jMenuExamen.setText("Exámenes");
 
@@ -1569,6 +1593,12 @@ public class Main extends javax.swing.JFrame {
         jTable6.getTableHeader().setReorderingAllowed(false);
         jScrollPane11.setViewportView(jTable6);
         jTable6.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        jTextField29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField29ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout tipoCapacitacionMainLayout = new javax.swing.GroupLayout(tipoCapacitacionMain.getContentPane());
         tipoCapacitacionMain.getContentPane().setLayout(tipoCapacitacionMainLayout);
@@ -2855,9 +2885,9 @@ public class Main extends javax.swing.JFrame {
         tipoExamenForm.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         tipoExamenForm.setVisible(true);
 
-        jLabelTipoCapacitacionTitle1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabelTipoCapacitacionTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTipoCapacitacionTitle1.setText("Creacion de tipo de examen");
+        jLabelTipoExamenTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabelTipoExamenTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTipoExamenTitle.setText("Creacion de tipo de examen");
 
         jLabel134.setText("Nombre");
 
@@ -2885,7 +2915,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel135.setText("Estado");
 
-        jComboBox18.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.TipoCapacitacionService.ESTADOS, 1, 3)));
+        jComboBox18.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.TipoExamenService.ESTADOS, 1, 3)));
 
         javax.swing.GroupLayout tipoExamenFormLayout = new javax.swing.GroupLayout(tipoExamenForm.getContentPane());
         tipoExamenForm.getContentPane().setLayout(tipoExamenFormLayout);
@@ -2910,12 +2940,12 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton46)
                 .addContainerGap())
-            .addComponent(jLabelTipoCapacitacionTitle1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelTipoExamenTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         tipoExamenFormLayout.setVerticalGroup(
             tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tipoExamenFormLayout.createSequentialGroup()
-                .addComponent(jLabelTipoCapacitacionTitle1)
+                .addComponent(jLabelTipoExamenTitle)
                 .addGap(23, 23, 23)
                 .addGroup(tipoExamenFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel134)
@@ -4358,10 +4388,11 @@ public class Main extends javax.swing.JFrame {
         usuario.setMailusuario(jTextField21.getText());
         usuario.setPerfilidperfil(jComboBox1.getSelectedIndex() + 1);
         usuario.setEstadousuario(jComboBox2.getSelectedIndex() + 1);
+        usuario.setClienteidcliente(1); //TODO: debe elegirse de un combobox
         
-        long id = usuarioService.save(usuario);
-        jButton10.setName(String.valueOf(id));
-        jButton12.setName(String.valueOf(id));
+        usuarioService.save(usuario);
+        jButton10.setName(usuario.getRunusuario());
+        jButton12.setName(usuario.getRunusuario());
         jLabelUsuarioTitle.setText("Editar Usuario");
         jButton12.setEnabled(true);
     }//GEN-LAST:event_jButton10ActionPerformed
@@ -4377,7 +4408,7 @@ public class Main extends javax.swing.JFrame {
         int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea eliminar este usuario?","Eliminar",JOptionPane.YES_NO_OPTION);
         if(dialogResult == JOptionPane.YES_OPTION){
             if(jButton12.getName() != null && jButton12.getName().length() > 0) {
-                usuarioService.delete(Long.parseLong(jButton12.getName()));
+                usuarioService.delete(jButton12.getName());
             }
             jButton12.setEnabled(false);
             usuarioForm.setVisible(false);
@@ -4460,45 +4491,45 @@ public class Main extends javax.swing.JFrame {
         jTable6.setRowSorter(sorter);
     }//GEN-LAST:event_jButton16ActionPerformed
 
-    private void jMenuCapListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCapListarActionPerformed
+    private void jMenuTipoCapListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTipoCapListarActionPerformed
         // listado de capacitaciones
-        Capacitacion[] capacitaciones = capacitacionService.getCollection();
-        if(capacitaciones != null ){
+        TipoCapacitacion[] tipos = tipoCapacitacionService.getCollection();
+        if(tipos != null ){
             DefaultTableModel model = (DefaultTableModel)jTable6.getModel();
             model.setRowCount(0);
-            for(Capacitacion c: capacitaciones){
+            for(TipoCapacitacion t: tipos){
                 Object[] item = {
-                    c.getNombrecapacitacion(),
-                    TipoCapacitacionService.ESTADOS[(int)c.getEstadocapacitacion()],
-                    c,
+                    t.getDescripcap(),
+                    TipoCapacitacionService.ESTADOS[(int)t.getEstado()],
+                    t,
                 };
                 model.addRow(item);
             }
         }
         changePanel(tipoCapacitacionMain);
-    }//GEN-LAST:event_jMenuCapListarActionPerformed
+    }//GEN-LAST:event_jMenuTipoCapListarActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        // guardar capacitacion
-        Capacitacion capacitacion = new Capacitacion();
+        // guardar tipo capacitación
+        TipoCapacitacion tipo = new TipoCapacitacion();
         if(jButton17.getName() != null && jButton17.getName().length() > 0) {
-            capacitacion = (Capacitacion)selectedEntity;
+            tipo = (TipoCapacitacion)selectedEntity;
         }
         
-        capacitacion.setNombrecapacitacion(jTextField30.getText());
-        capacitacion.setEstadocapacitacion(jComboBox5.getSelectedIndex() + 1);       
+        tipo.setDescripcap(jTextField30.getText());
+        tipo.setEstado(jComboBox5.getSelectedIndex() + 1);      
         
-        long id = capacitacionService.save(capacitacion);
+        long id = tipoCapacitacionService.save(tipo);
         jButton17.setName(String.valueOf(id));
         jButton19.setName(String.valueOf(id));
-        jLabelTipoCapacitacionTitle.setText("Editar Capacitacion");
+        jLabelTipoCapacitacionTitle.setText("Editar tipo capacitación");
         jButton19.setEnabled(true);
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        // TODO add your handling code here:
+        // cancelar tipo capacitación:
         tipoCapacitacionForm.setVisible(false);
-        jMenuCapListarActionPerformed(evt);
+        jMenuTipoCapListarActionPerformed(evt);
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
@@ -4506,15 +4537,15 @@ public class Main extends javax.swing.JFrame {
         int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea eliminar esta capacitación?","Eliminar",JOptionPane.YES_NO_OPTION);
         if(dialogResult == JOptionPane.YES_OPTION){
             if(jButton19.getName() != null && jButton19.getName().length() > 0) {
-                capacitacionService.delete(Long.parseLong(jButton19.getName()));
+                tipoCapacitacionService.delete(Long.parseLong(jButton19.getName()));
             }
             jButton19.setEnabled(false);
             tipoCapacitacionForm.setVisible(false);
-            jMenuCapListarActionPerformed(evt);
+            jMenuTipoCapListarActionPerformed(evt);
         }
     }//GEN-LAST:event_jButton19ActionPerformed
 
-    private void jMenuCapCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCapCrearActionPerformed
+    private void jMenuTipoCapCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTipoCapCrearActionPerformed
         // Crear capacitacion
         jTextField30.setText("");
         jComboBox5.setSelectedIndex(0);
@@ -4522,7 +4553,7 @@ public class Main extends javax.swing.JFrame {
         jButton19.setName(null);
         jButton17.setName(null);
         changePanel(tipoCapacitacionForm);
-    }//GEN-LAST:event_jMenuCapCrearActionPerformed
+    }//GEN-LAST:event_jMenuTipoCapCrearActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         //listar planes de capacitaciones
@@ -4694,19 +4725,56 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton45ActionPerformed
 
     private void jButton46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton46ActionPerformed
-        // TODO add your handling code here:
+        // crear o guardar tipo examen
+        TipoExamen tipo = new TipoExamen();
+        if(jButton46.getName() != null && jButton46.getName().length() > 0) {
+            tipo = (TipoExamen)selectedEntity;
+        }
+        
+        tipo.setDescrip_exam(jTextField41.getText());        
+        tipo.setEstado(jComboBox18.getSelectedIndex() + 1);
+        
+        long id = tipoExamenService.save(tipo);
+        jButton46.setName(String.valueOf(id));
+        jButton48.setName(String.valueOf(id));
+        jLabelTipoExamenTitle.setText("Editar tipo examen");
+        jButton48.setEnabled(true);
     }//GEN-LAST:event_jButton46ActionPerformed
 
     private void jButton47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton47ActionPerformed
-        // TODO add your handling code here:
+        // cancelar tipo examen
+        tipoExamenForm.setVisible(false);
+        jMenuExmListarActionPerformed(evt);
     }//GEN-LAST:event_jButton47ActionPerformed
 
     private void jButton48ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton48ActionPerformed
-        // TODO add your handling code here:
+        // eliminar tipo examen
+        int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea eliminar este tipo de examen?","Eliminar",JOptionPane.YES_NO_OPTION);
+        if(dialogResult == JOptionPane.YES_OPTION){
+            if(jButton48.getName() != null && jButton48.getName().length() > 0) {
+                tipoExamenService.delete(Long.parseLong(jButton48.getName()));
+            }
+            jButton48.setEnabled(false);
+            tipoExamenForm.setVisible(false);
+            jMenuExmListarActionPerformed(evt);
+        }
     }//GEN-LAST:event_jButton48ActionPerformed
 
     private void jMenuExmListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExmListarActionPerformed
         // Listado de exámenes
+        TipoExamen[] tipos = tipoExamenService.getCollection();
+        if(tipos != null ){
+            DefaultTableModel model = (DefaultTableModel)jTable21.getModel();
+            model.setRowCount(0);
+            for(TipoExamen t: tipos){
+                Object[] item = {
+                    t.getDescrip_exam(),
+                    TipoCapacitacionService.ESTADOS[(int)t.getEstado()],
+                    t,
+                };
+                model.addRow(item);
+            }
+        }
         changePanel(tipoExamenMain);
     }//GEN-LAST:event_jMenuExmListarActionPerformed
 
@@ -4749,6 +4817,10 @@ public class Main extends javax.swing.JFrame {
         // mostrar calendario
         changePanel(calendarMain);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jTextField29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField29ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField29ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame calendarMain;
@@ -4989,16 +5061,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelProfile;
     private javax.swing.JLabel jLabelRut;
     private javax.swing.JLabel jLabelTipoCapacitacionTitle;
-    private javax.swing.JLabel jLabelTipoCapacitacionTitle1;
+    private javax.swing.JLabel jLabelTipoExamenTitle;
     private javax.swing.JLabel jLabelTipoVisita;
     private javax.swing.JLabel jLabelUsuarioTitle;
     private javax.swing.JLabel jLabelUsuarioTitle1;
     private javax.swing.JLabel jLabelUsuarioTitle2;
     private javax.swing.JMenuBar jMenuAdmin;
     private javax.swing.JMenu jMenuCal;
-    private javax.swing.JMenuItem jMenuCapCrear;
-    private javax.swing.JMenuItem jMenuCapListar;
-    private javax.swing.JMenu jMenuCapacitacion;
     private javax.swing.JMenuItem jMenuEmpCrear;
     private javax.swing.JMenuItem jMenuEmpListar;
     private javax.swing.JMenu jMenuEmpresa;
@@ -5025,6 +5094,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuTerListar;
     private javax.swing.JMenu jMenuTerreno;
     private javax.swing.JMenu jMenuTerrenoEng;
+    private javax.swing.JMenuItem jMenuTipoCapCrear;
+    private javax.swing.JMenuItem jMenuTipoCapListar;
+    private javax.swing.JMenu jMenuTipoCapacitacion;
     private javax.swing.JMenuItem jMenuUsrCrear;
     private javax.swing.JMenuItem jMenuUsrListar;
     private javax.swing.JMenu jMenuUsuario;

@@ -6,7 +6,6 @@
 package com.safe.service;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.safe.dal.CapacitacionDAL;
 import com.safe.dal.TipoCapacitacionDAL;
 import com.safe.entity.TipoCapacitacion;
 import java.util.logging.Level;

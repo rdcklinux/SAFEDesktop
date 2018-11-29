@@ -60,10 +60,10 @@ public class UserDAL extends DAL {
         return usuario.getIdusuario();
     }
     
-    public void delete(long id) throws UnirestException {
-        String url = getURI("usuarios/deleteCliente/%d/0");
+    public void delete(String rut) throws UnirestException {
+        String url = getURI("usuarios/deleteMedico/%s/0"); //TODO: deberia ser deleteUsuario
         
-        HttpResponse<String> postResponse = Unirest.put(String.format(url, id))
+        HttpResponse<String> postResponse = Unirest.put(String.format(url, rut))
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
         .body(String.class)

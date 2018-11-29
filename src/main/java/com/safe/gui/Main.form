@@ -57,25 +57,25 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenuCapacitacion">
+        <Menu class="javax.swing.JMenu" name="jMenuTipoCapacitacion">
           <Properties>
             <Property name="text" type="java.lang.String" value="Capacitaciones"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuCapListar">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuTipoCapListar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Listar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuCapListarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuTipoCapListarActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuCapCrear">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuTipoCapCrear">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Crear"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuCapCrearActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuTipoCapCrearActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -1307,6 +1307,9 @@
           </SubComponents>
         </Container>
         <Component class="javax.swing.JTextField" name="jTextField29">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField29ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -3691,13 +3694,13 @@
                   <Component id="jButton46" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
-              <Component id="jLabelTipoCapacitacionTitle1" alignment="1" max="32767" attributes="0"/>
+              <Component id="jLabelTipoExamenTitle" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jLabelTipoCapacitacionTitle1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelTipoExamenTitle" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel134" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -3720,7 +3723,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabelTipoCapacitacionTitle1">
+        <Component class="javax.swing.JLabel" name="jLabelTipoExamenTitle">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="14" style="1"/>
@@ -3769,7 +3772,7 @@
         <Component class="javax.swing.JComboBox" name="jComboBox18">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.TipoCapacitacionService.ESTADOS, 1, 3))" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.TipoExamenService.ESTADOS, 1, 3))" type="code"/>
             </Property>
           </Properties>
           <AuxValues>

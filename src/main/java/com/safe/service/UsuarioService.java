@@ -87,9 +87,9 @@ public class UsuarioService {
         return id;
     }
     
-    public void delete(long id) {
+    public void delete(String rut) {
         try {
-            userDAL.delete(id);
+            userDAL.delete(rut);
         } catch (UnirestException ex) {
             Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
         }

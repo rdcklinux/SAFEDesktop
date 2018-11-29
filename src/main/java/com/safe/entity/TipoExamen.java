@@ -11,7 +11,7 @@ package com.safe.entity;
  */
 public class TipoExamen {
     private long idtipoexam;
-    private String descripexam;
+    private String descrip_exam;
     private long estado;
 
     public long getIdtipoexam() {
@@ -22,12 +22,12 @@ public class TipoExamen {
         this.idtipoexam = idtipoexam;
     }
 
-    public String getDescripexam() {
-        return descripexam;
+    public String getDescrip_exam() {
+        return descrip_exam;
     }
 
-    public void setDescripexam(String descripexam) {
-        this.descripexam = descripexam;
+    public void setDescrip_exam(String descrip_exam) {
+        this.descrip_exam = descrip_exam;
     }
 
     public long getEstado() {
