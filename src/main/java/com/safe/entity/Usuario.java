@@ -1,8 +1,10 @@
 
 package com.safe.entity;
 
+import com.safe.service.UsuarioService;
 import java.io.Serializable;
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Usuario implements Serializable{
     
@@ -96,7 +98,13 @@ public class Usuario implements Serializable{
     }
 
     public String getFnacimientousuario() {
-        return fnacimientousuario;
+        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            return date.format(dt.parse(this.fnacimientousuario));
+        } catch (ParseException ex) {
+            return "";
+        }
     }
 
     public Usuario setFnacimientousuario(String fnacimientousuario) {
@@ -108,9 +116,19 @@ public class Usuario implements Serializable{
     public String getSexousuario() {
         return sexousuario;
     }
-
+    
+    public int getSexousuarioIndex() {
+        return sexousuario.equals(UsuarioService.GENERO[1])?1:0;
+    }
+    
     public Usuario setSexousuario(String sexousuario) {
         this.sexousuario = sexousuario;
+        
+        return this;
+    }
+    
+    public Usuario setSexousuarioIndex(int sexousuario) {
+        this.sexousuario = UsuarioService.GENERO[sexousuario];
         
         return this;
     }
@@ -138,13 +156,23 @@ public class Usuario implements Serializable{
     public long getEstadousuario() {
         return estadousuario;
     }
+    
+    public int getEstadousuarioIndex() {
+        return (int)estadousuario - 1;
+    }
 
     public Usuario setEstadousuario(long estadousuario) {
         this.estadousuario = estadousuario;
         
         return this;
     }
-
+    
+    public Usuario setEstadousuarioIndex(long estadousuario) {
+        this.estadousuario = estadousuario + 1;
+        
+        return this;
+    }
+    
     public String getClaveusuario() {
         return claveusuario;
     }
@@ -158,13 +186,23 @@ public class Usuario implements Serializable{
     public long getPerfilidperfil() {
         return perfilidperfil;
     }
+    
+    public int getPerfilidperfilIndex() {
+        return (int)perfilidperfil - 1;
+    }
 
     public Usuario setPerfilidperfil(long perfilidperfil) {
         this.perfilidperfil = perfilidperfil;
         
         return this;
     }
-
+    
+    public Usuario setPerfilidperfilIndex(long perfilidperfil) {
+        this.perfilidperfil = perfilidperfil + 1;
+        
+        return this;
+    }
+    
     public long getClienteidcliente() {
         return clienteidcliente;
     }

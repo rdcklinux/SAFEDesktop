@@ -13,6 +13,7 @@ import com.safe.entity.SoliEvalTer;
 import com.safe.entity.TipoCapacitacion;
 import com.safe.entity.TipoExamen;
 import com.safe.entity.Usuario;
+import com.safe.gui.component.BindComponent;
 import com.safe.gui.component.WindowComponenet;
 import com.safe.service.CapacitacionService;
 import com.safe.service.TipoCapacitacionService;
@@ -103,28 +104,7 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void initCustoms(){
-        jTable7.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int row = jTable7.rowAtPoint(evt.getPoint());
-                int col = jTable7.columnAtPoint(evt.getPoint());
-                if (col == 6) {
-                    SoliEvalTer solicitud = (SoliEvalTer)jTable7.getValueAt(row, col);
-                    selectedEntity = solicitud;
-                    Cliente cliente = clienteService.getOne((int)solicitud.getClienteidcliente());
-                    jLabelRut.setText(cliente.getRutcliente());
-                    jLabelTipoVisita.setText(SolicitudService.TIPOS[(int)solicitud.getTipovisitteridtipovister()]);
-                    jLabelDireccionVisita.setText(solicitud.getDireccionvisita());                        
-                    changePanel(evaluacionForm);
-                }else if(col == 7){                        
-                    String url =jTable7.getValueAt(row, col).toString();
-                    openWebUrl(url);
-                }
-            }
-        });
-        jTable7.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("[+]"));
-        jTable7.getColumnModel().getColumn(7).setCellRenderer(new ButtonTableComponent("PDF"));
-        
+        javax.swing.JFrame self = this;
         jTable4.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -133,17 +113,7 @@ public class Main extends javax.swing.JFrame {
                 if(col == 7){                        
                     Cliente cliente = (Cliente)jTable4.getValueAt(row, col);
                     selectedEntity = cliente;
-                    jTextField1.setText(cliente.getRazonsocial());
-                    jTextField2.setText(cliente.getRutcliente());
-                    jTextField3.setText(cliente.getGirocliente());
-                    jTextField4.setText(cliente.getDireccioncliente());
-                    jTextField5.setText("Santiago"); //TODO: falta deto del WS Debe ser Un combobox.
-                    jTextField6.setText(cliente.getTeloficina());
-                    jTextField7.setText(cliente.getNombrecontacto());
-                    jTextField8.setText(cliente.getFonocontacto());
-                    jTextField9.setText(cliente.getMailcontacto());
-                    jTextField10.setText(cliente.getCargocontacto());
-                    jTextArea2.setText(cliente.getObservacionescliente());
+                    BindComponent.setComponent(cliente, self);
                     jButton8.setEnabled(true);
                     jLabelClienteTitle.setText("Editar empresa");
                     changePanel(clienteForm);
@@ -159,28 +129,17 @@ public class Main extends javax.swing.JFrame {
                 if(col == 7){
                         Usuario usuario = (Usuario)jTable5.getValueAt(row, col);
                         selectedEntity = usuario;
-                        jTextField13.setText(usuario.getRunusuario());
-                        jTextField14.setText(usuario.getNombresusuario());
-                        jTextField15.setText(usuario.getAppaterno());
-                        jTextField16.setText(usuario.getApmaterno());
-                        try {
-                            SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            jFormattedTextField3.setText(date.format(dt.parse(usuario.getFnacimientousuario())));
-                        } catch (ParseException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        
-                        jTextField20.setText(usuario.getTelusuario());
-                        jTextField21.setText(usuario.getMailusuario());
-                        jComboBox1.setSelectedIndex((int)usuario.getPerfilidperfil() - 1);
-                        jComboBox2.setSelectedIndex((int)usuario.getEstadousuario() - 1);
-                        jComboBox3.setSelectedItem(usuario.getSexousuario());
+                        BindComponent.setComponent(usuario, self);
+                        //jComboBox1.setSelectedIndex((int)usuario.getPerfilidperfilIndex());
+                        //jComboBox2.setSelectedIndex((int)usuario.getEstadousuarioIndex());
+                        jComboBox3.setSelectedIndex(usuario.getSexousuarioIndex());
                         jButton12.setEnabled(true);
                         jLabelUsuarioTitle.setText("Editar usuario");
                         changePanel(usuarioForm);
                 }
             }
         });
+        
         jTable5.getColumnModel().getColumn(7).setCellRenderer(new ButtonTableComponent("[+]"));
         
         jTable6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -241,6 +200,28 @@ public class Main extends javax.swing.JFrame {
             tiposCap.add(t);
         }
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(tiposCap));
+        
+        jTable7.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = jTable7.rowAtPoint(evt.getPoint());
+                int col = jTable7.columnAtPoint(evt.getPoint());
+                if (col == 6) {
+                    SoliEvalTer solicitud = (SoliEvalTer)jTable7.getValueAt(row, col);
+                    selectedEntity = solicitud;
+                    Cliente cliente = clienteService.getOne((int)solicitud.getClienteidcliente());
+                    jLabelRut.setText(cliente.getRutcliente());
+                    jLabelTipoVisita.setText(SolicitudService.TIPOS[(int)solicitud.getTipovisitteridtipovister()]);
+                    jLabelDireccionVisita.setText(solicitud.getDireccionvisita());                        
+                    changePanel(evaluacionForm);
+                }else if(col == 7){                        
+                    String url =jTable7.getValueAt(row, col).toString();
+                    openWebUrl(url);
+                }
+            }
+        });
+        jTable7.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("[+]"));
+        jTable7.getColumnModel().getColumn(7).setCellRenderer(new ButtonTableComponent("PDF"));
     }
     
     private void changePanel(JInternalFrame panel){
@@ -1106,28 +1087,47 @@ public class Main extends javax.swing.JFrame {
 
         jLabel19.setText("Razón Social");
 
+        jTextField1.setName("com.safe.entity.Cliente.razonsocial"); // NOI18N
+
         jLabel20.setText("RUT");
+
+        jTextField2.setName("com.safe.entity.Cliente.rutcliente"); // NOI18N
 
         jLabel21.setText("Giro");
 
+        jTextField3.setName("com.safe.entity.Cliente.girocliente"); // NOI18N
+
         jLabel22.setText("Dirección");
+
+        jTextField4.setName("com.safe.entity.Cliente.direccioncliente"); // NOI18N
 
         jLabel23.setText("Comuna");
 
         jLabel24.setText("Fono Oficina");
 
+        jTextField6.setName("com.safe.entity.Cliente.teloficina"); // NOI18N
+
         jLabel25.setText("Nombe Contacto");
+
+        jTextField7.setName("com.safe.entity.Cliente.nombrecontacto"); // NOI18N
 
         jLabel26.setText("Fono Contacto");
 
+        jTextField8.setName("com.safe.entity.Cliente.fonocontacto"); // NOI18N
+
         jLabel27.setText("Mail Contacto");
 
+        jTextField9.setName("com.safe.entity.Cliente.mailcontacto"); // NOI18N
+
         jLabel28.setText("Cargo Contacto");
+
+        jTextField10.setName("com.safe.entity.Cliente.cargocontacto"); // NOI18N
 
         jLabel29.setText("Observaciones");
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
+        jTextArea2.setName("com.safe.entity.Cliente.observacionescliente"); // NOI18N
         jScrollPane8.setViewportView(jTextArea2);
 
         jButton6.setText("Guardar");
@@ -1261,6 +1261,8 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jTextField1.getAccessibleContext().setAccessibleName("");
+
         usuarioMain.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         usuarioMain.setClosable(true);
         usuarioMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -1374,11 +1376,19 @@ public class Main extends javax.swing.JFrame {
 
         jLabel32.setText("RUN");
 
+        jTextField13.setName("com.safe.entity.Usuario.runusuario"); // NOI18N
+
         jLabel33.setText("Nombres");
+
+        jTextField14.setName("com.safe.entity.Usuario.nombresusuario"); // NOI18N
 
         jLabel34.setText("Apellido paterno");
 
+        jTextField15.setName("com.safe.entity.Usuario.appaterno"); // NOI18N
+
         jLabel35.setText("Apellido materno");
+
+        jTextField16.setName("com.safe.entity.Usuario.apmaterno"); // NOI18N
 
         jLabel36.setText("Fecha Nacimiento");
 
@@ -1386,7 +1396,11 @@ public class Main extends javax.swing.JFrame {
 
         jLabel39.setText("Fono Contacto");
 
+        jTextField20.setName("com.safe.entity.Usuario.telusuario"); // NOI18N
+
         jLabel40.setText("Mail Contacto");
+
+        jTextField21.setName("com.safe.entity.Usuario.mailusuario"); // NOI18N
 
         jLabel42.setText("Perfil");
 
@@ -1412,7 +1426,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.UsuarioService.PERFIL, 1, 7)));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.UsuarioService.PERFIL,1,7)));
+        jComboBox1.setName("com.safe.entity.Usuario.perfilidperfilIndex"); // NOI18N
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -1421,13 +1436,20 @@ public class Main extends javax.swing.JFrame {
 
         jLabel43.setText("Estado");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.UsuarioService.ESTADOS, 1, 4)));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.UsuarioService.ESTADOS,1,4)));
+        jComboBox2.setName("com.safe.entity.Usuario.estadousuarioIndex"); // NOI18N
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(com.safe.service.UsuarioService.GENERO));
 
         jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField3.setToolTipText("dd-mm-yyyy");
+        jFormattedTextField3.setName("com.safe.entity.Usuario.fnacimientousuario"); // NOI18N
         jFormattedTextField3.setPreferredSize(new java.awt.Dimension(4, 20));
+        jFormattedTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout usuarioFormLayout = new javax.swing.GroupLayout(usuarioForm.getContentPane());
         usuarioForm.getContentPane().setLayout(usuarioFormLayout);
@@ -4335,19 +4357,8 @@ public class Main extends javax.swing.JFrame {
         if(selectedEntity instanceof Cliente) {
             cliente = (Cliente)selectedEntity;
         }
-        cliente.setRazonsocial(jTextField1.getText());
-        cliente.setRutcliente(jTextField2.getText());
-        cliente.setGirocliente(jTextField3.getText());
-        cliente.setDireccioncliente(jTextField4.getText());
-        //jTextField5.setText("Santiago"); //TODO: falta deto del WS Debe ser Un combobox.
-        cliente.setTeloficina(jTextField6.getText());
-        cliente.setNombrecontacto(jTextField7.getText());
-        cliente.setFonocontacto(jTextField8.getText());
-        cliente.setMailcontacto(jTextField9.getText());
-        cliente.setCargocontacto(jTextField10.getText());
-        cliente.setObservacionescliente(jTextArea2.getText());
+        BindComponent.setEntity(cliente, this);
         cliente.setEstadocliente(1);
-        
         long idcliente = clienteService.save(cliente);
         cliente.setIdcliente(idcliente);
         selectedEntity = cliente;
@@ -4386,12 +4397,13 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+        // guardar usuario
         Usuario usuario = new Usuario();
         if(selectedEntity instanceof Usuario) {
             usuario = (Usuario)selectedEntity;
         }
-        
+        BindComponent.setEntity(usuario, this);
+        /*
         usuario.setRunusuario(jTextField13.getText());
         usuario.setNombresusuario(jTextField14.getText());
         usuario.setAppaterno(jTextField15.getText());
@@ -4401,14 +4413,15 @@ public class Main extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        usuario.setSexousuario(jComboBox3.getSelectedItem().toString());
+        */
+        usuario.setSexousuarioIndex(jComboBox3.getSelectedIndex());
+        usuario.setPerfilidperfilIndex(jComboBox1.getSelectedIndex());
+        usuario.setEstadousuarioIndex(jComboBox2.getSelectedIndex());
+        /*
         usuario.setTelusuario(jTextField20.getText());
         usuario.setMailusuario(jTextField21.getText());
-        usuario.setPerfilidperfil(jComboBox1.getSelectedIndex() + 1);
-        usuario.setEstadousuario(jComboBox2.getSelectedIndex() + 1);
+        */
         usuario.setClienteidcliente(1); //TODO: debe elegirse de un combobox
-        
         long id = usuarioService.save(usuario);
         usuario.setIdusuario(id);
         selectedEntity = usuario;
@@ -4865,6 +4878,10 @@ public class Main extends javax.swing.JFrame {
     private void jTextField29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField29ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField29ActionPerformed
+
+    private void jFormattedTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame calendarMain;
