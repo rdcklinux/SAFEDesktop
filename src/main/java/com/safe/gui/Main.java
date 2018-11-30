@@ -110,6 +110,7 @@ public class Main extends javax.swing.JFrame {
                 int col = jTable7.columnAtPoint(evt.getPoint());
                 if (col == 6) {
                     SoliEvalTer solicitud = (SoliEvalTer)jTable7.getValueAt(row, col);
+                    selectedEntity = solicitud;
                     Cliente cliente = clienteService.getOne((int)solicitud.getClienteidcliente());
                     jLabelRut.setText(cliente.getRutcliente());
                     jLabelTipoVisita.setText(SolicitudService.TIPOS[(int)solicitud.getTipovisitteridtipovister()]);
@@ -131,6 +132,7 @@ public class Main extends javax.swing.JFrame {
                 int col = jTable4.columnAtPoint(evt.getPoint());
                 if(col == 7){                        
                     Cliente cliente = (Cliente)jTable4.getValueAt(row, col);
+                    selectedEntity = cliente;
                     jTextField1.setText(cliente.getRazonsocial());
                     jTextField2.setText(cliente.getRutcliente());
                     jTextField3.setText(cliente.getGirocliente());
@@ -142,8 +144,6 @@ public class Main extends javax.swing.JFrame {
                     jTextField9.setText(cliente.getMailcontacto());
                     jTextField10.setText(cliente.getCargocontacto());
                     jTextArea2.setText(cliente.getObservacionescliente());
-                    jButton6.setName(String.valueOf(cliente.getIdcliente()));
-                    jButton8.setName(String.valueOf(cliente.getIdcliente()));
                     jButton8.setEnabled(true);
                     jLabelClienteTitle.setText("Editar empresa");
                     changePanel(clienteForm);
@@ -157,10 +157,8 @@ public class Main extends javax.swing.JFrame {
                 int row = jTable5.rowAtPoint(evt.getPoint());
                 int col = jTable5.columnAtPoint(evt.getPoint());
                 if(col == 7){
-                   
                         Usuario usuario = (Usuario)jTable5.getValueAt(row, col);
                         selectedEntity = usuario;
-                        
                         jTextField13.setText(usuario.getRunusuario());
                         jTextField14.setText(usuario.getNombresusuario());
                         jTextField15.setText(usuario.getAppaterno());
@@ -177,13 +175,9 @@ public class Main extends javax.swing.JFrame {
                         jComboBox1.setSelectedIndex((int)usuario.getPerfilidperfil() - 1);
                         jComboBox2.setSelectedIndex((int)usuario.getEstadousuario() - 1);
                         jComboBox3.setSelectedItem(usuario.getSexousuario());
-                        
-                        jButton10.setName(usuario.getRunusuario());
-                        jButton12.setName(usuario.getRunusuario());
                         jButton12.setEnabled(true);
                         jLabelUsuarioTitle.setText("Editar usuario");
                         changePanel(usuarioForm);
-                    
                 }
             }
         });
@@ -195,15 +189,10 @@ public class Main extends javax.swing.JFrame {
                 int row = jTable6.rowAtPoint(evt.getPoint());
                 int col = jTable6.columnAtPoint(evt.getPoint());
                 if(col == 2){
-                   
                         TipoCapacitacion tipo = (TipoCapacitacion)jTable6.getValueAt(row, col);
                         selectedEntity = tipo;
-                        
                         jTextField30.setText(tipo.getDescripcap());                        
                         jComboBox5.setSelectedIndex((int)tipo.getEstado()- 1);
-                        
-                        jButton17.setName(String.valueOf(tipo.getIdtipocap()));
-                        jButton19.setName(String.valueOf(tipo.getIdtipocap()));
                         jButton19.setEnabled(true);
                         jLabelTipoCapacitacionTitle.setText("Editar tipo de capacitación");
                         changePanel(tipoCapacitacionForm);
@@ -220,12 +209,8 @@ public class Main extends javax.swing.JFrame {
                 if(col == 2){
                         TipoExamen tipo = (TipoExamen)jTable21.getValueAt(row, col);
                         selectedEntity = tipo;
-                        
                         jTextField41.setText(tipo.getDescrip_exam());                        
                         jComboBox18.setSelectedIndex((int)tipo.getEstado()- 1);
-                        
-                        jButton46.setName(String.valueOf(tipo.getIdtipoexam()));
-                        jButton48.setName(String.valueOf(tipo.getIdtipoexam()));
                         jButton48.setEnabled(true);
                         jLabelTipoExamenTitle.setText("Editar tipo de examen");
                         changePanel(tipoExamenForm);
@@ -4189,6 +4174,7 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuEmpCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEmpCrearActionPerformed
+        selectedEntity = null;
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
@@ -4201,8 +4187,6 @@ public class Main extends javax.swing.JFrame {
         jTextField10.setText("");
         jTextArea2.setText("");
         jButton8.setEnabled(false);
-        jButton6.setName(null);
-        jButton8.setName(null);
         jLabelClienteTitle.setText("Crear empresa");
         changePanel(clienteForm);
     }//GEN-LAST:event_jMenuEmpCrearActionPerformed
@@ -4316,6 +4300,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuEmpListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEmpListarActionPerformed
         //listar empresas
+        selectedEntity = null;
         Cliente[] clientes = clienteService.getCollection();
         if(clientes != null ){
             DefaultTableModel model = (DefaultTableModel)jTable4.getModel();            
@@ -4346,10 +4331,9 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         //guardar e inmediatamente permite editar
-        
         Cliente cliente = new Cliente();
-        if(jButton6.getName() != null && jButton6.getName().length() > 0) {
-            cliente.setIdcliente(Integer.parseInt(jButton6.getName()));
+        if(selectedEntity instanceof Cliente) {
+            cliente = (Cliente)selectedEntity;
         }
         cliente.setRazonsocial(jTextField1.getText());
         cliente.setRutcliente(jTextField2.getText());
@@ -4364,10 +4348,9 @@ public class Main extends javax.swing.JFrame {
         cliente.setObservacionescliente(jTextArea2.getText());
         cliente.setEstadocliente(1);
         
-        //TODO: enviar al webservice el cliente
         long idcliente = clienteService.save(cliente);
-        jButton6.setName(String.valueOf(idcliente));
-        jButton8.setName(String.valueOf(idcliente));
+        cliente.setIdcliente(idcliente);
+        selectedEntity = cliente;
         jLabelClienteTitle.setText("Editar empresa");
         jButton8.setEnabled(true);
         JOptionPane.showMessageDialog(null, "Empresa se ha guardado correctamente.");
@@ -4376,8 +4359,9 @@ public class Main extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea eliminar esta empresa?","Eliminar",JOptionPane.YES_NO_OPTION);
         if(dialogResult == JOptionPane.YES_OPTION){
-            if(jButton8.getName() != null && jButton8.getName().length() > 0) {
-                clienteService.delete(Long.parseLong(jButton8.getName()));
+            if(selectedEntity instanceof Cliente) {
+                Cliente cliente = (Cliente)selectedEntity;
+                clienteService.delete(cliente.getIdcliente());
             }
             jButton8.setEnabled(false);
             clienteForm.setVisible(false);
@@ -4404,7 +4388,7 @@ public class Main extends javax.swing.JFrame {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
         Usuario usuario = new Usuario();
-        if(jButton10.getName() != null && jButton10.getName().length() > 0) {
+        if(selectedEntity instanceof Usuario) {
             usuario = (Usuario)selectedEntity;
         }
         
@@ -4425,9 +4409,9 @@ public class Main extends javax.swing.JFrame {
         usuario.setEstadousuario(jComboBox2.getSelectedIndex() + 1);
         usuario.setClienteidcliente(1); //TODO: debe elegirse de un combobox
         
-        usuarioService.save(usuario);
-        jButton10.setName(usuario.getRunusuario());
-        jButton12.setName(usuario.getRunusuario());
+        long id = usuarioService.save(usuario);
+        usuario.setIdusuario(id);
+        selectedEntity = usuario;
         jLabelUsuarioTitle.setText("Editar usuario");
         jButton12.setEnabled(true);
         JOptionPane.showMessageDialog(null, "Usuario se ha guardado correctamente.");
@@ -4443,8 +4427,9 @@ public class Main extends javax.swing.JFrame {
         // eliminar usuario
         int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea eliminar este usuario?","Eliminar",JOptionPane.YES_NO_OPTION);
         if(dialogResult == JOptionPane.YES_OPTION){
-            if(jButton12.getName() != null && jButton12.getName().length() > 0) {
-                usuarioService.delete(jButton12.getName());
+            if(selectedEntity instanceof Usuario) {
+                Usuario usuario  = (Usuario)selectedEntity;
+                usuarioService.delete(usuario.getRunusuario());
             }
             jButton12.setEnabled(false);
             usuarioForm.setVisible(false);
@@ -4454,6 +4439,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuUsrListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsrListarActionPerformed
         // listar usuarios
+        selectedEntity = null;
         Usuario[] usuarios = usuarioService.getCollection();
         if(usuarios != null ){
             DefaultTableModel model = (DefaultTableModel)jTable5.getModel();                    
@@ -4476,6 +4462,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuUsrListarActionPerformed
 
     private void jMenuUsrCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsrCrearActionPerformed
+        selectedEntity = null;
         jTextField13.setText("");
         jTextField14.setText("");
         jTextField15.setText("");
@@ -4487,8 +4474,6 @@ public class Main extends javax.swing.JFrame {
         jComboBox2.setSelectedIndex(0);
         jComboBox3.setSelectedIndex(0);
         jButton12.setEnabled(false);
-        jButton10.setName(null);
-        jButton10.setName(null);
         jLabelUsuarioTitle.setText("Crear usuario");
         changePanel(usuarioForm);
     }//GEN-LAST:event_jMenuUsrCrearActionPerformed
@@ -4529,6 +4514,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuTipoCapListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTipoCapListarActionPerformed
         // listado de capacitaciones
+        selectedEntity = null;
         TipoCapacitacion[] tipos = tipoCapacitacionService.getCollection();
         if(tipos != null ){
             DefaultTableModel model = (DefaultTableModel)jTable6.getModel();
@@ -4544,22 +4530,20 @@ public class Main extends javax.swing.JFrame {
         }
         changePanel(tipoCapacitacionMain);
     }//GEN-LAST:event_jMenuTipoCapListarActionPerformed
-
+    
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // guardar tipo capacitación
         TipoCapacitacion tipo = new TipoCapacitacion();
-        if(jButton17.getName() != null && jButton17.getName().length() > 0) {
+        if (selectedEntity instanceof TipoCapacitacion){
             tipo = (TipoCapacitacion)selectedEntity;
         }
-        
         tipo.setDescripcap(jTextField30.getText());
         tipo.setEstado(jComboBox5.getSelectedIndex() + 1);      
-        
         long id = tipoCapacitacionService.save(tipo);
-        jButton17.setName(String.valueOf(id));
-        jButton19.setName(String.valueOf(id));
+        tipo.setIdtipocap(id);
         jLabelTipoCapacitacionTitle.setText("Editar tipo de capacitación");
         jButton19.setEnabled(true);
+        selectedEntity = tipo;
         JOptionPane.showMessageDialog(null, "Tipo de capacitación se ha guardado correctamente.");
     }//GEN-LAST:event_jButton17ActionPerformed
 
@@ -4573,8 +4557,9 @@ public class Main extends javax.swing.JFrame {
         // Eliminar capacitacion
         int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea eliminar este tipo de capacitación?","Eliminar",JOptionPane.YES_NO_OPTION);
         if(dialogResult == JOptionPane.YES_OPTION){
-            if(jButton19.getName() != null && jButton19.getName().length() > 0) {
-                tipoCapacitacionService.delete(Long.parseLong(jButton19.getName()));
+            if(selectedEntity instanceof TipoCapacitacion) {
+                TipoCapacitacion tipo = (TipoCapacitacion)selectedEntity;
+                tipoCapacitacionService.delete(tipo.getIdtipocap());
             }
             jButton19.setEnabled(false);
             tipoCapacitacionForm.setVisible(false);
@@ -4584,11 +4569,11 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuTipoCapCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTipoCapCrearActionPerformed
         // Crear capacitacion
+        selectedEntity = null;
         jTextField30.setText("");
         jComboBox5.setSelectedIndex(0);
         jButton19.setEnabled(false);
-        jButton19.setName(null);
-        jButton17.setName(null);
+        selectedEntity = null;
         jLabelTipoCapacitacionTitle.setText("Crear tipo de capacitación");
         changePanel(tipoCapacitacionForm);
     }//GEN-LAST:event_jMenuTipoCapCrearActionPerformed
@@ -4778,7 +4763,7 @@ public class Main extends javax.swing.JFrame {
     private void jButton46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton46ActionPerformed
         // guardar tipo examen
         TipoExamen tipo = new TipoExamen();
-        if(jButton46.getName() != null && jButton46.getName().length() > 0) {
+        if(selectedEntity instanceof TipoExamen) {
             tipo = (TipoExamen)selectedEntity;
         }
         
@@ -4786,8 +4771,8 @@ public class Main extends javax.swing.JFrame {
         tipo.setEstado(jComboBox18.getSelectedIndex() + 1);
         
         long id = tipoExamenService.save(tipo);
-        jButton46.setName(String.valueOf(id));
-        jButton48.setName(String.valueOf(id));
+        tipo.setIdtipoexam(id);
+        selectedEntity = tipo;
         jLabelTipoExamenTitle.setText("Editar tipo de examen");
         jButton48.setEnabled(true);
         JOptionPane.showMessageDialog(null, "Tipo de examen se ha guardado correctamente.");
@@ -4803,8 +4788,9 @@ public class Main extends javax.swing.JFrame {
         // eliminar tipo examen
         int dialogResult = JOptionPane.showConfirmDialog (null, "¿Desea eliminar este tipo de examen?","Eliminar",JOptionPane.YES_NO_OPTION);
         if(dialogResult == JOptionPane.YES_OPTION){
-            if(jButton48.getName() != null && jButton48.getName().length() > 0) {
-                tipoExamenService.delete(Long.parseLong(jButton48.getName()));
+            if(selectedEntity instanceof TipoExamen) {
+                TipoExamen tipo = (TipoExamen)selectedEntity;
+                tipoExamenService.delete(tipo.getIdtipoexam());
             }
             jButton48.setEnabled(false);
             tipoExamenForm.setVisible(false);
@@ -4814,6 +4800,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuExmListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExmListarActionPerformed
         // Listado de exámenes
+        selectedEntity = null;
         TipoExamen[] tipos = tipoExamenService.getCollection();
         if(tipos != null ){
             DefaultTableModel model = (DefaultTableModel)jTable21.getModel();
@@ -4832,12 +4819,10 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuExmCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExmCrearActionPerformed
         // Nuevo tipo examen
+        selectedEntity = null;
         jTextField41.setText("");
         jComboBox18.setSelectedIndex(0);
         jButton48.setEnabled(false);
-        jButton48.setName(null);
-        jButton46.setName(null);
-        
         jLabelTipoExamenTitle.setText("Crear tipo de examen");
         changePanel(tipoExamenForm);
     }//GEN-LAST:event_jMenuExmCrearActionPerformed
