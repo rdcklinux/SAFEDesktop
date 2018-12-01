@@ -2,24 +2,15 @@
 package com.safe.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Obs_Ingeniero implements Serializable{
     
     
-    private long idobsingeniero;
-    
-    
-    private Date fechahoraobsing;
-    
-    
+    private long idobsingeniero;    
+    private String fechahoraobsing = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());
     private String obsing;
-    
-    
     private long evalterridevalterr;
-    
-    
-    private long estadoObsIng;
+    private long estadoObsIng = 1;
 
     public long getIdobsingeniero() {
         return idobsingeniero;
@@ -29,11 +20,11 @@ public class Obs_Ingeniero implements Serializable{
         this.idobsingeniero = idobsingeniero;
     }
 
-    public Date getFechahoraobsing() {
+    public String getFechahoraobsing() {
         return fechahoraobsing;
     }
 
-    public void setFechahoraobsing(Date fechahoraobsing) {
+    public void setFechahoraobsing(String fechahoraobsing) {
         this.fechahoraobsing = fechahoraobsing;
     }
 

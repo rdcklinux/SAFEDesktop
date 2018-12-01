@@ -14,13 +14,15 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 /**
  *
  * @author developer
  */
-public class BindComponent {
+public class Bind {
     
     public static void setComponent(Object object, JFrame container) {
         Class<?> mapEntity = object.getClass();
@@ -55,14 +57,17 @@ public class BindComponent {
                 }
                 if(component instanceof JTextField) {
                     ((JTextField)component).setText(result.toString());
-                }
-                if(component instanceof JComboBox){
+                } else if(component instanceof JTextArea){
+                    ((JTextArea)component).setText(result.toString());
+                } else if(component instanceof JLabel){
+                    ((JLabel)component).setText(result.toString());
+                } else if(component instanceof JComboBox){
                     ((JComboBox)component).setSelectedIndex((int)result);
                 }
             } catch (IllegalArgumentException ex) {
-                Logger.getLogger(BindComponent.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Bind.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
-                Logger.getLogger(BindComponent.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Bind.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -74,7 +79,6 @@ public class BindComponent {
         Class<? extends JFrame> swing = container.getClass();
         Field[] components = swing.getDeclaredFields();
         JComponent component;
-        Object result;
         
         for(Field c: components) {
             try {
@@ -96,42 +100,20 @@ public class BindComponent {
                 }
                 
                 try {
-                    if(component instanceof JTextField) {
+                    if(component instanceof JTextField){
                         method.invoke(object,((JTextField)component).getText());
-                    }
-                    if(component instanceof JComboBox){
+                    }else if(component instanceof JTextArea) {
+                        method.invoke(object,((JTextArea)component).getText());
+                    }else if(component instanceof JComboBox){
                         method.invoke(object,((JComboBox)component).getSelectedIndex());
                     }
                 } catch (InvocationTargetException ex) {
                     continue;
                 }
-                /*
-                c.setAccessible(true);
-                if(!(c.get(container) instanceof JComponent)) continue;
-                if(Modifier.isFinal(c.getModifiers())) continue;
-                component = (JComponent)c.get(container);
-                if(component.getName() == null) continue;
-                if(!component.getName().startsWith(name)) continue;
-                attribute = component.getName().replace(name + ".", "");
-                
-                try {   
-                    Field field = mapEntity.getDeclaredField(attribute);
-                    field.setAccessible(true);
-                    
-                    if(component instanceof JTextField) {
-                        JTextField instance = (JTextField)component;
-                        field.set(object, instance.getText());
-                    }
-                } catch (NoSuchFieldException ex) {
-                    Logger.getLogger(BindComponent.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SecurityException ex) {
-                    Logger.getLogger(BindComponent.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                */
             } catch (IllegalArgumentException ex) {
-                Logger.getLogger(BindComponent.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Bind.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
-                Logger.getLogger(BindComponent.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Bind.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -167,14 +149,14 @@ public class BindComponent {
                         }
                     }
                 } catch (NoSuchFieldException ex) {
-                    Logger.getLogger(BindComponent.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Bind.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SecurityException ex) {
-                    Logger.getLogger(BindComponent.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Bind.class.getName()).log(Level.SEVERE, null, ex);
                 }       
             } catch (IllegalArgumentException ex) {
-                Logger.getLogger(BindComponent.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Bind.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
-                Logger.getLogger(BindComponent.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Bind.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

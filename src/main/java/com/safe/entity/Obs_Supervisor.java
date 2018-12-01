@@ -2,23 +2,14 @@
 package com.safe.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Obs_Supervisor implements Serializable{
     
     
     private long idobssupervisor;
-    
-    
-    private Date fechahoraobssupervisor;
-    
-    
+    private String fechahoraobssupervisor = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());
     private String obssupervisor;
-    
-    
-    private long estadoObsSupervisor;
-    
-    
+    private long estadoObsSupervisor = 1;
     private long evalterridevalterr;
 
     public long getIdobssupervisor() {
@@ -29,11 +20,11 @@ public class Obs_Supervisor implements Serializable{
         this.idobssupervisor = idobssupervisor;
     }
 
-    public Date getFechahoraobssupervisor() {
+    public String getFechahoraobssupervisor() {
         return fechahoraobssupervisor;
     }
 
-    public void setFechahoraobssupervisor(Date fechahoraobssupervisor) {
+    public void setFechahoraobssupervisor(String fechahoraobssupervisor) {
         this.fechahoraobssupervisor = fechahoraobssupervisor;
     }
 

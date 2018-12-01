@@ -1,6 +1,7 @@
 
 package com.safe.entity;
 
+import com.safe.service.SolicitudService;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,8 +14,6 @@ public class SoliEvalTer implements Serializable{
     private String fechacreacion;
     
     private String fechaderivacion;
-    
-    private Usuario tecnico;
     
     private String pdf;
     
@@ -81,6 +80,10 @@ public class SoliEvalTer implements Serializable{
     public void setTipovisitteridtipovister(long tipovisitteridtipovister) {
         this.tipovisitteridtipovister = tipovisitteridtipovister;
     }
+    
+    public String getTipovisitaText() {
+        return SolicitudService.TIPOS[(int)tipovisitteridtipovister];
+    }
 
     public long getEstadosolievalter() {
         return estadosolievalter;
@@ -99,19 +102,12 @@ public class SoliEvalTer implements Serializable{
     }
 
     public String getFechaderivacion() {
+        if(fechaderivacion == null) fechaderivacion = "";
         return fechaderivacion;
     }
 
     public void setFechaderivacion(String fechaderivacion) {
         this.fechaderivacion = fechaderivacion;
-    }
-
-    public Usuario getTecnico() {
-        return tecnico;
-    }
-
-    public void setTecnico(Usuario tecnico) {
-        this.tecnico = tecnico;
     }
     
     public String getClientenombre() {

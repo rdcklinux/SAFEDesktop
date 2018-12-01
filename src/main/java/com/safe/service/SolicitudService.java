@@ -8,8 +8,9 @@ package com.safe.service;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.safe.dal.SolicitudDAL;
 import com.safe.entity.SoliEvalTer;
-import com.safe.entity.Usuario;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,15 +38,26 @@ public class SolicitudService {
         solicitudDAL = new SolicitudDAL(domain);
     }
     
+    public SoliEvalTer getOne(int id){
+        SoliEvalTer solicitud = null;
+        try {
+            solicitud = solicitudDAL.byId(id);
+            solicitud.setClientenombre("CLIENTE:NULL");
+            solicitud.setPdf("http://localhost/NULL.pdf");
+            solicitud.setFechaderivacion("2018-10-01");
+        } catch (UnirestException ex) {
+            Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return solicitud;
+    }
+    
     public SoliEvalTer[] getCollection(){
         
         SoliEvalTer[] solicitudes;
         try {
             solicitudes = solicitudDAL.getAllEvaluaciones();
             for(SoliEvalTer solicitud: solicitudes){
-                Usuario tecnico = new Usuario();
-                tecnico.setNombresusuario("TECNICO:NULL");
-                solicitud.setTecnico(tecnico);
                 solicitud.setClientenombre("CLIENTE:NULL");
                 solicitud.setPdf("http://localhost/NULL.pdf");
                 solicitud.setFechaderivacion("2018-10-01");
@@ -57,5 +69,24 @@ public class SolicitudService {
         }
         
         return solicitudes;
+    }
+    
+    public long save(SoliEvalTer solicitud) {
+        long id = 0;
+        if(solicitud.getIdsolicitud()> 0){
+            try {
+                id = solicitudDAL.update(solicitud);
+            } catch (UnirestException ex) {
+                Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else {
+            try {
+                id = solicitudDAL.create(solicitud);
+            } catch (UnirestException ex) {
+                Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return id;
     }
 }

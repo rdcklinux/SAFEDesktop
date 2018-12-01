@@ -7,17 +7,22 @@ package com.safe.gui;
 
 import com.safe.entity.Capacitacion;
 import com.safe.entity.Cliente;
+import com.safe.entity.Eval_Terr;
+import com.safe.entity.Obs_Ingeniero;
+import com.safe.entity.Obs_Supervisor;
 import com.safe.entity.PlanCapacitacion;
 import com.safe.gui.component.ButtonTableComponent;
 import com.safe.entity.SoliEvalTer;
 import com.safe.entity.TipoCapacitacion;
 import com.safe.entity.TipoExamen;
 import com.safe.entity.Usuario;
-import com.safe.gui.component.BindComponent;
+import com.safe.gui.component.Bind;
 import com.safe.gui.component.WindowComponenet;
 import com.safe.service.CapacitacionService;
 import com.safe.service.TipoCapacitacionService;
 import com.safe.service.ClienteService;
+import com.safe.service.EvaluacionTerrenoService;
+import com.safe.service.ObservacionService;
 import com.safe.service.PlanCapacitacionService;
 import com.safe.service.TokenManager;
 import com.safe.service.SessionManager;
@@ -61,11 +66,15 @@ public class Main extends javax.swing.JFrame {
     private final TipoExamenService tipoExamenService;
     private final CapacitacionService capacitacionService;
     private final PlanCapacitacionService planCapacitacionService;
+    private final SolicitudService solicitudService;
+    private final EvaluacionTerrenoService evaluacionTerrenoService;
+    private final ObservacionService observacionService;
     
     private javax.swing.JMenu jMenuProfile;
     private java.awt.Component horizontalGlue;
     private final String domain;
     private Object selectedEntity;
+    private Object secondEntity;
     
     private final SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -89,6 +98,9 @@ public class Main extends javax.swing.JFrame {
         tipoExamenService = new TipoExamenService(this.domain);
         capacitacionService = new CapacitacionService(this.domain);
         planCapacitacionService = new PlanCapacitacionService(this.domain);
+        solicitudService = new SolicitudService(this.domain);
+        evaluacionTerrenoService = new EvaluacionTerrenoService(this.domain);
+        observacionService = new ObservacionService(this.domain);
         int sessionTime;
         try {
             sessionTime = (int)Integer.parseInt(getConfig().getProperty("safe.sessionMinuteTime"));
@@ -113,7 +125,7 @@ public class Main extends javax.swing.JFrame {
                 if(col == 7){                        
                     Cliente cliente = (Cliente)jTable4.getValueAt(row, col);
                     selectedEntity = cliente;
-                    BindComponent.setComponent(cliente, self);
+                    Bind.setComponent(cliente, self);
                     jButton8.setEnabled(true);
                     jLabelClienteTitle.setText("Editar empresa");
                     changePanel(clienteForm);
@@ -129,10 +141,7 @@ public class Main extends javax.swing.JFrame {
                 if(col == 7){
                         Usuario usuario = (Usuario)jTable5.getValueAt(row, col);
                         selectedEntity = usuario;
-                        BindComponent.setComponent(usuario, self);
-                        //jComboBox1.setSelectedIndex((int)usuario.getPerfilidperfilIndex());
-                        //jComboBox2.setSelectedIndex((int)usuario.getEstadousuarioIndex());
-                        jComboBox3.setSelectedIndex(usuario.getSexousuarioIndex());
+                        Bind.setComponent(usuario, self);
                         jButton12.setEnabled(true);
                         jLabelUsuarioTitle.setText("Editar usuario");
                         changePanel(usuarioForm);
@@ -150,8 +159,7 @@ public class Main extends javax.swing.JFrame {
                 if(col == 2){
                         TipoCapacitacion tipo = (TipoCapacitacion)jTable6.getValueAt(row, col);
                         selectedEntity = tipo;
-                        jTextField30.setText(tipo.getDescripcap());                        
-                        jComboBox5.setSelectedIndex((int)tipo.getEstado()- 1);
+                        Bind.setComponent(tipo, self);                      
                         jButton19.setEnabled(true);
                         jLabelTipoCapacitacionTitle.setText("Editar tipo de capacitación");
                         changePanel(tipoCapacitacionForm);
@@ -168,8 +176,7 @@ public class Main extends javax.swing.JFrame {
                 if(col == 2){
                         TipoExamen tipo = (TipoExamen)jTable21.getValueAt(row, col);
                         selectedEntity = tipo;
-                        jTextField41.setText(tipo.getDescrip_exam());                        
-                        jComboBox18.setSelectedIndex((int)tipo.getEstado()- 1);
+                        Bind.setComponent(tipo, self);
                         jButton48.setEnabled(true);
                         jLabelTipoExamenTitle.setText("Editar tipo de examen");
                         changePanel(tipoExamenForm);
@@ -207,15 +214,43 @@ public class Main extends javax.swing.JFrame {
                 int row = jTable7.rowAtPoint(evt.getPoint());
                 int col = jTable7.columnAtPoint(evt.getPoint());
                 if (col == 6) {
-                    SoliEvalTer solicitud = (SoliEvalTer)jTable7.getValueAt(row, col);
-                    selectedEntity = solicitud;
+                    SoliEvalTer solicitud = (SoliEvalTer)jTable7.getValueAt(row, 6);
+                    Eval_Terr evaluacion = (Eval_Terr)jTable7.getValueAt(row, 7);
+                    selectedEntity = evaluacion;
+                    secondEntity = solicitud;
                     Cliente cliente = clienteService.getOne((int)solicitud.getClienteidcliente());
-                    jLabelRut.setText(cliente.getRutcliente());
-                    jLabelTipoVisita.setText(SolicitudService.TIPOS[(int)solicitud.getTipovisitteridtipovister()]);
-                    jLabelDireccionVisita.setText(solicitud.getDireccionvisita());                        
+                    Bind.setComponent(cliente, self);
+                    Bind.setComponent(solicitud, self);
+                    
+                    Obs_Supervisor[] obsS = observacionService.getSupervisorCollection();
+                    if(obsS != null){
+                        DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
+                        model.setRowCount(0);
+                        for(Obs_Supervisor o: obsS){
+                            Object[] item = {
+                                o.getFechahoraobssupervisor(),
+                                o.getObssupervisor(),
+                            };
+                            model.addRow(item);
+                        }
+                    }
+                    Obs_Ingeniero[] obsI = observacionService.getIngenieroCollection();
+                    if(obsI != null){
+                        DefaultTableModel model = (DefaultTableModel)jTable3.getModel();
+                        model.setRowCount(0);
+                        for(Obs_Ingeniero o: obsI){
+                            Object[] item = {
+                                o.getFechahoraobsing(),
+                                o.getObsing(),
+                            };
+                            model.addRow(item);
+                        }
+                    }                    
+                    
                     changePanel(evaluacionForm);
-                }else if(col == 7){                        
-                    String url =jTable7.getValueAt(row, col).toString();
+                }else if(col == 7){
+                    SoliEvalTer solicitud = (SoliEvalTer)jTable7.getValueAt(row, 6);
+                    String url = solicitud.getPdf();
                     openWebUrl(url);
                 }
             }
@@ -509,7 +544,6 @@ public class Main extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabelRut = new javax.swing.JLabel();
@@ -518,11 +552,8 @@ public class Main extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabelDireccionVisita = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextAreaDescVisita = new javax.swing.JTextArea();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTextAreaObsVisita = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -1440,6 +1471,7 @@ public class Main extends javax.swing.JFrame {
         jComboBox2.setName("com.safe.entity.Usuario.estadousuarioIndex"); // NOI18N
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(com.safe.service.UsuarioService.GENERO));
+        jComboBox3.setName("com.safe.entity.Usuario.sexousuarioIndex"); // NOI18N
 
         jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField3.setToolTipText("dd-mm-yyyy");
@@ -1655,6 +1687,8 @@ public class Main extends javax.swing.JFrame {
 
         jLabel55.setText("Nombre");
 
+        jTextField30.setName("com.safe.entity.TipoCapacitacion.descripcap"); // NOI18N
+
         jButton17.setText("Guardar");
         jButton17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1680,6 +1714,7 @@ public class Main extends javax.swing.JFrame {
         jLabel64.setText("Estado");
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.TipoCapacitacionService.ESTADOS, 1, 3)));
+        jComboBox5.setName("com.safe.entity.TipoCapacitacion.estadoIndex"); // NOI18N
 
         javax.swing.GroupLayout tipoCapacitacionFormLayout = new javax.swing.GroupLayout(tipoCapacitacionForm.getContentPane());
         tipoCapacitacionForm.getContentPane().setLayout(tipoCapacitacionFormLayout);
@@ -1818,6 +1853,8 @@ public class Main extends javax.swing.JFrame {
 
         jLabel134.setText("Nombre");
 
+        jTextField41.setName("com.safe.entity.TipoExamen.descrip_exam"); // NOI18N
+
         jButton46.setText("Guardar");
         jButton46.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1843,6 +1880,7 @@ public class Main extends javax.swing.JFrame {
         jLabel135.setText("Estado");
 
         jComboBox18.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.TipoExamenService.ESTADOS, 1, 3)));
+        jComboBox18.setName("com.safe.entity.TipoExamen.estadoIndex"); // NOI18N
 
         javax.swing.GroupLayout tipoExamenFormLayout = new javax.swing.GroupLayout(tipoExamenForm.getContentPane());
         tipoExamenForm.getContentPane().setLayout(tipoExamenFormLayout);
@@ -1901,11 +1939,11 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        jFormattedTextField4.setToolTipText("dd/mm/yyyy");
+        jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        jFormattedTextField4.setToolTipText("dd-mm-yyyy");
 
         jFormattedTextField5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        jFormattedTextField5.setToolTipText("dd/mm/yyyy");
+        jFormattedTextField5.setToolTipText("dd-mm-yyyy");
 
         jButton13.setText("Buscar");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
@@ -1915,10 +1953,8 @@ public class Main extends javax.swing.JFrame {
         });
 
         jLabel37.setText("Filtro de Estado");
-        jLabel37.setToolTipText("");
 
         jLabel41.setText("Filtro de Fecha");
-        jLabel41.setToolTipText("");
 
         jLabel44.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1926,7 +1962,6 @@ public class Main extends javax.swing.JFrame {
         jLabel44.setToolTipText("");
 
         jLabel45.setText("Filtro tipo visita");
-        jLabel45.setToolTipText("");
 
         jComboBoxTipo1.setModel(new javax.swing.DefaultComboBoxModel(com.safe.service.SolicitudService.TIPOS));
 
@@ -2028,35 +2063,27 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Volver");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jLabel11.setText("RUT Cliente");
 
         jLabelRut.setText("00.000.000-0");
         jLabelRut.setToolTipText("");
+        jLabelRut.setName("com.safe.entity.Cliente.rutcliente"); // NOI18N
 
         jLabel13.setText("Tipo de visita");
 
         jLabelTipoVisita.setText("TIPO");
+        jLabelTipoVisita.setName("com.safe.entity.SoliEvalTer.tipovisitaText"); // NOI18N
 
         jLabel12.setText("Dirección visita");
 
         jLabelDireccionVisita.setText("DIRECCION");
+        jLabelDireccionVisita.setName("com.safe.entity.SoliEvalTer.direccionvisita"); // NOI18N
 
         jLabel17.setText("Descripción visita");
 
-        jLabel18.setText("Observaciones");
-
         jTextAreaDescVisita.setEditable(false);
+        jTextAreaDescVisita.setName("com.safe.entity.SoliEvalTer.descripcionvisita"); // NOI18N
         jScrollPane3.setViewportView(jTextAreaDescVisita);
-
-        jTextAreaObsVisita.setEditable(false);
-        jScrollPane4.setViewportView(jTextAreaObsVisita);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -2076,41 +2103,34 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jLabelRut)))
                     .addComponent(jLabelDireccionVisita, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18))
+                .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabelRut))
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabelTipoVisita))
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelDireccionVisita))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel18))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabelRut))
+                                .addGap(8, 8, 8)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabelTipoVisita))
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelDireccionVisita))
+                            .addComponent(jLabel17))
+                        .addGap(0, 14, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -2119,11 +2139,7 @@ public class Main extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -2131,9 +2147,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addContainerGap())
+                .addContainerGap(174, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Detalle", jPanel1);
@@ -2156,6 +2170,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Observaciones al supervisor");
 
@@ -2164,27 +2179,28 @@ public class Main extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(114, 114, 114)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(376, 376, 376)
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4))
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(216, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(287, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(130, 130, 130)
                 .addComponent(jLabel7)
-                .addGap(4, 4, 4)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -2195,14 +2211,14 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Fecha", "Hora", "Descripción"
+                "Fecha", "Descripción"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -2227,7 +2243,7 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -2249,14 +2265,14 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Fecha", "Hora", "Descripción"
+                "Fecha", "Descripción"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -2279,7 +2295,7 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -2308,10 +2324,10 @@ public class Main extends javax.swing.JFrame {
         evaluacionFormLayout.setVerticalGroup(
             evaluacionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(evaluacionFormLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -4184,12 +4200,12 @@ public class Main extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 25, Short.MAX_VALUE)
                     .addComponent(jPanelWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 25, Short.MAX_VALUE)))
         );
 
         pack();
@@ -4226,12 +4242,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuTerCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerCrearActionPerformed
-        // Nueva evaluación ????
         changePanel(evaluacionForm);
     }//GEN-LAST:event_jMenuTerCrearActionPerformed
 
     private void jMenuTerListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerListarActionPerformed
-        changePanel(evaluacionMain);
+        jMenuTerEngListarActionPerformed(evt);
     }//GEN-LAST:event_jMenuTerListarActionPerformed
 
     private void jMenuTerrenoEngMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuTerrenoEngMouseClicked
@@ -4240,23 +4255,32 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuTerEngListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerEngListarActionPerformed
         //listar solicitudes de evaluaciones en terreno
-        SolicitudService terreno = new SolicitudService(domain);
-        SoliEvalTer[] solicitudes = terreno.getCollection();
-        if(solicitudes != null ){
+        selectedEntity = null;
+        secondEntity = null;
+        if(token.getUserRole().equals("ROLE_SUPERVISOR")) {
+            jLabel7.setText("Observaciones al ingeniero");
+            jButton2.setText("Derivar al ingeniero");
+        }else if(token.getUserRole().equals("ROLE_ENGINEER")) {
+            jLabel7.setText("Observaciones al supervisor");
+            jButton2.setText("Derivar al supervisor");
+        }
+        Eval_Terr[] evaluaciones = evaluacionTerrenoService.getCollection();
+        if(evaluaciones != null ){
             DefaultTableModel model = (DefaultTableModel)jTable7.getModel();            
             model.setRowCount(0);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String createdAt, derivatedAt;
             Cliente cliente;
-            for(SoliEvalTer s: solicitudes){
-                cliente = clienteService.getOne((int)s.getClienteidcliente());
+            for(Eval_Terr e: evaluaciones){
+                SoliEvalTer solicitud = solicitudService.getOne(e.getSolievalteridsolicitud().intValue());
+                cliente = clienteService.getOne((int)solicitud.getClienteidcliente());
                 try {
-                    createdAt = date.format(df.parse(s.getFechacreacion()));
+                    createdAt = date.format(df.parse(solicitud.getFechacreacion()));
                 } catch (ParseException ex) {
                     createdAt = "";
                 }
                 try {
-                    derivatedAt = date.format(df.parse(s.getFechaderivacion()));
+                    derivatedAt = date.format(df.parse(solicitud.getFechaderivacion()));
                 } catch (ParseException ex) {
                     derivatedAt = "";
                 }
@@ -4264,13 +4288,12 @@ public class Main extends javax.swing.JFrame {
                 Object[] item = {
                     createdAt,
                     derivatedAt,
-                    //"TECNICO", //TODO: falta tecnico ,
-                    s.getTecnico().getNombresusuario(),
+                    "TECNICO", //TODO: falta tecnico ,
                     cliente.getRazonsocial(),
-                    SolicitudService.TIPOS[(int)s.getTipovisitteridtipovister()],
-                    SolicitudService.ESTADOS[(int)s.getEstadosolievalter()],
-                    s,
-                    s.getPdf(),
+                    SolicitudService.TIPOS[(int)solicitud.getTipovisitteridtipovister()],
+                    SolicitudService.ESTADOS[(int)solicitud.getEstadosolievalter()],
+                    solicitud,
+                    e,
                 };
                 model.addRow(item);
             }
@@ -4278,18 +4301,65 @@ public class Main extends javax.swing.JFrame {
         changePanel(evaluacionMain);
     }//GEN-LAST:event_jMenuTerEngListarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // derivar a supervisor y dejar registro en historico de ingeniero
-        
-        
+        if(token.getUserRole().equals("ROLE_SUPERVISOR")) {
+            //derivar a ingeniero    
+            Obs_Ingeniero observacion = new Obs_Ingeniero();
+            observacion.setObsing(jTextArea1.getText());
+            observacion.setEvalterridevalterr(((Eval_Terr)selectedEntity).getIdevalterr());
+            observacionService.saveIngeniero(observacion);
+            
+            SoliEvalTer solicitud = (SoliEvalTer)secondEntity;
+            solicitud.setEstadosolievalter(3);
+            solicitudService.save(solicitud);
+            
+            DefaultTableModel model = (DefaultTableModel)jTable3.getModel();
+            Object[] item = {
+                observacion.getFechahoraobsing(),
+                observacion.getObsing(),
+            };
+            model.addRow(item);
+            
+        }else if(token.getUserRole().equals("ROLE_ENGINEER")) {
+            // derivar a supervisor
+            Obs_Supervisor observacion = new Obs_Supervisor();
+            observacion.setObssupervisor(jTextArea1.getText());
+            observacion.setEvalterridevalterr(((Eval_Terr)selectedEntity).getIdevalterr());
+            observacionService.saveSupervisor(observacion);
+            
+            SoliEvalTer solicitud = (SoliEvalTer)secondEntity;
+            solicitud.setEstadosolievalter(2);
+            solicitudService.save(solicitud);
+            
+            DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
+            Object[] item = {
+                observacion.getFechahoraobssupervisor(),
+                observacion.getObssupervisor(),
+            };
+            model.addRow(item);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        //rechazar y derivar al tecnico en terreno y queda registrado en el historico del supervidor
+        //rechazar y derivar al tecnico en terreno y queda registrado en el historico del supervisor
+        Obs_Supervisor observacion = new Obs_Supervisor();
+        observacion.setObssupervisor(jTextArea1.getText());
+        observacion.setEvalterridevalterr(((Eval_Terr)selectedEntity).getIdevalterr());
+        observacionService.saveSupervisor(observacion);
+        
+        SoliEvalTer solicitud = (SoliEvalTer)secondEntity;
+        solicitud.setEstadosolievalter(5);
+        solicitudService.save(solicitud);
+        
+        DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
+        Object[] item = {
+            observacion.getFechahoraobssupervisor(),
+            observacion.getObssupervisor(),
+        };
+        model.addRow(item);
+        JOptionPane.showMessageDialog(null, "Se ha registrado la observacion de rechazo correctamente.");
+        evaluacionForm.setVisible(false);
+        jMenuTerEngListarActionPerformed(null);
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -4357,7 +4427,7 @@ public class Main extends javax.swing.JFrame {
         if(selectedEntity instanceof Cliente) {
             cliente = (Cliente)selectedEntity;
         }
-        BindComponent.setEntity(cliente, this);
+        Bind.setEntity(cliente, this);
         cliente.setEstadocliente(1);
         long idcliente = clienteService.save(cliente);
         cliente.setIdcliente(idcliente);
@@ -4402,25 +4472,7 @@ public class Main extends javax.swing.JFrame {
         if(selectedEntity instanceof Usuario) {
             usuario = (Usuario)selectedEntity;
         }
-        BindComponent.setEntity(usuario, this);
-        /*
-        usuario.setRunusuario(jTextField13.getText());
-        usuario.setNombresusuario(jTextField14.getText());
-        usuario.setAppaterno(jTextField15.getText());
-        usuario.setApmaterno(jTextField16.getText());        
-        try {
-            usuario.setFnacimientousuario(date.format(date.parse(jFormattedTextField3.getText())));
-        } catch (ParseException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
-        usuario.setSexousuarioIndex(jComboBox3.getSelectedIndex());
-        usuario.setPerfilidperfilIndex(jComboBox1.getSelectedIndex());
-        usuario.setEstadousuarioIndex(jComboBox2.getSelectedIndex());
-        /*
-        usuario.setTelusuario(jTextField20.getText());
-        usuario.setMailusuario(jTextField21.getText());
-        */
+        Bind.setEntity(usuario, this);
         usuario.setClienteidcliente(1); //TODO: debe elegirse de un combobox
         long id = usuarioService.save(usuario);
         usuario.setIdusuario(id);
@@ -4550,8 +4602,7 @@ public class Main extends javax.swing.JFrame {
         if (selectedEntity instanceof TipoCapacitacion){
             tipo = (TipoCapacitacion)selectedEntity;
         }
-        tipo.setDescripcap(jTextField30.getText());
-        tipo.setEstado(jComboBox5.getSelectedIndex() + 1);      
+        Bind.setEntity(tipo, this);
         long id = tipoCapacitacionService.save(tipo);
         tipo.setIdtipocap(id);
         jLabelTipoCapacitacionTitle.setText("Editar tipo de capacitación");
@@ -4779,10 +4830,7 @@ public class Main extends javax.swing.JFrame {
         if(selectedEntity instanceof TipoExamen) {
             tipo = (TipoExamen)selectedEntity;
         }
-        
-        tipo.setDescrip_exam(jTextField41.getText());        
-        tipo.setEstado(jComboBox18.getSelectedIndex() + 1);
-        
+        Bind.setEntity(tipo, this);
         long id = tipoExamenService.save(tipo);
         tipo.setIdtipoexam(id);
         selectedEntity = tipo;
@@ -4913,7 +4961,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton28;
     private javax.swing.JButton jButton29;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton30;
     private javax.swing.JButton jButton31;
     private javax.swing.JButton jButton32;
@@ -5029,7 +5076,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -5199,7 +5245,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane26;
     private javax.swing.JScrollPane jScrollPane27;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
@@ -5234,7 +5279,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextAreaDescVisita;
-    private javax.swing.JTextArea jTextAreaObsVisita;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;

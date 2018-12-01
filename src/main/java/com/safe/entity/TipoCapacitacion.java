@@ -43,5 +43,13 @@ public class TipoCapacitacion {
         this.estado = estado;
     }
     
+    public int getEstadoIndex() {
+        return (int)estado - 1;
+    }
+
+    public void setEstadoIndex(int estado) {
+        this.estado = estado + 1;
+    }
+    
     
 }
