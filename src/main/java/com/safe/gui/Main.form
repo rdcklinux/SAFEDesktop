@@ -284,9 +284,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="clienteMain">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Empresas"/>
         <Property name="opaque" type="boolean" value="false"/>
@@ -436,9 +433,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="clienteForm">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -739,9 +733,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="usuarioMain">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Usuarios"/>
         <Property name="opaque" type="boolean" value="false"/>
@@ -926,9 +917,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="usuarioForm">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -1234,9 +1222,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="tipoCapacitacionMain">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Capacitaciones"/>
         <Property name="opaque" type="boolean" value="false"/>
@@ -1360,9 +1345,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="tipoCapacitacionForm">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -1488,9 +1470,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="tipoExamenMain">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Capacitaciones"/>
         <Property name="opaque" type="boolean" value="false"/>
@@ -1610,9 +1589,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="tipoExamenForm">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -1738,9 +1714,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="evaluacionMain">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -1954,9 +1927,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="evaluacionForm">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -2425,9 +2395,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="planCapacitacionMain">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -2648,9 +2615,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="newPlanCapacitacionForm">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Nuevo plan anual"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -2812,9 +2776,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="planCapacitacionForm">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Plan de capacitaci&#xf3;n"/>
         <Property name="visible" type="boolean" value="true"/>
@@ -3953,9 +3914,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="planSaludMain">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -4149,9 +4107,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="newPlanSaludForm">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Nuevo plan salud"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -4309,9 +4264,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="planSaludForm">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Plan de salud"/>
         <Property name="visible" type="boolean" value="true"/>
@@ -5164,9 +5116,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="expositorMain">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -5177,24 +5126,24 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane18" alignment="0" pref="680" max="32767" attributes="0"/>
+                      <Component id="jScrollPane18" alignment="0" pref="851" max="32767" attributes="0"/>
                       <Component id="jLabel111" alignment="1" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel109" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel110" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel109" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel110" alignment="1" min="-2" pref="112" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jComboBoxEstado3" alignment="1" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jFormattedTextField16" min="-2" pref="72" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jFormattedTextField17" min="-2" pref="72" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jFormattedTextField16" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jFormattedTextField17" min="-2" pref="100" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jButton36" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="jComboBoxEstado3" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -5214,14 +5163,14 @@
                       <Component id="jFormattedTextField16" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel110" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jComboBoxEstado3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel109" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jScrollPane18" min="-2" pref="200" max="-2" attributes="0"/>
-                  <EmptySpace pref="80" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane18" pref="296" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -5229,8 +5178,11 @@
       <SubComponents>
         <Component class="javax.swing.JComboBox" name="jComboBoxEstado3">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel(com.safe.service.SolicitudService.ESTADOS)" type="code"/>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="2">
+                <StringItem index="0" value="Activo"/>
+                <StringItem index="1" value="Desactivo"/>
+              </StringArray>
             </Property>
           </Properties>
           <Events>
@@ -5243,17 +5195,17 @@
         <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField16">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format format="dd/MM/yyyy" subtype="-1" type="1"/>
+              <Format subtype="2" type="1"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="dd/mm/yyyy"/>
+            <Property name="toolTipText" type="java.lang.String" value="dd-mm-yyyy"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField17">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format subtype="0" type="1"/>
+              <Format subtype="2" type="1"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="dd/mm/yyyy"/>
+            <Property name="toolTipText" type="java.lang.String" value="dd-mm-yyyy"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton36">
@@ -5351,9 +5303,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="expositorForm">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -5405,13 +5354,13 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
-              <Component id="jLabelUsuarioTitle1" alignment="1" max="32767" attributes="0"/>
+              <Component id="jLabelExpositorTitle" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jLabelUsuarioTitle1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelExpositorTitle" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
@@ -5452,13 +5401,13 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabelUsuarioTitle1">
+        <Component class="javax.swing.JLabel" name="jLabelExpositorTitle">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Creaci&#xf3;n de expositor"/>
+            <Property name="text" type="java.lang.String" value="Crear expositor"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel113">
@@ -5467,6 +5416,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField28">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Expositor.runexpositor" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel114">
           <Properties>
@@ -5474,6 +5426,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField31">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Expositor.nombreexpositor" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel119">
           <Properties>
@@ -5481,6 +5436,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField34">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Expositor.telexpositor" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel120">
           <Properties>
@@ -5488,6 +5446,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField35">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Expositor.mailexpositor" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton37">
           <Properties>
@@ -5521,9 +5482,13 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox12">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.UsuarioService.ESTADOS, 1, 4))" type="code"/>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="2">
+                <StringItem index="0" value="Desactivo"/>
+                <StringItem index="1" value="Activo"/>
+              </StringArray>
             </Property>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Expositor.estadoexpositorIndex" noResource="true"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -5533,9 +5498,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="medicoMain">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -5719,9 +5681,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="medicoForm">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -5837,7 +5796,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Creaci&#xf3;n de m&#xe9;dico"/>
+            <Property name="text" type="java.lang.String" value="Crear m&#xe9;dico"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel117">
@@ -5919,9 +5878,6 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="calendarMain">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>

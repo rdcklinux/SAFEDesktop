@@ -9,6 +9,7 @@ import com.safe.entity.Capacitacion;
 import com.safe.entity.Cliente;
 import com.safe.entity.Eval_Terr;
 import com.safe.entity.Expositor;
+import com.safe.entity.Medico;
 import com.safe.entity.Obs_Ingeniero;
 import com.safe.entity.Obs_Supervisor;
 import com.safe.entity.PlanCapacitacion;
@@ -37,6 +38,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
+import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -240,7 +242,24 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
-    private void algo(java.awt.event.MouseEvent evt){
+    private void editarExpositor(MouseEvent evt) {
+        int row = jTable13.rowAtPoint(evt.getPoint());
+        int col = jTable13.columnAtPoint(evt.getPoint());
+        if(col == 5){
+            Expositor expositor = (Expositor)jTable13.getValueAt(row, col);
+            selectedEntity = expositor;
+            Bind.setComponent(expositor, this);
+            jButton39.setEnabled(true);
+            jLabelExpositorTitle.setText("Editar expositor");
+            changePanel(expositorForm);
+        }
+    }
+    
+    private void editarMedico(java.awt.event.MouseEvent evt){
+        
+    }
+    
+    private void editarOtro(java.awt.event.MouseEvent evt){
         
     }
     
@@ -282,6 +301,14 @@ public class Main extends javax.swing.JFrame {
                 self.editarTipoExamen(evt);
             }
         });  
+        
+        jTable13.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                self.editarExpositor(evt);
+            }
+        });
+        
         Vector<TipoCapacitacion> tiposCap = new Vector<>();
         for(TipoCapacitacion t: tipoCapacitacionService.getCollection()){
             tiposCap.add(t);
@@ -295,6 +322,7 @@ public class Main extends javax.swing.JFrame {
         jTable7.getColumnModel().getColumn(7).setCellRenderer(new ButtonTableComponent("PDF"));
         jTable8.getColumnModel().getColumn(3).setCellRenderer(new ButtonTableComponent("[+]"));
         jTable8.getColumnModel().getColumn(4).setCellRenderer(new ButtonTableComponent("[-]"));
+        jTable13.getColumnModel().getColumn(5).setCellRenderer(new ButtonTableComponent("[+]"));
         jTable21.getColumnModel().getColumn(2).setCellRenderer(new ButtonTableComponent("[+]"));
     }
     
@@ -819,7 +847,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane18 = new javax.swing.JScrollPane();
         jTable13 = new javax.swing.JTable();
         expositorForm = new javax.swing.JInternalFrame();
-        jLabelUsuarioTitle1 = new javax.swing.JLabel();
+        jLabelExpositorTitle = new javax.swing.JLabel();
         jLabel113 = new javax.swing.JLabel();
         jTextField28 = new javax.swing.JTextField();
         jLabel114 = new javax.swing.JLabel();
@@ -1100,7 +1128,6 @@ public class Main extends javax.swing.JFrame {
 
         jMenuEngineer.add(jMenuTerrenoEng);
 
-        clienteMain.setBorder(null);
         clienteMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         clienteMain.setTitle("Empresas");
         clienteMain.setOpaque(false);
@@ -1190,7 +1217,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        clienteForm.setBorder(null);
         clienteForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         clienteForm.setVisible(true);
 
@@ -1376,7 +1402,6 @@ public class Main extends javax.swing.JFrame {
 
         jTextField1.getAccessibleContext().setAccessibleName("");
 
-        usuarioMain.setBorder(null);
         usuarioMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         usuarioMain.setTitle("Usuarios");
         usuarioMain.setOpaque(false);
@@ -1479,7 +1504,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        usuarioForm.setBorder(null);
         usuarioForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         usuarioForm.setVisible(true);
 
@@ -1670,7 +1694,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tipoCapacitacionMain.setBorder(null);
         tipoCapacitacionMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         tipoCapacitacionMain.setTitle("Capacitaciones");
         tipoCapacitacionMain.setOpaque(false);
@@ -1759,7 +1782,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        tipoCapacitacionForm.setBorder(null);
         tipoCapacitacionForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         tipoCapacitacionForm.setVisible(true);
 
@@ -1843,7 +1865,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tipoExamenMain.setBorder(null);
         tipoExamenMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         tipoExamenMain.setTitle("Capacitaciones");
         tipoExamenMain.setOpaque(false);
@@ -1925,7 +1946,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        tipoExamenForm.setBorder(null);
         tipoExamenForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         tipoExamenForm.setVisible(true);
 
@@ -2009,7 +2029,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        evaluacionMain.setBorder(null);
         evaluacionMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         evaluacionMain.setVisible(true);
 
@@ -2127,7 +2146,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(80, Short.MAX_VALUE))
         );
 
-        evaluacionForm.setBorder(null);
         evaluacionForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         evaluacionForm.setVisible(true);
 
@@ -2417,7 +2435,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        planCapacitacionMain.setBorder(null);
         planCapacitacionMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         planCapacitacionMain.setVisible(true);
 
@@ -2557,7 +2574,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        newPlanCapacitacionForm.setBorder(null);
         newPlanCapacitacionForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         newPlanCapacitacionForm.setTitle("Nuevo plan anual");
         newPlanCapacitacionForm.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -2663,7 +2679,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        planCapacitacionForm.setBorder(null);
         planCapacitacionForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         planCapacitacionForm.setTitle("Plan de capacitación");
         planCapacitacionForm.setVisible(true);
@@ -3217,7 +3232,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        planSaludMain.setBorder(null);
         planSaludMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         planSaludMain.setVisible(true);
 
@@ -3341,7 +3355,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        newPlanSaludForm.setBorder(null);
         newPlanSaludForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         newPlanSaludForm.setTitle("Nuevo plan salud");
         newPlanSaludForm.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -3443,7 +3456,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
-        planSaludForm.setBorder(null);
         planSaludForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         planSaludForm.setTitle("Plan de salud");
         planSaludForm.setVisible(true);
@@ -3806,22 +3818,21 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        expositorMain.setBorder(null);
         expositorMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         expositorMain.setVisible(true);
 
-        jComboBoxEstado3.setModel(new javax.swing.DefaultComboBoxModel(com.safe.service.SolicitudService.ESTADOS));
+        jComboBoxEstado3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Desactivo" }));
         jComboBoxEstado3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxEstado3ActionPerformed(evt);
             }
         });
 
-        jFormattedTextField16.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        jFormattedTextField16.setToolTipText("dd/mm/yyyy");
+        jFormattedTextField16.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
+        jFormattedTextField16.setToolTipText("dd-mm-yyyy");
 
-        jFormattedTextField17.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        jFormattedTextField17.setToolTipText("dd/mm/yyyy");
+        jFormattedTextField17.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
+        jFormattedTextField17.setToolTipText("dd-mm-yyyy");
 
         jButton36.setText("Buscar");
         jButton36.addActionListener(new java.awt.event.ActionListener() {
@@ -3876,22 +3887,22 @@ public class Main extends javax.swing.JFrame {
             .addGroup(expositorMainLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(expositorMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
+                    .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
                     .addComponent(jLabel111, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(expositorMainLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(expositorMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel109, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel110, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(expositorMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel109, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel110, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(expositorMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBoxEstado3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(expositorMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(expositorMainLayout.createSequentialGroup()
-                                .addComponent(jFormattedTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jFormattedTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFormattedTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFormattedTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton36)))))
+                                .addComponent(jButton36))
+                            .addComponent(jComboBoxEstado3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         expositorMainLayout.setVerticalGroup(
@@ -3905,30 +3916,37 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jFormattedTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel110))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(expositorMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxEstado3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel109))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        expositorForm.setBorder(null);
         expositorForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         expositorForm.setVisible(true);
 
-        jLabelUsuarioTitle1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabelUsuarioTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelUsuarioTitle1.setText("Creación de expositor");
+        jLabelExpositorTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabelExpositorTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelExpositorTitle.setText("Crear expositor");
 
         jLabel113.setText("RUN");
 
+        jTextField28.setName("com.safe.entity.Expositor.runexpositor"); // NOI18N
+
         jLabel114.setText("Nombres");
+
+        jTextField31.setName("com.safe.entity.Expositor.nombreexpositor"); // NOI18N
 
         jLabel119.setText("Fono Contacto");
 
+        jTextField34.setName("com.safe.entity.Expositor.telexpositor"); // NOI18N
+
         jLabel120.setText("Mail Contacto");
+
+        jTextField35.setName("com.safe.entity.Expositor.mailexpositor"); // NOI18N
 
         jButton37.setText("Guardar");
         jButton37.addActionListener(new java.awt.event.ActionListener() {
@@ -3954,7 +3972,8 @@ public class Main extends javax.swing.JFrame {
 
         jLabel122.setText("Estado");
 
-        jComboBox12.setModel(new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.UsuarioService.ESTADOS, 1, 4)));
+        jComboBox12.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Desactivo", "Activo" }));
+        jComboBox12.setName("com.safe.entity.Expositor.estadoexpositorIndex"); // NOI18N
 
         javax.swing.GroupLayout expositorFormLayout = new javax.swing.GroupLayout(expositorForm.getContentPane());
         expositorForm.getContentPane().setLayout(expositorFormLayout);
@@ -3994,12 +4013,12 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton37)))
                 .addContainerGap())
-            .addComponent(jLabelUsuarioTitle1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelExpositorTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         expositorFormLayout.setVerticalGroup(
             expositorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(expositorFormLayout.createSequentialGroup()
-                .addComponent(jLabelUsuarioTitle1)
+                .addComponent(jLabelExpositorTitle)
                 .addGap(21, 21, 21)
                 .addGroup(expositorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(expositorFormLayout.createSequentialGroup()
@@ -4029,7 +4048,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        medicoMain.setBorder(null);
         medicoMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         medicoMain.setVisible(true);
 
@@ -4136,13 +4154,12 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(80, Short.MAX_VALUE))
         );
 
-        medicoForm.setBorder(null);
         medicoForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         medicoForm.setVisible(true);
 
         jLabelUsuarioTitle2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabelUsuarioTitle2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelUsuarioTitle2.setText("Creación de médico");
+        jLabelUsuarioTitle2.setText("Crear médico");
 
         jLabel117.setText("RUN");
 
@@ -4261,7 +4278,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        calendarMain.setBorder(null);
         calendarMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         calendarMain.setVisible(true);
 
@@ -4898,7 +4914,7 @@ public class Main extends javax.swing.JFrame {
                     date.format(fechacreado),
                     date.format(new Date()), //TODO: falta fecha de inicio
                     date.format(new Date()), //TODO: falta fecha de fin
-                    cliente.getRutcliente(), //TODO: falta nombre cliente
+                    cliente.getRutcliente(),
                     "0", //TODO: falta cantidad de sesiones
                     CapacitacionService.ESTADOS[(int)p.getEstadoplancap()],
                     p,
@@ -5030,19 +5046,53 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxEstado3ActionPerformed
 
     private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
-        // TODO add your handling code here:
+        // buscar expositores
+        jTable13.setRowSorter(null);
+        RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
+            @Override
+            public boolean include(RowFilter.Entry entry) {
+              if(entry.getValue(1) == null) return false;
+              String fecha = (String) entry.getValue(0);              
+              String estado = (String) entry.getValue(4);
+              String esSearch = jComboBoxEstado3.getSelectedItem().toString();
+              String fiSearch = jFormattedTextField16.getText();
+              String ffSearch = jFormattedTextField17.getText();
+              return (estado.equals(esSearch) || esSearch.length() == 0) &&
+              (fecha.compareTo(fiSearch) >= 0 || fiSearch.length() == 0) && 
+              (fecha.compareTo(ffSearch) <= 0 || ffSearch.length() == 0);
+            }
+        };
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTable13.getModel());
+        sorter.setRowFilter(filter);
+        jTable13.setRowSorter(sorter);
     }//GEN-LAST:event_jButton36ActionPerformed
 
     private void jButton39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton39ActionPerformed
-        // TODO add your handling code here:
+        // eliminar expositor
+        Expositor expositor = (Expositor)selectedEntity;
+        expositorService.delete(expositor.getIdexpositor());
+        expositorForm.setVisible(false);
+        jMenuItem5ActionPerformed(evt);
     }//GEN-LAST:event_jButton39ActionPerformed
 
     private void jButton38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton38ActionPerformed
-        // TODO add your handling code here:
+        // cerrar ventana editar|crear expositor
+        expositorForm.setVisible(false);
+        jMenuItem5ActionPerformed(evt);
     }//GEN-LAST:event_jButton38ActionPerformed
 
     private void jButton37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton37ActionPerformed
-        // TODO add your handling code here:
+        // guardar expositor
+        Expositor expositor = new Expositor();
+        if(selectedEntity instanceof Expositor) {
+            expositor = (Expositor)selectedEntity;
+        }
+        Bind.setEntity(expositor, this);
+        long id = expositorService.save(expositor);
+        expositor.setIdexpositor(id);
+        selectedEntity = expositor;
+        jLabelExpositorTitle.setText("Editar expositor");
+        JOptionPane.showMessageDialog(null, "Expositor guardado correctamente.");
     }//GEN-LAST:event_jButton37ActionPerformed
 
     private void jComboBoxEstado4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstado4ActionPerformed
@@ -5050,7 +5100,25 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxEstado4ActionPerformed
 
     private void jButton40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton40ActionPerformed
-        // TODO add your handling code here:
+        // buscar medicos
+        jTable19.setRowSorter(null);
+        RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
+            @Override
+            public boolean include(RowFilter.Entry entry) {
+              if(entry.getValue(1) == null) return false;
+              String fecha = (String) entry.getValue(0);              
+              String estado = (String) entry.getValue(4);
+              String esSearch = jComboBoxEstado4.getSelectedItem().toString();
+              String fiSearch = jFormattedTextField18.getText();
+              String ffSearch = jFormattedTextField19.getText();
+              return (estado.equals(esSearch) || esSearch.length() == 0) &&
+              (fecha.compareTo(fiSearch) >= 0 || fiSearch.length() == 0) && 
+              (fecha.compareTo(ffSearch) <= 0 || ffSearch.length() == 0);
+            }
+        };
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTable19.getModel());
+        sorter.setRowFilter(filter);
+        jTable19.setRowSorter(sorter);
     }//GEN-LAST:event_jButton40ActionPerformed
 
     private void jButton41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton41ActionPerformed
@@ -5158,21 +5226,65 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // listado de expositores
+        selectedEntity = null;
+        Expositor[] expositores = expositorService.getCollection();
+        if(expositores != null ){
+            DefaultTableModel model = (DefaultTableModel)jTable13.getModel();                    
+            model.setRowCount(0);
+            for(Expositor e: expositores){
+                Object[] item = {
+                    date.format(new Date()), //TODO: falta fecha                    
+                    e.getNombreexpositor(),
+                    e.getTelexpositor(),
+                    e.getMailexpositor(),
+                    e.getEstadoexpositor()==1?"Activo":"Desactivo",
+                    e,
+                };
+                model.addRow(item);
+            }
+        }
         changePanel(expositorMain);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // crear expositor
+        selectedEntity = null;
+        jLabelExpositorTitle.setText("Crear expositor");
+        Expositor expositor = new Expositor();
+        expositor.setEstadoexpositor(1);
+        Bind.setComponent(expositor, this);
         changePanel(expositorForm);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuMedCrear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMedCrear1ActionPerformed
         // crear médico
+        selectedEntity = null;
+        jLabelExpositorTitle.setText("Crear médico");
+        Medico medico = new Medico();
+        medico.setEstadomedico(1);
+        Bind.setComponent(medico, this);
         changePanel(medicoForm);
     }//GEN-LAST:event_jMenuMedCrear1ActionPerformed
 
     private void jMenuMedListar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMedListar1ActionPerformed
         // listado de médicos
+        selectedEntity = null;
+        Medico[] medicos = medicoService.getCollection();
+        if(medicos != null ){
+            DefaultTableModel model = (DefaultTableModel)jTable19.getModel();                    
+            model.setRowCount(0);
+            for(Medico m: medicos){
+                Object[] item = {
+                    date.format(new Date()), //TODO: falta fecha                    
+                    m.getNombremedico(),
+                    m.getTelmedico(),
+                    m.getMailmedico(),
+                    m.getEstadomedico()==1?"Activo":"Desactivo",
+                    m,
+                };
+                model.addRow(item);
+            }
+        }
         changePanel(medicoMain);
     }//GEN-LAST:event_jMenuMedListar1ActionPerformed
 
@@ -5472,13 +5584,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel99;
     private javax.swing.JLabel jLabelClienteTitle;
     private javax.swing.JLabel jLabelDireccionVisita;
+    private javax.swing.JLabel jLabelExpositorTitle;
     private javax.swing.JLabel jLabelProfile;
     private javax.swing.JLabel jLabelRut;
     private javax.swing.JLabel jLabelTipoCapacitacionTitle;
     private javax.swing.JLabel jLabelTipoExamenTitle;
     private javax.swing.JLabel jLabelTipoVisita;
     private javax.swing.JLabel jLabelUsuarioTitle;
-    private javax.swing.JLabel jLabelUsuarioTitle1;
     private javax.swing.JLabel jLabelUsuarioTitle2;
     private javax.swing.JMenuBar jMenuAdmin;
     private javax.swing.JMenu jMenuCal;
@@ -5640,4 +5752,5 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JInternalFrame usuarioForm;
     private javax.swing.JInternalFrame usuarioMain;
     // End of variables declaration//GEN-END:variables
+
 }

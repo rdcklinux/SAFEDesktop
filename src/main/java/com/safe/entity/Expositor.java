@@ -4,23 +4,11 @@ package com.safe.entity;
 import java.io.Serializable;
 
 public class Expositor implements Serializable{
-    
-    
     private long idexpositor;
-    
-    
     private String runexpositor;
-    
-    
     private String nombreexpositor;
-    
-    
     private String telexpositor;
-    
-    
     private String mailexpositor;
-    
-    
     private long estadoexpositor;
 
     public long getIdexpositor() {
@@ -68,6 +56,14 @@ public class Expositor implements Serializable{
     }
 
     public void setEstadoexpositor(long estadoexpositor) {
+        this.estadoexpositor = estadoexpositor;
+    }
+    
+    public int getEstadoexpositorIndex() {
+        return (new Long(estadoexpositor)).intValue();
+    }
+
+    public void setEstadoexpositorIndex(int estadoexpositor) {
         this.estadoexpositor = estadoexpositor;
     }
 
