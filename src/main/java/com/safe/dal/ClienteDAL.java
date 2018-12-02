@@ -23,12 +23,29 @@ public class ClienteDAL extends DAL {
     
     public Cliente byId(int id) throws UnirestException{
         
-        String url = getURI("cliente/readOneCliente/%d");
+        String url = getURI("cliente/readOneClienteById/%d");
         HttpResponse<Cliente[]> response = Unirest.get(String.format(url, id)).asObject(Cliente[].class);
         Cliente[] clientes = response.getBody();
         
         
         return clientes[0];
+    }
+    
+    public Cliente byIdRut(String rut) throws UnirestException {
+        Cliente cliente = new Cliente();
+        cliente.setRutcliente(rut);
+        String url = getURI("cliente/readOneClienteByRut/");
+        HttpResponse<Cliente[]> response = Unirest.post(String.format(url))
+        .header("accept", "application/json")
+        .header("Content-Type", "application/json")
+        .body(cliente)
+        .asObject(Cliente[].class);
+        
+        Cliente[] clientes = response.getBody();
+        
+        if(clientes.length > 0) return clientes[0];
+        
+        return null;
     }
     
     public Cliente[] all() throws UnirestException{
@@ -61,10 +78,10 @@ public class ClienteDAL extends DAL {
         return cliente.getIdcliente();
     }
     
-    public void delete(long id) throws UnirestException {
-        String url = getURI("cliente/deleteCliente/%d/0");
+    public void delete(String rut) throws UnirestException {
+        String url = getURI("cliente/deleteCliente/%s/0");
         
-        HttpResponse<String> postResponse = Unirest.put(String.format(url, id))
+        HttpResponse<String> postResponse = Unirest.put(String.format(url, rut))
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
         .body(String.class)

@@ -3,7 +3,6 @@ package com.safe.entity;
 
 import com.safe.service.SolicitudService;
 import java.io.Serializable;
-import java.util.Date;
 
 public class SoliEvalTer implements Serializable{
     

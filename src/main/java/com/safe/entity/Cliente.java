@@ -4,41 +4,17 @@ package com.safe.entity;
 import java.io.Serializable;
 
 public class Cliente implements Serializable{
-    
-    
     private long idcliente;
-    
-    
     private String razonsocial;
-    
-    
     private String rutcliente;
-    
-    
     private String girocliente;
-    
-    
     private String direccioncliente;
-    
-    
     private String teloficina;
-    
-    
     private String nombrecontacto;
-    
-    
     private String fonocontacto;
-    
-    
     private String mailcontacto;
-    
-    
     private String cargocontacto;
-    
-    
     private String observacionescliente;
-    
-    
     private long estadocliente;
 
     public long getIdcliente() {

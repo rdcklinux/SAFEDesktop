@@ -3,15 +3,6 @@ package com.safe.entity;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Rodrigo
- */
-
-
-
-
-
 public class Expositor implements Serializable{
     
     

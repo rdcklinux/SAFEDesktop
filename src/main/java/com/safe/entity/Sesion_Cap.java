@@ -2,48 +2,25 @@
 package com.safe.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
-public class Sesion_Cap implements Serializable{
-    
-    
+public class Sesion_Cap implements Serializable{    
     private long idsesioncap;
-    
-    
     private long numsesioncap;
-    
-    
     private String nombresesion;
-    
-    
     private long cupossesion;
-    
-    
-    private Date fechasesion;
-    
-    
-    private Date horainiciocap;
-    
-    
-    private Date horaterminocap;
-    
-    
+    private String fechasesion;
+    private String horainiciocap;
+    private String horaterminocap;
     private String descripcionsesion;
-    
-    
     private long estadosesioncap;
-    
-    
     private long capacitacionidcap;
-    
-    
     private long expositoridexpositor;
 
     public long getIdsesioncap() {
         return idsesioncap;
     }
 
-    public void setIdsesioncap(long idsesioncap) {
+    public void setIdsesioncap(Long idsesioncap) {
         this.idsesioncap = idsesioncap;
     }
 
@@ -51,7 +28,7 @@ public class Sesion_Cap implements Serializable{
         return numsesioncap;
     }
 
-    public void setNumsesioncap(long numsesioncap) {
+    public void setNumsesioncap(Long numsesioncap) {
         this.numsesioncap = numsesioncap;
     }
 
@@ -67,31 +44,39 @@ public class Sesion_Cap implements Serializable{
         return cupossesion;
     }
 
-    public void setCupossesion(long cupossesion) {
+    public void setCupossesion(Long cupossesion) {
         this.cupossesion = cupossesion;
     }
+    
+    public String getCupossesionString() {
+        return (new Long(this.cupossesion)).toString();
+    }
+    
+    public void setCupossesionString(String cupossesion) {
+        this.cupossesion = Long.parseLong(cupossesion);
+    }
 
-    public Date getFechasesion() {
+    public String getFechasesion() {
         return fechasesion;
     }
 
-    public void setFechasesion(Date fechasesion) {
+    public void setFechasesion(String fechasesion) {
         this.fechasesion = fechasesion;
     }
 
-    public Date getHorainiciocap() {
+    public String getHorainiciocap() {
         return horainiciocap;
     }
 
-    public void setHorainiciocap(Date horainiciocap) {
+    public void setHorainiciocap(String horainiciocap) {
         this.horainiciocap = horainiciocap;
     }
 
-    public Date getHoraterminocap() {
+    public String getHoraterminocap() {
         return horaterminocap;
     }
 
-    public void setHoraterminocap(Date horaterminocap) {
+    public void setHoraterminocap(String horaterminocap) {
         this.horaterminocap = horaterminocap;
     }
 
@@ -107,7 +92,7 @@ public class Sesion_Cap implements Serializable{
         return estadosesioncap;
     }
 
-    public void setEstadosesioncap(long estadosesioncap) {
+    public void setEstadosesioncap(Long estadosesioncap) {
         this.estadosesioncap = estadosesioncap;
     }
 
@@ -115,7 +100,7 @@ public class Sesion_Cap implements Serializable{
         return capacitacionidcap;
     }
 
-    public void setCapacitacionidcap(long capacitacionidcap) {
+    public void setCapacitacionidcap(Long capacitacionidcap) {
         this.capacitacionidcap = capacitacionidcap;
     }
 
@@ -123,7 +108,7 @@ public class Sesion_Cap implements Serializable{
         return expositoridexpositor;
     }
 
-    public void setExpositoridexpositor(long expositoridexpositor) {
+    public void setExpositoridexpositor(Long expositoridexpositor) {
         this.expositoridexpositor = expositoridexpositor;
     }
 
@@ -131,9 +116,4 @@ public class Sesion_Cap implements Serializable{
     public String toString() {
         return "Sesion_Cap{" + "idsesioncap=" + idsesioncap + ", numsesioncap=" + numsesioncap + ", nombresesion=" + nombresesion + ", cupossesion=" + cupossesion + ", fechasesion=" + fechasesion + ", horainiciocap=" + horainiciocap + ", horaterminocap=" + horaterminocap + ", descripcionsesion=" + descripcionsesion + ", estadosesioncap=" + estadosesioncap + ", capacitacionidcap=" + capacitacionidcap + ", expositoridexpositor=" + expositoridexpositor + '}';
     }
-
-    
-    
-    
-
 }

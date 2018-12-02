@@ -34,6 +34,18 @@ public class ClienteService {
         return cliente;
     }
     
+    
+    public Cliente getOneByRut(String rut){
+        Cliente cliente = null;
+        try {
+            cliente = clienteDAL.byIdRut(rut);
+        } catch (UnirestException ex) {
+            Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return cliente;
+    }
+    
     public Cliente[] getCollection(){
         Cliente[] clientes = null;
         try {
@@ -64,9 +76,9 @@ public class ClienteService {
         return id;
     }
     
-    public void delete(long id) {
+    public void delete(String rut) {
         try {
-            clienteDAL.delete(id);
+            clienteDAL.delete(rut);
         } catch (UnirestException ex) {
             Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
         }
