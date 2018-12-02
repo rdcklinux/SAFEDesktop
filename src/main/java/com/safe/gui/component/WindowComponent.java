@@ -11,7 +11,7 @@ import java.awt.Window;
  *
  * @author cetecom
  */
-public  class WindowComponenet {
+public  class WindowComponent {
     private static java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
     
     public static void centerWindow(Window object){

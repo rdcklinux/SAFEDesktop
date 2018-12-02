@@ -285,11 +285,8 @@
     <Container class="javax.swing.JInternalFrame" name="clienteMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
-        <Property name="closable" type="boolean" value="true"/>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Empresas"/>
         <Property name="opaque" type="boolean" value="false"/>
@@ -440,10 +437,9 @@
     <Container class="javax.swing.JInternalFrame" name="clienteForm">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
+        <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
 
@@ -744,11 +740,8 @@
     <Container class="javax.swing.JInternalFrame" name="usuarioMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
-        <Property name="closable" type="boolean" value="true"/>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Usuarios"/>
         <Property name="opaque" type="boolean" value="false"/>
@@ -934,10 +927,9 @@
     <Container class="javax.swing.JInternalFrame" name="usuarioForm">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
+        <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
 
@@ -1243,11 +1235,8 @@
     <Container class="javax.swing.JInternalFrame" name="tipoCapacitacionMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
-        <Property name="closable" type="boolean" value="true"/>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Capacitaciones"/>
         <Property name="opaque" type="boolean" value="false"/>
@@ -1372,10 +1361,9 @@
     <Container class="javax.swing.JInternalFrame" name="tipoCapacitacionForm">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
+        <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
 
@@ -1501,11 +1489,8 @@
     <Container class="javax.swing.JInternalFrame" name="tipoExamenMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
-        <Property name="closable" type="boolean" value="true"/>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Capacitaciones"/>
         <Property name="opaque" type="boolean" value="false"/>
@@ -1626,10 +1611,9 @@
     <Container class="javax.swing.JInternalFrame" name="tipoExamenForm">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
+        <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
 
@@ -1755,11 +1739,8 @@
     <Container class="javax.swing.JInternalFrame" name="evaluacionMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
-        <Property name="closable" type="boolean" value="true"/>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -1974,11 +1955,8 @@
     <Container class="javax.swing.JInternalFrame" name="evaluacionForm">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
-        <Property name="closable" type="boolean" value="true"/>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -2448,11 +2426,8 @@
     <Container class="javax.swing.JInternalFrame" name="planCapacitacionMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
-        <Property name="closable" type="boolean" value="true"/>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -2674,10 +2649,9 @@
     <Container class="javax.swing.JInternalFrame" name="newPlanCapacitacionForm">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
+        <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Nuevo plan anual"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Cursor Por defecto"/>
@@ -2839,10 +2813,9 @@
     <Container class="javax.swing.JInternalFrame" name="planCapacitacionForm">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
+        <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Plan de capacitaci&#xf3;n"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -2850,13 +2823,13 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jLabel136" alignment="1" max="32767" attributes="0"/>
+              <Component id="jLabel137" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jTabbedPane2" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
-              <Component id="jLabel136" alignment="1" max="32767" attributes="0"/>
-              <Component id="jLabel137" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -2912,7 +2885,7 @@
                                   <Component id="jButton21" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="859" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="1025" max="32767" attributes="0"/>
                                   <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -2941,7 +2914,7 @@
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane12" pref="618" max="32767" attributes="0"/>
+                          <Component id="jScrollPane12" pref="311" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -3102,7 +3075,7 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="jFormattedTextField8" min="-2" pref="75" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                                  <Component id="jScrollPane13" pref="521" max="32767" attributes="0"/>
+                                                  <Component id="jScrollPane13" pref="687" max="32767" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="jTextField22" min="-2" pref="182" max="-2" attributes="0"/>
@@ -3179,7 +3152,7 @@
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="jButton22" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane4" pref="453" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" pref="146" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton49" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -3413,33 +3386,44 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel70" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="jTextField23" min="-2" pref="104" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton23" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel71" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton24" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace pref="576" max="32767" attributes="0"/>
-                      </Group>
                       <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane15" alignment="0" pref="934" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace pref="1031" max="32767" attributes="0"/>
                                   <Component id="jButton50" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jScrollPane15" alignment="0" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jTextField23" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                              <Component id="jLabel70" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="jLabel139" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jComboBox19" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="jButton23" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="jButton24" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  <Component id="jLabel71" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -3450,15 +3434,17 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel70" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel71" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel139" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jTextField23" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jButton23" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jButton24" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jComboBox19" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane15" pref="600" max="32767" attributes="0"/>
+                          <Component id="jScrollPane15" pref="293" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton50" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -3469,7 +3455,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel70">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Agregar trabajador por RUN"/>
+                    <Property name="text" type="java.lang.String" value="RUN trabajador"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextField23">
@@ -3478,6 +3464,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Agregar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton23ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel71">
                   <Properties>
@@ -3563,6 +3552,22 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closePlanCapacitacionForm"/>
                   </Events>
                 </Component>
+                <Component class="javax.swing.JComboBox" name="jComboBox19">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="com.safe.entity.Sesion_Cap.capacitacionidcap" noResource="true"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel139">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Capacitaci&#xf3;n"/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel9">
@@ -3588,7 +3593,7 @@
                                   <Component id="jLabel73" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel74" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="274" max="32767" attributes="0"/>
+                                  <EmptySpace pref="440" max="32767" attributes="0"/>
                                   <Component id="jButton25" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
@@ -3624,7 +3629,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton26" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane16" pref="594" max="32767" attributes="0"/>
+                          <Component id="jScrollPane16" pref="287" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton51" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -3765,48 +3770,53 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane17" alignment="0" pref="934" max="32767" attributes="0"/>
+                              <Component id="jScrollPane17" alignment="0" pref="1100" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Component id="jButton52" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel75" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jComboBox10" min="-2" pref="327" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                              <Component id="jLabel75" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jComboBox10" min="-2" pref="327" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="448" max="-2" attributes="0"/>
                               <Component id="jLabel76" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jLabel77" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="441" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="356" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel75" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jComboBox10" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jScrollPane17" min="-2" pref="326" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="jButton52" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel75" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel76" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jComboBox10" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel77" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="689" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -3815,7 +3825,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel75">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Sesi&#xf3;n"/>
+                    <Property name="text" type="java.lang.String" value="Capacitaci&#xf3;n"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="jComboBox10">
@@ -3944,11 +3954,8 @@
     <Container class="javax.swing.JInternalFrame" name="planSaludMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
-        <Property name="closable" type="boolean" value="true"/>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -4143,10 +4150,9 @@
     <Container class="javax.swing.JInternalFrame" name="newPlanSaludForm">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
+        <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Nuevo plan salud"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Cursor Por defecto"/>
@@ -4304,10 +4310,9 @@
     <Container class="javax.swing.JInternalFrame" name="planSaludForm">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
+        <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="title" type="java.lang.String" value="Plan de salud"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -5160,11 +5165,8 @@
     <Container class="javax.swing.JInternalFrame" name="expositorMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
-        <Property name="closable" type="boolean" value="true"/>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -5350,10 +5352,9 @@
     <Container class="javax.swing.JInternalFrame" name="expositorForm">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
+        <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
 
@@ -5533,11 +5534,8 @@
     <Container class="javax.swing.JInternalFrame" name="medicoMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
-        <Property name="closable" type="boolean" value="true"/>
         <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
@@ -5722,10 +5720,9 @@
     <Container class="javax.swing.JInternalFrame" name="medicoForm">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
-            <CompoundBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
+        <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
 
@@ -5922,6 +5919,10 @@
     </Container>
     <Container class="javax.swing.JInternalFrame" name="calendarMain">
       <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
+        </Property>
+        <Property name="defaultCloseOperation" type="int" value="1"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
 
@@ -6120,75 +6121,61 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="960" max="32767" attributes="0"/>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  <Component id="jPanelWelcome" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanelWelcome" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="768" max="32767" attributes="0"/>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  <Component id="jPanelWelcome" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="239" max="-2" attributes="0"/>
+              <Component id="jPanelWelcome" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="427" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JPanel" name="jPanelWelcome">
-      <Properties>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[720, 400]"/>
-        </Property>
-      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="242" max="-2" attributes="0"/>
-                  <Component id="jLabel2" min="-2" pref="142" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jLabelProfile" min="-2" pref="141" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="237" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="293" max="-2" attributes="0"/>
+                          <Component id="jLabel2" min="-2" pref="142" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelProfile" min="-2" pref="141" max="-2" attributes="0"/>
+                          <EmptySpace pref="305" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jLabel1" alignment="1" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
-              <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="133" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="160" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabelProfile" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelProfile" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel1">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="48" style="1"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Bienvenido"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="2"/>
@@ -6199,6 +6186,15 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="Administrador"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="48" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Bienvenido"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -5,7 +5,7 @@
  */
 package com.safe.gui;
 
-import com.safe.gui.component.WindowComponenet;
+import com.safe.gui.component.WindowComponent;
 import com.safe.service.TokenManager;
 import java.util.HashMap;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -39,7 +39,7 @@ public class Login extends javax.swing.JFrame {
         impersonateUserRole = args[4];
         token = new TokenManager(roleMap, domain);
         
-        WindowComponenet.centerWindow(this);
+        WindowComponent.centerWindow(this);
         this.main = new Main(this, token, args);
         java.awt.event.KeyAdapter adapter = new java.awt.event.KeyAdapter() {
             @Override
@@ -192,7 +192,7 @@ public class Login extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
+        try {            
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
