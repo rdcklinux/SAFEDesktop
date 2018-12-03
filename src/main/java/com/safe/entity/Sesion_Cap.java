@@ -4,17 +4,17 @@ package com.safe.entity;
 import java.io.Serializable;
 
 public class Sesion_Cap implements Serializable{    
-    private long idsesioncap;
-    private long numsesioncap;
-    private String nombresesion;
-    private long cupossesion;
-    private String fechasesion;
-    private String horainiciocap;
-    private String horaterminocap;
-    private String descripcionsesion;
-    private long estadosesioncap;
-    private long capacitacionidcap;
-    private long expositoridexpositor;
+    private long idsesioncap = 0;
+    private long numsesioncap = 0;
+    private String nombresesion = "";
+    private long cupossesion = 0;
+    private String fechasesion = "";
+    private String horainiciocap = "";
+    private String horaterminocap = "";
+    private String descripcionsesion = "";
+    private long estadosesioncap = 1;
+    private long capacitacionidcap = 0;
+    private long expositoridexpositor = 0;
 
     public long getIdsesioncap() {
         return idsesioncap;

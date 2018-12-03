@@ -12,24 +12,12 @@ import java.io.Serializable;
 
 
 
-public class List_Trab_Cap implements Serializable{
-    
-    
-    private long idlistrabcap;
-    
-    
-    private long presenteCap;
-    
-    
-    private long estadoCap;
-    
-    
-    private long usuarioidusuario;
-    
-    
-    private long lisasiscapidlistacap;
-    
-    
+public class List_Trab_Cap implements Serializable {
+    private long idlistrabcap = 0;
+    private long presenteCap = 1;
+    private long estadoCap = 1;
+    private long usuarioidusuario = 0;
+    private long lisasiscapidlistacap = 0;
     private long certificadoidcertificado;
 
     public long getIdlistrabcap() {

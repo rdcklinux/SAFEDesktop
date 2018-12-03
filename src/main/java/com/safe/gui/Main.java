@@ -9,6 +9,8 @@ import com.safe.entity.Capacitacion;
 import com.safe.entity.Cliente;
 import com.safe.entity.Eval_Terr;
 import com.safe.entity.Expositor;
+import com.safe.entity.List_Asis_Cap;
+import com.safe.entity.List_Trab_Cap;
 import com.safe.entity.Medico;
 import com.safe.entity.Obs_Ingeniero;
 import com.safe.entity.Obs_Supervisor;
@@ -22,11 +24,13 @@ import com.safe.entity.TipoExamen;
 import com.safe.entity.Usuario;
 import com.safe.gui.component.Bind;
 import com.safe.gui.component.WindowComponent;
+import com.safe.service.AsistenciaTrabajadorService;
 import com.safe.service.CapacitacionService;
 import com.safe.service.TipoCapacitacionService;
 import com.safe.service.ClienteService;
 import com.safe.service.EvaluacionTerrenoService;
 import com.safe.service.ExpositorService;
+import com.safe.service.ListTrabajadorService;
 import com.safe.service.MedicoService;
 import com.safe.service.ObservacionService;
 import com.safe.service.PlanCapacitacionService;
@@ -47,17 +51,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Properties;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -87,12 +90,16 @@ public class Main extends javax.swing.JFrame {
     private final SesionService sesionService;
     private final ExpositorService expositorService;
     private final MedicoService medicoService;
+    private final ListTrabajadorService listTrabajadorService;
+    private final AsistenciaTrabajadorService asistenciaTrabajadorService;
+    
     
     private javax.swing.JMenu jMenuProfile;
     private java.awt.Component horizontalGlue;
     private final String domain;
     private Object selectedEntity;
     private Object secondEntity;
+    LinkedHashMap<Long, Capacitacion> mapCapcitacion;
     
     private final SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
     private final SimpleDateFormat dateInverted = new SimpleDateFormat("yyyy-MM-dd");
@@ -123,6 +130,8 @@ public class Main extends javax.swing.JFrame {
         sesionService = new SesionService(this.domain);
         expositorService = new ExpositorService(this.domain);
         medicoService  = new MedicoService(this.domain);
+        listTrabajadorService = new ListTrabajadorService(this.domain);
+        asistenciaTrabajadorService = new AsistenciaTrabajadorService(this.domain);
         
         int sessionTime;
         try {
@@ -358,6 +367,8 @@ public class Main extends javax.swing.JFrame {
         jTable7.getColumnModel().getColumn(7).setCellRenderer(new ButtonTableComponent("PDF"));
         jTable8.getColumnModel().getColumn(3).setCellRenderer(new ButtonTableComponent("[+]"));
         jTable8.getColumnModel().getColumn(4).setCellRenderer(new ButtonTableComponent("[-]"));
+        jTable10.getColumnModel().getColumn(7).setCellRenderer(new ButtonTableComponent("[-]"));
+        jTable11.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("[ ]"));
         jTable13.getColumnModel().getColumn(5).setCellRenderer(new ButtonTableComponent("[+]"));
         jTable19.getColumnModel().getColumn(5).setCellRenderer(new ButtonTableComponent("[+]"));
         jTable21.getColumnModel().getColumn(2).setCellRenderer(new ButtonTableComponent("[+]"));
@@ -471,7 +482,7 @@ public class Main extends javax.swing.JFrame {
     
     private void loadGestionCapacitacion(long capplanid){
         Capacitacion[] capacitaciones = capacitacionService.getCollection();
-        HashMap<Long, Capacitacion> mapCapcitacion = new HashMap<>();
+        this.mapCapcitacion = new LinkedHashMap<>();
         HashMap<Long, Expositor> mapExpositor = new HashMap<>();
         
         Expositor[] expositores = expositorService.getCollection();
@@ -485,8 +496,9 @@ public class Main extends javax.swing.JFrame {
             modelCapacitacion.setRowCount(0);
             for(Capacitacion c: capacitaciones){
                 if(c.getPlancapidplancap() != capplanid) continue;
-                mapCapcitacion.put(c.getIdcap(), c);
+                this.mapCapcitacion.put(c.getIdcap(), c);
                 jComboBox7.addItem(c.getNombrecapacitacion());
+                jComboBox19.addItem(c.getNombrecapacitacion());
                 Object[] item = {
                     c.getNombrecapacitacion(),
                     c.getTipocapidtipocap(),
@@ -504,7 +516,7 @@ public class Main extends javax.swing.JFrame {
             DefaultTableModel modelSession = (DefaultTableModel)jTable9.getModel();
             modelSession.setRowCount(0);
             for(Sesion_Cap s: sesionesCap){
-                cap = mapCapcitacion.get(s.getCapacitacionidcap());
+                cap = this.mapCapcitacion.get(s.getCapacitacionidcap());
                 if(cap == null) continue;
                 Object[] item = {
                     cap.getNombrecapacitacion(),
@@ -3010,7 +3022,7 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Creado el", "RUN", "Nombre", "Apellido", "Fono Contacto", "Email", "Quitar"
+                "Creado el", "Capacitación", "RUN", "Nombre", "Apellido", "Fono Contacto", "Email", "Quitar"
             }
         ));
         jScrollPane15.setViewportView(jTable10);
@@ -3091,7 +3103,7 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Creado el", "RUN", "Nombre", "Apellido", "Fono Contacto", "Email", "Quitar"
+                "Creado el", "RUN", "Nombre", "Apellido", "Fono Contacto", "Email", "Asistió"
             }
         ));
         jScrollPane16.setViewportView(jTable11);
@@ -5455,11 +5467,43 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
         // agreagr trabajador a la lista de participantes
+        
         String rut = jTextField23.getText();
-        Usuario trabajadro = usuarioService.getOne(rut);
-        if(trabajadro.getPerfilidperfil() != 4) {
+        Usuario trabajador = usuarioService.getOne(rut);
+        
+        if(trabajador == null || trabajador.getPerfilidperfil() != 4) {
             JOptionPane.showMessageDialog(null, "No se ha encontado al trabajador.");
             return;
+        }
+        int idx = jComboBox19.getSelectedIndex();
+        long capid = (long)this.mapCapcitacion.keySet().toArray()[idx];
+        
+        Sesion_Cap[] sesiones = sesionService.getCapacitacionCollection();
+        DefaultTableModel model = (DefaultTableModel)jTable10.getModel();
+        for(Sesion_Cap s: sesiones){
+            if( s.getCapacitacionidcap() != capid) continue;
+            List_Trab_Cap list = new List_Trab_Cap();
+            list.setUsuarioidusuario(trabajador.getIdusuario());
+            
+            List_Asis_Cap asis = new List_Asis_Cap();
+            asis.setSesioncapidsesioncap(s.getIdsesioncap());
+            long id_asis = asistenciaTrabajadorService.saveListCap(asis);  //TODO falla al insertar el WS
+            list.setLisasiscapidlistacap(id_asis);
+            
+            list.setCertificadoidcertificado(1); //TODO debe ser nulo ya que el certificado se genera despues
+            listTrabajadorService.saveListCap(list);
+            Object[] item = {
+                date.format(new Date()),
+                this.mapCapcitacion.get(capid).getNombrecapacitacion(),
+                trabajador.getRunusuario(),
+                trabajador.getNombresusuario(),
+                trabajador.getAppaterno()+" "+trabajador.getApmaterno(),
+                trabajador.getTelusuario(),
+                trabajador.getMailusuario(),
+                trabajador,
+            };
+            model.addRow(item);
+            JOptionPane.showMessageDialog(null, "Trabajador agregado correctamente.");
         }
     }//GEN-LAST:event_jButton23ActionPerformed
 
