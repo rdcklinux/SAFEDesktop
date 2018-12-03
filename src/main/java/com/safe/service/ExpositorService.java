@@ -24,38 +24,38 @@ public class ExpositorService {
     }
     
     public Expositor getOne(int id){
-        Expositor cliente = null;
+        Expositor expositor = null;
         try {
-            cliente = expositorDAL.byId(id);
+            expositor = expositorDAL.byId(id);
         } catch (UnirestException ex) {
             Logger.getLogger(ExpositorService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return cliente;
+        return expositor;
     }
     
     public Expositor[] getCollection(){
-        Expositor[] clientes = null;
+        Expositor[] expositores = null;
         try {
-            clientes = expositorDAL.all();
+            expositores = expositorDAL.all();
         } catch (UnirestException ex) {
             Logger.getLogger(ExpositorService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return clientes;
+        return expositores;
     }
     
-    public long save(Expositor cliente) {
+    public long save(Expositor expositor) {
         long id = 0;
-        if(cliente.getIdexpositor()> 0){
+        if(expositor.getIdexpositor()> 0){
             try {
-                id = expositorDAL.update(cliente);
+                id = expositorDAL.update(expositor);
             } catch (UnirestException ex) {
                 Logger.getLogger(ExpositorService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else {
             try {
-                id = expositorDAL.create(cliente);
+                id = expositorDAL.create(expositor);
             } catch (UnirestException ex) {
                 Logger.getLogger(ExpositorService.class.getName()).log(Level.SEVERE, null, ex);
             }

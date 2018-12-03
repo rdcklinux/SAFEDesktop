@@ -5227,6 +5227,9 @@
             <Property name="text" type="java.lang.String" value="Filtro de Fecha"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel110MouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel111">
           <Properties>
@@ -5234,7 +5237,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Listado de evaluaciones en terreno"/>
+            <Property name="text" type="java.lang.String" value="Listado de expositores"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
@@ -5484,7 +5487,7 @@
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="2">
-                <StringItem index="0" value="Desactivo"/>
+                <StringItem index="0" value="Desactivado"/>
                 <StringItem index="1" value="Activo"/>
               </StringArray>
             </Property>
@@ -5512,18 +5515,21 @@
                       <Component id="jLabel116" alignment="1" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel112" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel115" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel112" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel115" alignment="1" min="-2" pref="112" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jComboBoxEstado4" alignment="1" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jFormattedTextField18" min="-2" pref="72" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jFormattedTextField19" min="-2" pref="72" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jComboBoxEstado4" pref="246" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                  <Component id="jFormattedTextField18" min="-2" pref="84" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jFormattedTextField19" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jButton40" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -5538,7 +5544,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Component id="jLabel116" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButton40" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jFormattedTextField19" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -5551,8 +5557,8 @@
                       <Component id="jLabel112" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jScrollPane25" min="-2" pref="200" max="-2" attributes="0"/>
-                  <EmptySpace pref="80" max="32767" attributes="0"/>
+                  <Component id="jScrollPane25" pref="250" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -5560,8 +5566,11 @@
       <SubComponents>
         <Component class="javax.swing.JComboBox" name="jComboBoxEstado4">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel(com.safe.service.SolicitudService.ESTADOS)" type="code"/>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="2">
+                <StringItem index="0" value="Activo"/>
+                <StringItem index="1" value="Desactivado"/>
+              </StringArray>
             </Property>
           </Properties>
           <Events>
@@ -5574,17 +5583,20 @@
         <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField18">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format format="dd/MM/yyyy" subtype="-1" type="1"/>
+              <Format subtype="0" type="1"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="dd/mm/yyyy"/>
+            <Property name="toolTipText" type="java.lang.String" value="dd-mm-yyyy"/>
           </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+          </AccessibilityProperties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField19">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
               <Format subtype="0" type="1"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="dd/mm/yyyy"/>
+            <Property name="toolTipText" type="java.lang.String" value="dd-mm-yyyy"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton40">
@@ -5741,13 +5753,13 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
-              <Component id="jLabelUsuarioTitle2" alignment="1" max="32767" attributes="0"/>
+              <Component id="jLabelMedicoTitle" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jLabelUsuarioTitle2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelMedicoTitle" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -5790,7 +5802,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabelUsuarioTitle2">
+        <Component class="javax.swing.JLabel" name="jLabelMedicoTitle">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="14" style="1"/>
@@ -5805,6 +5817,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField32">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Medico.runmedico" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel118">
           <Properties>
@@ -5812,6 +5827,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField33">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Medico.nombremedico" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel121">
           <Properties>
@@ -5819,6 +5837,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField36">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Medico.telmedico" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel123">
           <Properties>
@@ -5826,6 +5847,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField37">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Medico.mailmedico" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton41">
           <Properties>
@@ -5859,9 +5883,13 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox17">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel(Arrays.copyOfRange(com.safe.service.UsuarioService.ESTADOS, 1, 4))" type="code"/>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="2">
+                <StringItem index="0" value="Desactivado"/>
+                <StringItem index="1" value="Activo"/>
+              </StringArray>
             </Property>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Medico.estadomedicoIndex" noResource="true"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -5873,6 +5901,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField38">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Medico.universidadMed" noResource="true"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -5953,8 +5984,16 @@
             <Property name="text" type="java.lang.String" value="Buscar"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton44ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="com.toedter.calendar.JCalendar" name="jCalendar1">
+          <Properties>
+            <Property name="date" type="java.util.Date" editor="org.netbeans.beaninfo.editors.DateEditor">
+              <SerializedValue value="-84,-19,0,5,115,114,0,14,106,97,118,97,46,117,116,105,108,46,68,97,116,101,104,106,-127,1,75,89,116,25,3,0,0,120,112,119,8,0,0,1,103,118,-123,77,-8,120"/>
+            </Property>
+          </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane26">
           <AuxValues>
@@ -5966,7 +6005,7 @@
             <Component class="javax.swing.JTable" name="jTable20">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="3" rowCount="4">
+                  <Table columnCount="3" rowCount="0">
                     <Column editable="false" title="Nombre" type="java.lang.Object"/>
                     <Column editable="false" title="Hora Inicio" type="java.lang.Object"/>
                     <Column editable="false" title="Hora Fin" type="java.lang.Object"/>
@@ -6032,6 +6071,7 @@
         <Component class="javax.swing.JLabel" name="jLabel129">
           <Properties>
             <Property name="text" type="java.lang.String" value="NOMBRE DEL CLIENTE"/>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Cliente.razonsocial" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel130">
@@ -6042,6 +6082,7 @@
         <Component class="javax.swing.JLabel" name="jLabel131">
           <Properties>
             <Property name="text" type="java.lang.String" value="99999999-9"/>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Cliente.rutcliente" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>

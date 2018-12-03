@@ -3,27 +3,13 @@ package com.safe.entity;
 
 import java.io.Serializable;
 
-public class Medico implements Serializable{
-    
-    
+public class Medico implements Serializable {
     private long idmedico;
-    
-    
     private String runmedico;
-    
-    
     private String nombremedico;
-    
-    
     private String universidadMed;
-    
-    
     private String mailmedico;
-    
-    
     private String telmedico;
-    
-    
     private long estadomedico;
 
     public long getIdmedico() {
@@ -79,6 +65,14 @@ public class Medico implements Serializable{
     }
 
     public void setEstadomedico(long estadomedico) {
+        this.estadomedico = estadomedico;
+    }
+    
+    public int getEstadomedicoIndex() {
+        return (new Long(estadomedico)).intValue();
+    }
+
+    public void setEstadomedicoIndex(int estadomedico) {
         this.estadomedico = estadomedico;
     }
 
