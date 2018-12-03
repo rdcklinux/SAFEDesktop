@@ -20,6 +20,33 @@ public class UserDAL extends DAL {
         this.domain = domain;
         initObjectMapper();
     }
+    
+    public Usuario login(String run, String password) throws UnirestException {
+        
+        String url = getURI("usuarios/login");
+        Usuario usuario = new Usuario();
+        usuario.setRunusuario(run);
+        usuario.setClaveusuario(password);
+        usuario.setNombresusuario("");
+        usuario.setAppaterno("");
+        usuario.setApmaterno("");
+        usuario.setFnacimientousuario("");
+        usuario.setTelusuario("");
+        usuario.setMailusuario("");
+        usuario.setSexousuario("");
+        
+        HttpResponse<Usuario[]> response = Unirest.post(String.format(url))
+        .header("accept", "application/json")
+        .header("Content-Type", "application/json")
+        .body(usuario)
+        .asObject(Usuario[].class);
+        
+        Usuario[] usuarios = response.getBody();
+        
+        if(usuarios.length > 0) return usuarios[0];
+        
+        return null;
+    }
           
     public Usuario byRun(String run) throws UnirestException {
         
@@ -45,7 +72,6 @@ public class UserDAL extends DAL {
         .header("Content-Type", "application/json")
         .body(usuario).asString();
         
-        //TODO: debe retornar un ID de cliente
         return usuario.getIdusuario();
     }
     
