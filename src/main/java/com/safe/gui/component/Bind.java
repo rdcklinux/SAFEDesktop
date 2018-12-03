@@ -77,9 +77,9 @@ public class Bind {
                 if(!(c.get(container) instanceof JComponent)) continue;
                 if(Modifier.isFinal(c.getModifiers())) continue;
                 component = (JComponent)c.get(container);
+                if(!component.getAccessibleContext().getAccessibleParent().equals(scope)) continue;
                 if(component.getName() == null) continue;
                 if(!component.getName().startsWith(name)) continue;
-                if(component.getParent() != scope) continue;
                 attribute = component.getName().replace(name + ".", "");
                 attribute = (attribute.charAt(0)+"").toUpperCase() + attribute.substring(1);
                 Method method = null;

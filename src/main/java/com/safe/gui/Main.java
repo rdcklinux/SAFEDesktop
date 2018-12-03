@@ -242,8 +242,8 @@ public class Main extends javax.swing.JFrame {
             selectedEntity = evaluacion;
             secondEntity = solicitud;
             Cliente cliente = clienteService.getOne((int)solicitud.getClienteidcliente());
-            Bind.setComponent(cliente, this, evaluacionForm);
-            Bind.setComponent(solicitud, this, evaluacionForm);
+            Bind.setComponent(cliente, this, jPanel5);
+            Bind.setComponent(solicitud, this, jPanel5);
 
             Obs_Supervisor[] obsS = observacionService.getSupervisorCollection();
             if(obsS != null){
@@ -1183,7 +1183,6 @@ public class Main extends javax.swing.JFrame {
 
         clienteMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         clienteMain.setTitle("Empresas");
-        clienteMain.setOpaque(false);
         clienteMain.setVisible(true);
 
         jButton5.setText("Buscar");
@@ -1457,7 +1456,6 @@ public class Main extends javax.swing.JFrame {
 
         usuarioMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         usuarioMain.setTitle("Usuarios");
-        usuarioMain.setOpaque(false);
         usuarioMain.setVisible(true);
 
         jButton9.setText("Buscar");
@@ -1749,7 +1747,6 @@ public class Main extends javax.swing.JFrame {
 
         tipoCapacitacionMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         tipoCapacitacionMain.setTitle("Capacitaciones");
-        tipoCapacitacionMain.setOpaque(false);
         tipoCapacitacionMain.setVisible(true);
 
         jButton16.setText("Buscar");
@@ -1920,7 +1917,6 @@ public class Main extends javax.swing.JFrame {
 
         tipoExamenMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         tipoExamenMain.setTitle("Capacitaciones");
-        tipoExamenMain.setOpaque(false);
         tipoExamenMain.setVisible(true);
 
         jButton45.setText("Buscar");
@@ -4269,6 +4265,11 @@ public class Main extends javax.swing.JFrame {
         jLabel125.setText("Universidad");
 
         jTextField38.setName("com.safe.entity.Medico.universidadMed"); // NOI18N
+        jTextField38.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField38ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout medicoFormLayout = new javax.swing.GroupLayout(medicoForm.getContentPane());
         medicoForm.getContentPane().setLayout(medicoFormLayout);
@@ -4283,15 +4284,15 @@ public class Main extends javax.swing.JFrame {
                                 .addGroup(medicoFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel118, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel117))
-                                .addGap(27, 27, 27)
-                                .addGroup(medicoFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField33, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                                    .addComponent(jTextField32)))
+                                .addGap(24, 24, 24)
+                                .addGroup(medicoFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField33, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField32, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(medicoFormLayout.createSequentialGroup()
-                                .addComponent(jLabel125)
+                                .addComponent(jLabel125, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField38, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                                .addComponent(jTextField38)))
+                        .addGap(18, 49, Short.MAX_VALUE)
                         .addGroup(medicoFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(medicoFormLayout.createSequentialGroup()
                                 .addComponent(jLabel124)
@@ -4343,7 +4344,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jComboBox17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel125))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addGroup(medicoFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton41)
                     .addComponent(jButton42)
@@ -5358,7 +5359,7 @@ public class Main extends javax.swing.JFrame {
         jLabelExpositorTitle.setText("Crear médico");
         Medico medico = new Medico();
         medico.setEstadomedico(1);
-        Bind.setComponent(medico, this);
+        Bind.setComponent(medico, this, medicoForm);
         changePanel(medicoForm);
     }//GEN-LAST:event_jMenuMedCrear1ActionPerformed
 
@@ -5386,7 +5387,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // mostrar calendario
-        Bind.setComponent(new Cliente(), this);
+        Bind.setComponent(new Cliente(), this, calendarMain);
         int cbindex = jComboBox11.getSelectedIndex();
         Sesion_Cap[] capacitaciones = null;
         Sesion_Salud[] salud = null;
@@ -5451,7 +5452,7 @@ public class Main extends javax.swing.JFrame {
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
         // crear una nueva sesion de capacitacion
         Sesion_Cap sesion = new Sesion_Cap();
-        Bind.setEntity(sesion, this);
+        Bind.setEntity(sesion, this, jPanel7);
         sesion.setEstadosesioncap(1L);
         sesionService.saveCapacitacion(sesion);
         Object[] item = {
@@ -5524,8 +5525,12 @@ public class Main extends javax.swing.JFrame {
         // buscar cliente para calendario
         String rut = jTextField39.getText();
         Cliente cliente = clienteService.getOneByRut(rut);
-        Bind.setComponent(cliente, this);
+        Bind.setComponent(cliente, this, calendarMain);
     }//GEN-LAST:event_jButton44ActionPerformed
+
+    private void jTextField38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField38ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField38ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame calendarMain;
