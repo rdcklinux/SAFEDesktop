@@ -41,13 +41,15 @@ public class PlanCapacitacionDAL extends DAL {
     
     public long create(PlanCapacitacion plan) throws UnirestException {
         String url = getURI("planCapacitacion/createPlanCapSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<PlanCapacitacion[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(plan).asString();
+        .body(plan).asObject(PlanCapacitacion[].class);
         
-        //TODO: debe retornar un ID de cliente
-        return plan.getIdplancap();
+        PlanCapacitacion[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdplancap();
+        
+        return 0;
     }
     
     public long update(PlanCapacitacion capacitacion) throws UnirestException {

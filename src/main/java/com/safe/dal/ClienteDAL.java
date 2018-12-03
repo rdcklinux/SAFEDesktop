@@ -38,8 +38,7 @@ public class ClienteDAL extends DAL {
         HttpResponse<Cliente[]> response = Unirest.post(String.format(url))
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(cliente)
-        .asObject(Cliente[].class);
+        .body(cliente).asObject(Cliente[].class);
         
         Cliente[] clientes = response.getBody();
         
@@ -58,13 +57,15 @@ public class ClienteDAL extends DAL {
     
     public long create(Cliente cliente) throws UnirestException {
         String url = getURI("cliente/createClienteSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<Cliente[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(cliente).asString();
+        .body(cliente).asObject(Cliente[].class);
         
-        //TODO: debe retornar un ID de cliente
-        return cliente.getIdcliente();
+        Cliente[] clientes = result.getBody();
+        if(clientes.length > 0) return clientes[0].getIdcliente();
+        
+        return 0;
     }
     
     public long update(Cliente cliente) throws UnirestException {

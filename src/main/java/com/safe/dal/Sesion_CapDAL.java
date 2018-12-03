@@ -41,12 +41,15 @@ public class Sesion_CapDAL extends DAL {
     
     public long create(Sesion_Cap sesion) throws UnirestException {
         String url = getURI("sesionCap/createSesionCapSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<Sesion_Cap[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(sesion).asString();
+        .body(sesion).asObject(Sesion_Cap[].class);
         
-        return sesion.getIdsesioncap();
+        Sesion_Cap[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdsesioncap();
+        
+        return 0;
     }
     
     public long update(Sesion_Cap sesion) throws UnirestException {

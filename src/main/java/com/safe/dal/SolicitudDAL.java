@@ -37,12 +37,15 @@ public class SolicitudDAL extends DAL {
     
     public long create(SoliEvalTer solicitud) throws UnirestException {
         String url = getURI("SolicitudEvalTerreno/createSoliEvalTerSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<SoliEvalTer[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(solicitud).asString();
+        .body(solicitud).asObject(SoliEvalTer[].class);
         
-        return solicitud.getIdsolicitud();
+        SoliEvalTer[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdsolicitud();
+        
+        return 0;
     }
     
     public long update(SoliEvalTer solicitud) throws UnirestException {

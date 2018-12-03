@@ -41,13 +41,13 @@ public class CertificadoDAL extends DAL {
     
     public long create(Certificado cert) throws UnirestException {
         String url = getURI("certificado/createCertificadoSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<Certificado[]> certs = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(cert).asString();
+        .body(cert).asObject(Certificado[].class);
         
         //TODO: debe retornar un ID de cliente
-        return cert.getIdcertificado();
+        return certs.getBody()[0].getIdcertificado();
     }
     
     public long update(Certificado cert) throws UnirestException {

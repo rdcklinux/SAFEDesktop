@@ -67,12 +67,15 @@ public class UserDAL extends DAL {
     
     public long create(Usuario usuario) throws UnirestException {
         String url = getURI("usuarios/createUsuarioSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<Usuario[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(usuario).asString();
+        .body(usuario).asObject(Usuario[].class);
         
-        return usuario.getIdusuario();
+        Usuario[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdusuario();
+        
+        return 0;
     }
     
     public long update(Usuario usuario) throws UnirestException {

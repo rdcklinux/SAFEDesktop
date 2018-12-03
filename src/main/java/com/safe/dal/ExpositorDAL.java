@@ -41,13 +41,15 @@ public class ExpositorDAL extends DAL {
     
     public long create(Expositor expositor) throws UnirestException {
         String url = getURI("expositor/createExpositorSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<Expositor[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(expositor).asString();
+        .body(expositor).asObject(Expositor[].class);
         
-        //TODO: debe retornar un ID de cliente
-        return expositor.getIdexpositor();
+        Expositor[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdexpositor();
+        
+        return 0;
     }
     
     public long update(Expositor expositor) throws UnirestException {

@@ -40,12 +40,15 @@ public class ListTrabSaludDAL extends DAL {
     
     public long create(ListTrabSalud lista) throws UnirestException {
         String url = getURI("listaTrabajadoresSalud/createListTrabSaludSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<ListTrabSalud[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(lista).asString();
+        .body(lista).asObject(ListTrabSalud[].class);
         
-        return lista.getIdlistrabsalud();
+        ListTrabSalud[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdlistrabsalud();
+        
+        return 0;
     }
     
     public long update(ListTrabSalud lista) throws UnirestException {

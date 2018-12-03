@@ -41,13 +41,15 @@ public class TipoCapacitacionDAL extends DAL {
     
     public long create(TipoCapacitacion tipo) throws UnirestException {
         String url = getURI("tipoCap/createTipoCapSP");
-        HttpResponse<TipoCapacitacion[]> tipos = Unirest.post(url)
+        HttpResponse<TipoCapacitacion[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
         .body(tipo).asObject(TipoCapacitacion[].class);
         
-        //TODO: debe retornar un ID       
-        return tipos.getBody()[0].getIdtipocap();
+        TipoCapacitacion[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdtipocap();
+        
+        return 0;
     }
     
     public long update(TipoCapacitacion tipo) throws UnirestException {

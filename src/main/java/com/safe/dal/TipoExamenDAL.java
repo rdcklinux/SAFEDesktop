@@ -41,13 +41,15 @@ public class TipoExamenDAL extends DAL {
     
     public long create(TipoExamen tipo) throws UnirestException {
         String url = getURI("tipoExa/createTipoExaSP");
-        HttpResponse<TipoExamen[]> tipos = Unirest.post(url)
+        HttpResponse<TipoExamen[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
         .body(tipo).asObject(TipoExamen[].class);
         
-        //TODO: debe retornar un ID
-        return tipos.getBody()[0].getIdtipoexam();
+        TipoExamen[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdtipoexam();
+        
+        return 0;
     }
     
     public long update(TipoExamen tipo) throws UnirestException {

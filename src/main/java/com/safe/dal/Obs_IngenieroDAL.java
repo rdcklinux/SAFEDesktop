@@ -41,12 +41,15 @@ public class Obs_IngenieroDAL extends DAL {
     
     public long create(Obs_Ingeniero obs) throws UnirestException {
         String url = getURI("obsIngeniero/createObsIngSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<Obs_Ingeniero[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(obs).asString();
+        .body(obs).asObject(Obs_Ingeniero[].class);
         
-        return obs.getIdobsingeniero();
+        Obs_Ingeniero[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdobsingeniero();
+        
+        return 0;
     }
     
     public long update(Obs_Ingeniero obs) throws UnirestException {

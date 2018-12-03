@@ -41,13 +41,15 @@ public class ListTrabCapDAL extends DAL {
     
     public long create(List_Trab_Cap lista) throws UnirestException {
         String url = getURI("listaTrabajadoresCap/createListTrabCapSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<List_Trab_Cap[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(lista).asString();
+        .body(lista).asObject(List_Trab_Cap[].class);
         
-        //TODO: debe retornar un ID de cliente
-        return lista.getIdlistrabcap();
+        List_Trab_Cap[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdlistrabcap();
+        
+        return 0;
     }
     
     public long update(List_Trab_Cap lista) throws UnirestException {

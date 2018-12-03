@@ -41,13 +41,15 @@ public class MedicoDAL extends DAL {
     
     public long create(Medico medico) throws UnirestException {
         String url = getURI("medico/createMedicoSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<Medico[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(medico).asString();
+        .body(medico).asObject(Medico[].class);
         
-        //TODO: debe retornar un ID de cliente
-        return medico.getIdmedico();
+        Medico[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdmedico();
+        
+        return 0;
     }
     
     public long update(Medico medico) throws UnirestException {

@@ -41,13 +41,15 @@ public class EvaluacionTerrenoDAL extends DAL {
     
     public long create(Eval_Terr evaluacion) throws UnirestException {
         String url = getURI("evalTerreno/createEvalTerrenoSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<Eval_Terr[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(evaluacion).asString();
+        .body(evaluacion).asObject(Eval_Terr[].class);
         
-        //TODO: debe retornar un ID de cliente
-        return evaluacion.getIdevalterr();
+        Eval_Terr[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdevalterr();
+        
+        return 0;
     }
     
     public long update(Eval_Terr evaluacion) throws UnirestException {

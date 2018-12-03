@@ -41,13 +41,15 @@ public class Obs_SupervisorDAL extends DAL {
     
     public long create(Obs_Supervisor obs) throws UnirestException {
         String url = getURI("obsSupervisor/createObsSupSP");
-        HttpResponse<String> result = Unirest.post(url)
+        HttpResponse<Obs_Supervisor[]> result = Unirest.post(url)
         .header("accept", "application/json")
         .header("Content-Type", "application/json")
-        .body(obs).asString();
+        .body(obs).asObject(Obs_Supervisor[].class);
         
-        //TODO: debe retornar un ID de cliente
-        return obs.getIdobssupervisor();
+        Obs_Supervisor[] entities = result.getBody();
+        if(entities.length > 0) return entities[0].getIdobssupervisor();
+        
+        return 0;
     }
     
     public long update(Obs_Supervisor obs) throws UnirestException {
