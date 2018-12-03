@@ -167,7 +167,7 @@ public class Main extends javax.swing.JFrame {
         if(col == 7){                        
             Cliente cliente = (Cliente)jTable4.getValueAt(row, col);
             selectedEntity = cliente;
-            Bind.setComponent(cliente, this);
+            Bind.setComponent(cliente, this, clienteForm);
             jButton8.setEnabled(true);
             jLabelClienteTitle.setText("Editar empresa");
             changePanel(clienteForm);
@@ -180,7 +180,7 @@ public class Main extends javax.swing.JFrame {
         if(col == 7){
             Usuario usuario = (Usuario)jTable5.getValueAt(row, col);
             selectedEntity = usuario;
-            Bind.setComponent(usuario, this);
+            Bind.setComponent(usuario, this, usuarioForm);
             jButton12.setEnabled(true);
             jLabelUsuarioTitle.setText("Editar usuario");
             changePanel(usuarioForm);
@@ -193,7 +193,7 @@ public class Main extends javax.swing.JFrame {
         if(col == 2){
             TipoCapacitacion tipo = (TipoCapacitacion)jTable6.getValueAt(row, col);
             selectedEntity = tipo;
-            Bind.setComponent(tipo, this);                      
+            Bind.setComponent(tipo, this, tipoCapacitacionForm);                      
             jButton19.setEnabled(true);
             jLabelTipoCapacitacionTitle.setText("Editar tipo de capacitación");
             changePanel(tipoCapacitacionForm);
@@ -220,7 +220,7 @@ public class Main extends javax.swing.JFrame {
         if(col == 2){
             TipoExamen tipo = (TipoExamen)jTable21.getValueAt(row, col);
             selectedEntity = tipo;
-            Bind.setComponent(tipo, this);
+            Bind.setComponent(tipo, this, tipoExamenForm);
             jButton48.setEnabled(true);
             jLabelTipoExamenTitle.setText("Editar tipo de examen");
             changePanel(tipoExamenForm);
@@ -242,8 +242,8 @@ public class Main extends javax.swing.JFrame {
             selectedEntity = evaluacion;
             secondEntity = solicitud;
             Cliente cliente = clienteService.getOne((int)solicitud.getClienteidcliente());
-            Bind.setComponent(cliente, this);
-            Bind.setComponent(solicitud, this);
+            Bind.setComponent(cliente, this, evaluacionForm);
+            Bind.setComponent(solicitud, this, evaluacionForm);
 
             Obs_Supervisor[] obsS = observacionService.getSupervisorCollection();
             if(obsS != null){
@@ -281,7 +281,7 @@ public class Main extends javax.swing.JFrame {
         if(col == 5){
             Expositor expositor = (Expositor)jTable13.getValueAt(row, col);
             selectedEntity = expositor;
-            Bind.setComponent(expositor, this);
+            Bind.setComponent(expositor, this, expositorForm);
             jButton39.setEnabled(true);
             jLabelExpositorTitle.setText("Editar expositor");
             changePanel(expositorForm);
@@ -294,7 +294,7 @@ public class Main extends javax.swing.JFrame {
         if(col == 5){
             Medico medico = (Medico)jTable19.getValueAt(row, col);
             selectedEntity = medico;
-            Bind.setComponent(medico, this);
+            Bind.setComponent(medico, this, medicoForm);
             jButton43.setEnabled(true);
             jLabelMedicoTitle.setText("Editar médico");
             changePanel(medicoForm);
@@ -4761,7 +4761,7 @@ public class Main extends javax.swing.JFrame {
         if(selectedEntity instanceof Cliente) {
             cliente = (Cliente)selectedEntity;
         }
-        Bind.setEntity(cliente, this);
+        Bind.setEntity(cliente, this, clienteForm);
         cliente.setEstadocliente(1);
         long idcliente = clienteService.save(cliente);
         cliente.setIdcliente(idcliente);
@@ -4806,7 +4806,7 @@ public class Main extends javax.swing.JFrame {
         if(selectedEntity instanceof Usuario) {
             usuario = (Usuario)selectedEntity;
         }
-        Bind.setEntity(usuario, this);
+        Bind.setEntity(usuario, this, usuarioForm);
         usuario.setClienteidcliente(1); //TODO: debe elegirse de un combobox
         long id = usuarioService.save(usuario);
         usuario.setIdusuario(id);
@@ -4936,7 +4936,7 @@ public class Main extends javax.swing.JFrame {
         if (selectedEntity instanceof TipoCapacitacion){
             tipo = (TipoCapacitacion)selectedEntity;
         }
-        Bind.setEntity(tipo, this);
+        Bind.setEntity(tipo, this, tipoCapacitacionForm);
         long id = tipoCapacitacionService.save(tipo);
         tipo.setIdtipocap(id);
         jLabelTipoCapacitacionTitle.setText("Editar tipo de capacitación");
@@ -5031,10 +5031,10 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         // buscar cliente por rut        
-        Bind.setComponent(new Cliente(), this);
+        Bind.setComponent(new Cliente(), this, clienteForm);
         Cliente cliente = clienteService.getOneByRut(jTextField18.getText());
         if(cliente != null) {
-            Bind.setComponent(cliente, this);
+            Bind.setComponent(cliente, this, clienteForm);
             selectedEntity = cliente;
         } else {
             JOptionPane.showMessageDialog(null, "Empresa no encotrada.");
@@ -5166,7 +5166,7 @@ public class Main extends javax.swing.JFrame {
         if(selectedEntity instanceof Expositor) {
             expositor = (Expositor)selectedEntity;
         }
-        Bind.setEntity(expositor, this);
+        Bind.setEntity(expositor, this, expositorForm);
         long id = expositorService.save(expositor);
         expositor.setIdexpositor(id);
         selectedEntity = expositor;
@@ -5207,7 +5207,7 @@ public class Main extends javax.swing.JFrame {
         if(selectedEntity instanceof Medico) {
             medico = (Medico)selectedEntity;
         }
-        Bind.setEntity(medico, this);
+        Bind.setEntity(medico, this, medicoForm);
         long id = medicoService.save(medico);
         medico.setIdmedico(id);
         selectedEntity = medico;
@@ -5252,7 +5252,7 @@ public class Main extends javax.swing.JFrame {
         if(selectedEntity instanceof TipoExamen) {
             tipo = (TipoExamen)selectedEntity;
         }
-        Bind.setEntity(tipo, this);
+        Bind.setEntity(tipo, this, tipoExamenForm);
         long id = tipoExamenService.save(tipo);
         tipo.setIdtipoexam(id);
         selectedEntity = tipo;
@@ -5348,7 +5348,7 @@ public class Main extends javax.swing.JFrame {
         jLabelExpositorTitle.setText("Crear expositor");
         Expositor expositor = new Expositor();
         expositor.setEstadoexpositor(1);
-        Bind.setComponent(expositor, this);
+        Bind.setComponent(expositor, this, expositorForm);
         changePanel(expositorForm);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
