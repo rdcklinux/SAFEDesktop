@@ -6,6 +6,7 @@
 package com.safe.gui;
 
 import com.safe.entity.Capacitacion;
+import com.safe.entity.Certificado;
 import com.safe.entity.Cliente;
 import com.safe.entity.Eval_Terr;
 import com.safe.entity.Expositor;
@@ -26,6 +27,7 @@ import com.safe.gui.component.Bind;
 import com.safe.gui.component.WindowComponent;
 import com.safe.service.AsistenciaTrabajadorService;
 import com.safe.service.CapacitacionService;
+import com.safe.service.CertificadoService;
 import com.safe.service.TipoCapacitacionService;
 import com.safe.service.ClienteService;
 import com.safe.service.EvaluacionTerrenoService;
@@ -92,6 +94,7 @@ public class Main extends javax.swing.JFrame {
     private final MedicoService medicoService;
     private final ListTrabajadorService listTrabajadorService;
     private final AsistenciaTrabajadorService asistenciaTrabajadorService;
+    private final CertificadoService certificadoService;
     
     
     private javax.swing.JMenu jMenuProfile;
@@ -132,6 +135,7 @@ public class Main extends javax.swing.JFrame {
         medicoService  = new MedicoService(this.domain);
         listTrabajadorService = new ListTrabajadorService(this.domain);
         asistenciaTrabajadorService = new AsistenciaTrabajadorService(this.domain);
+        certificadoService = new CertificadoService(this.domain);
         
         int sessionTime;
         try {
@@ -5480,17 +5484,21 @@ public class Main extends javax.swing.JFrame {
         
         Sesion_Cap[] sesiones = sesionService.getCapacitacionCollection();
         DefaultTableModel model = (DefaultTableModel)jTable10.getModel();
-        for(Sesion_Cap s: sesiones){
+        for(Sesion_Cap s: sesiones) {
             if( s.getCapacitacionidcap() != capid) continue;
             List_Trab_Cap list = new List_Trab_Cap();
             list.setUsuarioidusuario(trabajador.getIdusuario());
             
+            //crear lista de asistencia para el trabajador en las sesiones
             List_Asis_Cap asis = new List_Asis_Cap();
             asis.setSesioncapidsesioncap(s.getIdsesioncap());
             long id_asis = asistenciaTrabajadorService.saveListCap(asis);  //TODO falla al insertar el WS
-            list.setLisasiscapidlistacap(id_asis);
             
-            list.setCertificadoidcertificado(1); //TODO debe ser nulo ya que el certificado se genera despues
+            //asignar certifiacdo al trabajador
+            Certificado cert = new Certificado();
+            long id_cert = certificadoService.save(cert);  //Crear un certificado en estado 0 sin codigo
+            list.setLisasiscapidlistacap(id_asis);
+            list.setCertificadoidcertificado(id_cert); //TODO debe ser nulo ya que el certificado se genera despues
             listTrabajadorService.saveListCap(list);
             Object[] item = {
                 date.format(new Date()),
