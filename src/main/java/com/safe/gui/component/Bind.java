@@ -24,12 +24,12 @@ import javax.swing.JLabel;
  */
 public class Bind {
     
-    public static void setComponent(Object object, JFrame container) {
-        performChange(object, container, false);
+    public static void setComponent(Object object, JFrame container, Object scope) {
+        performChange(object, container, scope, false);
     }
     
-    public static void setEntity(Object object, JFrame container) {
-        performChange(object, container, true);
+    public static void setEntity(Object object, JFrame container, Object scope) {
+        performChange(object, container, scope, true);
     }
     
     private static void setter(JComponent component, Method method, Object object) throws IllegalAccessException {
@@ -63,7 +63,7 @@ public class Bind {
         }
     }
     
-    private static void performChange(Object object, JFrame container, boolean set) {
+    private static void performChange(Object object, JFrame container,Object scope, boolean set) {
         Class<?> mapEntity = object.getClass();
         String name = object.getClass().toString().replace("class ","");
         String attribute;
@@ -79,6 +79,7 @@ public class Bind {
                 component = (JComponent)c.get(container);
                 if(component.getName() == null) continue;
                 if(!component.getName().startsWith(name)) continue;
+                if(component.getParent() != scope) continue;
                 attribute = component.getName().replace(name + ".", "");
                 attribute = (attribute.charAt(0)+"").toUpperCase() + attribute.substring(1);
                 Method method = null;
