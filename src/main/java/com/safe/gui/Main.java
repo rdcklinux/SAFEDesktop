@@ -5050,8 +5050,8 @@ public class Main extends javax.swing.JFrame {
         plan.setClienteidcliente(cliente.getIdcliente());
         plan.setEstadoplancap(1);
         plan.setFechacreacion(date.format(new Date()));
-        plan = planCapacitacionService.save(plan);
-        loadGestionCapacitacion(plan.getIdplancap());
+        long planid = planCapacitacionService.save(plan);
+        loadGestionCapacitacion(planid);
         changePanel(planCapacitacionForm);
     }//GEN-LAST:event_jButton15ActionPerformed
 

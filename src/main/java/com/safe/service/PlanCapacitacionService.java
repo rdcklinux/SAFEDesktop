@@ -45,23 +45,23 @@ public class PlanCapacitacionService {
         return planes;
     }
     
-    public PlanCapacitacion save(PlanCapacitacion plan) {
+    public long save(PlanCapacitacion plan) {
+        long id = 0;
         if(plan.getIdplancap() > 0){
             try {
-                planCapacitacionDAL.update(plan);
+                id = planCapacitacionDAL.update(plan);
             } catch (UnirestException ex) {
                 Logger.getLogger(PlanCapacitacionService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else {
             try {
-                long id = planCapacitacionDAL.create(plan);
-                plan.setIdplancap(id);
+                id = planCapacitacionDAL.create(plan);
             } catch (UnirestException ex) {
                 Logger.getLogger(PlanCapacitacionService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
-        return plan;
+        return id;
     }
     
     public void delete(long id) {
