@@ -2,21 +2,12 @@
 package com.safe.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
-public class Plan_Salud implements Serializable{
-    
-    
-    private long idplansalud;
-    
-    
-    private Date fechacreacion;
-    
-    
-    private long estadoplansalud;
-    
-    
-    private long clienteidcliente;
+public class Plan_Salud implements Serializable {
+    private long idplansalud = 0;
+    private String fechacreacion = "";
+    private long estadoplansalud = 1;
+    private long clienteidcliente = 0;
 
     public long getIdplansalud() {
         return idplansalud;
@@ -26,11 +17,11 @@ public class Plan_Salud implements Serializable{
         this.idplansalud = idplansalud;
     }
 
-    public Date getFechacreacion() {
+    public String getFechacreacion() {
         return fechacreacion;
     }
 
-    public void setFechacreacion(Date fechacreacion) {
+    public void setFechacreacion(String fechacreacion) {
         this.fechacreacion = fechacreacion;
     }
 

@@ -2,41 +2,18 @@
 package com.safe.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
-public class Sesion_Salud implements Serializable{
-    
-    
+public class Sesion_Salud implements Serializable {
     private long idsesionsalud;
-    
-    
     private long numsesionsalud;
-    
-    
     private String nombresesionsalud;
-    
-    
     private long cupossesion;
-    
-    
-    private Date fechasesion;
-    
-    
-    private Date horainiciosalud;
-    
-    
-    private Date horaterminosalud;
-    
-    
+    private String fechasesion;
+    private String horainiciosalud;
+    private String horaterminosalud;
     private String descripcionsesionsalud;
-    
-    
     private long medicoidmedico;
-    
-    
     private long examenesidexamenes;
-    
-    
     private long estadosesionsalud;
 
     public long getIdsesionsalud() {
@@ -70,28 +47,36 @@ public class Sesion_Salud implements Serializable{
     public void setCupossesion(long cupossesion) {
         this.cupossesion = cupossesion;
     }
+    
+    public String getCupossesionString() {
+        return (new Long(cupossesion)).toString();
+    }
 
-    public Date getFechasesion() {
+    public void setCupossesionString(String cupossesion) {
+        this.cupossesion = Long.parseLong(cupossesion);
+    }
+
+    public String getFechasesion() {
         return fechasesion;
     }
 
-    public void setFechasesion(Date fechasesion) {
+    public void setFechasesion(String fechasesion) {
         this.fechasesion = fechasesion;
     }
 
-    public Date getHorainiciosalud() {
+    public String getHorainiciosalud() {
         return horainiciosalud;
     }
 
-    public void setHorainiciosalud(Date horainiciosalud) {
+    public void setHorainiciosalud(String horainiciosalud) {
         this.horainiciosalud = horainiciosalud;
     }
 
-    public Date getHoraterminosalud() {
+    public String getHoraterminosalud() {
         return horaterminosalud;
     }
 
-    public void setHoraterminosalud(Date horaterminosalud) {
+    public void setHoraterminosalud(String horaterminosalud) {
         this.horaterminosalud = horaterminosalud;
     }
 

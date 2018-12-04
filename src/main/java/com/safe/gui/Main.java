@@ -16,6 +16,7 @@ import com.safe.entity.Medico;
 import com.safe.entity.Obs_Ingeniero;
 import com.safe.entity.Obs_Supervisor;
 import com.safe.entity.PlanCapacitacion;
+import com.safe.entity.Plan_Salud;
 import com.safe.entity.Sesion_Cap;
 import com.safe.entity.Sesion_Salud;
 import com.safe.gui.component.ButtonTableComponent;
@@ -36,6 +37,7 @@ import com.safe.service.ListTrabajadorService;
 import com.safe.service.MedicoService;
 import com.safe.service.ObservacionService;
 import com.safe.service.PlanCapacitacionService;
+import com.safe.service.PlanSaludService;
 import com.safe.service.SesionService;
 import com.safe.service.TokenManager;
 import com.safe.service.SessionManager;
@@ -86,6 +88,7 @@ public class Main extends javax.swing.JFrame {
     private final TipoExamenService tipoExamenService;
     private final CapacitacionService capacitacionService;
     private final PlanCapacitacionService planCapacitacionService;
+    private final PlanSaludService planSaludService;
     private final SolicitudService solicitudService;
     private final EvaluacionTerrenoService evaluacionTerrenoService;
     private final ObservacionService observacionService;
@@ -127,6 +130,7 @@ public class Main extends javax.swing.JFrame {
         tipoExamenService = new TipoExamenService(this.domain);
         capacitacionService = new CapacitacionService(this.domain);
         planCapacitacionService = new PlanCapacitacionService(this.domain);
+        planSaludService = new PlanSaludService(this.domain);
         solicitudService = new SolicitudService(this.domain);
         evaluacionTerrenoService = new EvaluacionTerrenoService(this.domain);
         observacionService = new ObservacionService(this.domain);
@@ -481,6 +485,33 @@ public class Main extends javax.swing.JFrame {
             java.awt.Desktop.getDesktop().browse(uri);
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void loadGestionSalud(long planid){
+        HashMap<Long, Medico> mapMedico = new HashMap<>();        
+        Medico[] medicos = medicoService.getCollection();
+        for(Medico m: medicos){
+            mapMedico.put(m.getIdmedico(), m);
+            jComboBox14.addItem(m.getMailmedico());
+        }
+        
+        Sesion_Salud[] sesionesSalud = sesionService.getSaludCollection();        
+        if(sesionesSalud != null ){
+            DefaultTableModel modelSession = (DefaultTableModel)jTable14.getModel();
+            modelSession.setRowCount(0);
+            for(Sesion_Salud s: sesionesSalud){                
+                Object[] item = {                    
+                    s.getCupossesion(),
+                    s.getNombresesionsalud(),
+                    mapMedico.get(s.getMedicoidmedico()).getNombremedico(),
+                    s.getFechasesion(),
+                    s.getHorainiciosalud(),
+                    s.getHoraterminosalud(),
+                    s.getDescripcionsesionsalud(),
+                };
+                modelSession.addRow(item);
+            }
         }
     }
     
@@ -842,8 +873,6 @@ public class Main extends javax.swing.JFrame {
         planSaludForm = new javax.swing.JInternalFrame();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel12 = new javax.swing.JPanel();
-        jComboBox13 = new javax.swing.JComboBox<>();
-        jLabel81 = new javax.swing.JLabel();
         jLabel82 = new javax.swing.JLabel();
         jFormattedTextField10 = new javax.swing.JFormattedTextField();
         jLabel83 = new javax.swing.JLabel();
@@ -2797,7 +2826,7 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton21))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 1025, Short.MAX_VALUE)
+                        .addGap(0, 857, Short.MAX_VALUE)
                         .addComponent(jButton3)))
                 .addContainerGap())
         );
@@ -2938,7 +2967,7 @@ public class Main extends javax.swing.JFrame {
                                     .addGroup(jPanel7Layout.createSequentialGroup()
                                         .addComponent(jFormattedTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(24, 24, 24)
-                                        .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE))
+                                        .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE))
                                     .addGroup(jPanel7Layout.createSequentialGroup()
                                         .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -3044,7 +3073,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addContainerGap(1031, Short.MAX_VALUE)
+                        .addContainerGap(863, Short.MAX_VALUE)
                         .addComponent(jButton50))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -3138,7 +3167,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel73)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel74)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 440, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
                         .addComponent(jButton25))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addContainerGap()
@@ -3210,7 +3239,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
+                    .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton52))
@@ -3508,36 +3537,39 @@ public class Main extends javax.swing.JFrame {
         planSaludForm.setTitle("Plan de salud");
         planSaludForm.setVisible(true);
 
-        jComboBox13.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel81.setText("Capacitación");
-
         jLabel82.setText("Cupos");
 
         jFormattedTextField10.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jFormattedTextField10.setName("com.safe.entity.Sesion_Salud.cupossesion"); // NOI18N
 
         jLabel83.setText("Lugar");
 
-        jComboBox14.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jTextField25.setName("com.safe.entity.Sesion_Salud.nombresesionsalud"); // NOI18N
 
-        jLabel84.setText("Expositor");
+        jComboBox14.setName("com.safe.entity.Sesion_Salud.medicoidmedicoIndex"); // NOI18N
+
+        jLabel84.setText("Médico");
 
         jLabel85.setText("Fecha");
 
         jFormattedTextField11.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        jFormattedTextField11.setName("com.safe.entity.Sesion_Salud.fechasesion"); // NOI18N
 
         jLabel86.setText("Hora inicio");
 
         jLabel87.setText("Hora término");
 
         jFormattedTextField12.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jFormattedTextField12.setName("com.safe.entity.Sesion_Salud.horaterminosalud"); // NOI18N
 
         jFormattedTextField13.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jFormattedTextField13.setName("com.safe.entity.Sesion_Salud.horainiciosalud"); // NOI18N
 
         jLabel88.setText("Descripción");
 
         jTextArea4.setColumns(20);
         jTextArea4.setRows(5);
+        jTextArea4.setName("com.safe.entity.Sesion_Salud.descripcionsesionsalud"); // NOI18N
         jScrollPane19.setViewportView(jTextArea4);
 
         jTable14.setModel(new javax.swing.table.DefaultTableModel(
@@ -3545,15 +3577,25 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Capacitación", "Cupos", "Lugar", "Expositor", "Fecha", "Hora inicio", "Hora término", "Descripción"
+                "Cupos", "Lugar", "Médico", "Fecha", "Hora inicio", "Hora término", "Descripción"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane20.setViewportView(jTable14);
-        if (jTable14.getColumnModel().getColumnCount() > 0) {
-            jTable14.getColumnModel().getColumn(0).setResizable(false);
-        }
 
         jButton28.setText("Añadir nueva sesión");
+        jButton28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton28ActionPerformed(evt);
+            }
+        });
 
         jLabel89.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel89.setText("Añadir nueva sesión");
@@ -3572,21 +3614,15 @@ public class Main extends javax.swing.JFrame {
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane20, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jFormattedTextField11, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel85, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox13, javax.swing.GroupLayout.Alignment.LEADING, 0, 214, Short.MAX_VALUE))
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jFormattedTextField11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel85, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jFormattedTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel86)
                                     .addComponent(jFormattedTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel12Layout.createSequentialGroup()
-                                        .addComponent(jTextField25, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBox14, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(jPanel12Layout.createSequentialGroup()
                                         .addComponent(jLabel87)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -3595,19 +3631,23 @@ public class Main extends javax.swing.JFrame {
                                     .addGroup(jPanel12Layout.createSequentialGroup()
                                         .addComponent(jFormattedTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(24, 24, 24)
-                                        .addComponent(jScrollPane19))))
+                                        .addComponent(jScrollPane19, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE))))
                             .addGroup(jPanel12Layout.createSequentialGroup()
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel89)
                                     .addGroup(jPanel12Layout.createSequentialGroup()
-                                        .addComponent(jLabel81)
-                                        .addGap(131, 131, 131)
-                                        .addComponent(jLabel82)
-                                        .addGap(38, 38, 38)
-                                        .addComponent(jLabel83)
-                                        .addGap(142, 142, 142)
-                                        .addComponent(jLabel84)))
-                                .addGap(0, 137, Short.MAX_VALUE)))))
+                                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jFormattedTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel82))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextField25, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel83))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel84)
+                                            .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
@@ -3617,13 +3657,11 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jLabel89)
                 .addGap(12, 12, 12)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel81)
                     .addComponent(jLabel82)
                     .addComponent(jLabel83)
                     .addComponent(jLabel84))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -3674,7 +3712,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE)
+                    .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel90)
@@ -3802,7 +3840,7 @@ public class Main extends javax.swing.JFrame {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane23, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
+                .addComponent(jScrollPane23, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel15Layout.createSequentialGroup()
@@ -3814,7 +3852,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel96)
                     .addGap(18, 18, 18)
                     .addComponent(jLabel97)
-                    .addContainerGap(210, Short.MAX_VALUE)))
+                    .addContainerGap(439, Short.MAX_VALUE)))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4551,7 +4589,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // buscar capacitaciones
+        // buscar planes de capacitaciones
         jTable1.setRowSorter(null);
         RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
             @Override
@@ -5031,10 +5069,10 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         // buscar cliente por rut        
-        Bind.setComponent(new Cliente(), this, clienteForm);
+        Bind.setComponent(new Cliente(), this, newPlanCapacitacionForm);
         Cliente cliente = clienteService.getOneByRut(jTextField18.getText());
         if(cliente != null) {
-            Bind.setComponent(cliente, this, clienteForm);
+            Bind.setComponent(cliente, this, newPlanCapacitacionForm);
             selectedEntity = cliente;
         } else {
             JOptionPane.showMessageDialog(null, "Empresa no encotrada.");
@@ -5042,7 +5080,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        // TODO add your handling code here:
+        // crear plan de capacitacion
         PlanCapacitacion plan = new PlanCapacitacion();
         
         Cliente cliente = (Cliente)selectedEntity;
@@ -5101,7 +5139,27 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jFormattedTextField15ActionPerformed
 
     private void jButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton33ActionPerformed
-        // TODO add your handling code here:
+        // buscar planes de salud
+        jTable18.setRowSorter(null);
+        RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
+            @Override
+            public boolean include(RowFilter.Entry entry) {
+              if(entry.getValue(1) == null) return false;
+              String fini = dateInvert((String)entry.getValue(1));
+              String ffin = dateInvert((String)entry.getValue(2));
+              String rut = (String) entry.getValue(3);
+              String rutSearch = jTextField27.getText();
+              String fiSearch = dateInvert(jFormattedTextField14.getText());
+              String ffSearch = dateInvert(jFormattedTextField15.getText());
+              
+              return (rut.contains(rutSearch) || rutSearch.length() == 0) &&
+              (fini.equals(fiSearch) || fiSearch.length() == 0) &&
+              (ffin.equals(ffSearch) || ffSearch.length() == 0);
+            }
+        };
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTable18.getModel());
+        sorter.setRowFilter(filter);
+        jTable18.setRowSorter(sorter);
     }//GEN-LAST:event_jButton33ActionPerformed
 
     private void jTextField27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField27ActionPerformed
@@ -5109,15 +5167,35 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField27ActionPerformed
 
     private void jButton34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton34ActionPerformed
-        // TODO add your handling code here:
+        // crear nuevo plan de salud        
+        changePanel(newPlanSaludForm);
+        
     }//GEN-LAST:event_jButton34ActionPerformed
 
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
-        // TODO add your handling code here:
+        // crear plan de salud
+        Plan_Salud plan = new Plan_Salud();
+        
+        Cliente cliente = (Cliente)selectedEntity;
+        selectedEntity = null;
+        plan.setClienteidcliente(cliente.getIdcliente());
+        plan.setFechacreacion(date.format(new Date()));
+        long planid = planSaludService.save(plan);
+        loadGestionSalud(planid);
+        changePanel(planSaludForm);
     }//GEN-LAST:event_jButton27ActionPerformed
 
     private void jButton35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35ActionPerformed
-        // TODO add your handling code here:
+
+        // buscar cliente por rut        
+        Bind.setComponent(new Cliente(), this, newPlanSaludForm);
+        Cliente cliente = clienteService.getOneByRut(jTextField24.getText());
+        if(cliente != null) {
+            Bind.setComponent(cliente, this, newPlanSaludForm);
+            selectedEntity = cliente;
+        } else {
+            JOptionPane.showMessageDialog(null, "Empresa no encotrada.");
+        }
     }//GEN-LAST:event_jButton35ActionPerformed
 
     private void jComboBoxEstado3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstado3ActionPerformed
@@ -5312,6 +5390,29 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // listar planes de salud
+        selectedEntity = null;
+        Plan_Salud[] planes = planSaludService.getCollection();
+        if(planes != null ){
+            DefaultTableModel model = (DefaultTableModel)jTable18.getModel();
+            model.setRowCount(0);
+            for(Plan_Salud p: planes){
+                Cliente cliente = clienteService.getOne((int)p.getClienteidcliente());
+                Date fechacreado = new Date();
+                try {
+                    fechacreado = date.parse(p.getFechacreacion());
+                } catch (ParseException ex) {}
+                Object[] item = {
+                    date.format(fechacreado),
+                    date.format(new Date()), //TODO: falta fecha de inicio
+                    date.format(new Date()), //TODO: falta fecha de fin
+                    cliente.getRutcliente(),
+                    "0", //TODO: falta cantidad de sesiones
+                    PlanSaludService.ESTADOS[(int)p.getEstadoplansalud()],
+                    p,
+                };
+                model.addRow(item);
+            }
+        }
         changePanel(planSaludMain);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -5535,6 +5636,26 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField38ActionPerformed
 
+    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
+        //agregar nueva sesion de salud        
+        Sesion_Salud sesion = new Sesion_Salud();
+        Bind.setEntity(sesion, this, jPanel12);
+        sesion.setEstadosesionsalud(1L);
+        sesionService.saveSalud(sesion);
+        Object[] item = {
+           sesion.getCupossesionString(),
+           sesion.getNombresesionsalud(),
+           jComboBox14.getSelectedItem(),
+           sesion.getFechasesion(),
+           sesion.getHorainiciosalud(),
+           sesion.getHoraterminosalud(),
+           sesion.getDescripcionsesionsalud(),
+        };
+        DefaultTableModel model = (DefaultTableModel)jTable14.getModel();
+        model.addRow(item);
+        JOptionPane.showMessageDialog(null, "Se ha agregado una nueva sesión correctamente.");
+    }//GEN-LAST:event_jButton28ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame calendarMain;
     private javax.swing.JInternalFrame clienteForm;
@@ -5601,7 +5722,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox10;
     private javax.swing.JComboBox<String> jComboBox11;
     private javax.swing.JComboBox<String> jComboBox12;
-    private javax.swing.JComboBox<String> jComboBox13;
     private javax.swing.JComboBox<String> jComboBox14;
     private javax.swing.JComboBox<String> jComboBox15;
     private javax.swing.JComboBox<String> jComboBox16;
@@ -5759,7 +5879,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
-    private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel83;
     private javax.swing.JLabel jLabel84;
