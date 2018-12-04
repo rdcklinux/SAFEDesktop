@@ -1633,7 +1633,6 @@ public class Main extends javax.swing.JFrame {
         jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField3.setToolTipText("dd-mm-yyyy");
         jFormattedTextField3.setName("com.safe.entity.Usuario.fnacimientousuario"); // NOI18N
-        jFormattedTextField3.setPreferredSize(new java.awt.Dimension(4, 20));
         jFormattedTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField3ActionPerformed(evt);
@@ -4284,13 +4283,13 @@ public class Main extends javax.swing.JFrame {
                                 .addGroup(medicoFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel118, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel117))
-                                .addGap(24, 24, 24)
-                                .addGroup(medicoFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField33, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField32, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(28, 28, 28)
+                                .addGroup(medicoFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField33, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                    .addComponent(jTextField32)))
                             .addGroup(medicoFormLayout.createSequentialGroup()
-                                .addComponent(jLabel125, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel125, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)
                                 .addComponent(jTextField38)))
                         .addGap(18, 49, Short.MAX_VALUE)
                         .addGroup(medicoFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -5494,9 +5493,13 @@ public class Main extends javax.swing.JFrame {
             List_Asis_Cap asis = new List_Asis_Cap();
             asis.setSesioncapidsesioncap(s.getIdsesioncap());
             long id_asis = asistenciaTrabajadorService.saveListCap(asis);  //TODO falla al insertar el WS
-            
+            if(id_asis == 0){
+                JOptionPane.showMessageDialog(null, "Trabajador ya ha sido agregado.");
+                return;
+            }
             //asignar certifiacdo al trabajador
             Certificado cert = new Certificado();
+            cert.setTipocertificado("Capacitación");
             long id_cert = certificadoService.save(cert);  //Crear un certificado en estado 0 sin codigo
             list.setLisasiscapidlistacap(id_asis);
             list.setCertificadoidcertificado(id_cert); //TODO debe ser nulo ya que el certificado se genera despues

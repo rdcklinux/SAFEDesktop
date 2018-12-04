@@ -26,13 +26,13 @@ public class TokenManager {
     }
     
     public boolean getSuccessAuthentication(String username, String password){
-        try {
-            usuario = userDAL.byRun(username);
+        try {        
+            usuario = userDAL.login(username, password);
         }catch(UnirestException e) {
             expire();        
             return false;
         }
-        isAuthenticated = (username.equals(usuario.getRunusuario()) && password.equals(usuario.getClaveusuario()));
+        isAuthenticated = true;
         switch ((int)usuario.getPerfilidperfil()) {
             case 1:
                 this.role = "ROLE_ADMIN";
@@ -45,6 +45,7 @@ public class TokenManager {
                 break;
             default:
                 this.role = null;
+                isAuthenticated = false;
                 break;
         }
         
