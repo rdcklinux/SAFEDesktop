@@ -13,23 +13,11 @@ import java.io.Serializable;
 
 
 public class ListTrabSalud implements Serializable{
-    
-    
     private long idlistrabsalud;
-    
-    
     private long presenteSalud;
-    
-    
     private long estadoSalud;
-    
-    
     private long usuarioidusuario;
-    
-    
     private long lisasissaludidlistasalud;
-    
-    
     private long certificadoidcertificado;
 
     public long getIdlistrabsalud() {
@@ -64,12 +52,12 @@ public class ListTrabSalud implements Serializable{
         this.usuarioidusuario = usuarioidusuario;
     }
 
-    public long getLisasiscapidlistasalud() {
+    public long getLisasissaludidlistasalud() {
         return lisasissaludidlistasalud;
     }
 
-    public void setLisasiscapidlistasalud(long lisasiscapidlistasalud) {
-        this.lisasissaludidlistasalud = lisasiscapidlistasalud;
+    public void setLisasissaludidlistasalud(long lisasissaludidlistasalud) {
+        this.lisasissaludidlistasalud = lisasissaludidlistasalud;
     }
 
     public long getCertificadoidcertificado() {
@@ -84,6 +72,4 @@ public class ListTrabSalud implements Serializable{
     public String toString() {
         return "ListTrabSalud{" + "idlistrabsalud=" + idlistrabsalud + ", presenteSalud=" + presenteSalud + ", estadoSalud=" + estadoSalud + ", usuarioidusuario=" + usuarioidusuario + ", lisasissaludidlistasalud=" + lisasissaludidlistasalud + ", certificadoidcertificado=" + certificadoidcertificado + '}';
     }
-
-       
 }

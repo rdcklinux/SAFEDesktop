@@ -10,7 +10,9 @@ import com.safe.entity.Certificado;
 import com.safe.entity.Cliente;
 import com.safe.entity.Eval_Terr;
 import com.safe.entity.Expositor;
+import com.safe.entity.ListTrabSalud;
 import com.safe.entity.List_Asis_Cap;
+import com.safe.entity.List_Asis_Salud;
 import com.safe.entity.List_Trab_Cap;
 import com.safe.entity.Medico;
 import com.safe.entity.Obs_Ingeniero;
@@ -106,6 +108,14 @@ public class Main extends javax.swing.JFrame {
     private Object selectedEntity;
     private Object secondEntity;
     LinkedHashMap<Long, Capacitacion> mapCapcitacion;
+    LinkedHashMap<Long, Sesion_Cap> mapSesionCap;
+    LinkedHashMap<Long, Sesion_Salud> mapSesionSalud;
+    LinkedHashMap<Long, Medico> mapMedico;
+    HashMap<Long, Usuario> mapUsuarios;
+    HashMap<Long, List_Asis_Cap> mapAsisCap;
+    HashMap<Long, List_Asis_Salud> mapAsisSalud;
+    List_Trab_Cap[] participantes;
+    ListTrabSalud[] pacientes;
     
     private final SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
     private final SimpleDateFormat dateInverted = new SimpleDateFormat("yyyy-MM-dd");
@@ -215,6 +225,20 @@ public class Main extends javax.swing.JFrame {
             selectedEntity = plan;
             loadGestionCapacitacion(plan.getIdplancap());
             changePanel(planCapacitacionForm);
+        }
+    }
+    
+    private void editarPlanSalud(java.awt.event.MouseEvent evt){
+        int row = jTable18.rowAtPoint(evt.getPoint());
+        int col = jTable18.columnAtPoint(evt.getPoint());
+        if(col == 6){
+            Plan_Salud plan = (Plan_Salud)jTable18.getValueAt(row, col);
+            String rut = jTable18.getValueAt(row, 3).toString();
+            Cliente cliente = clienteService.getOneByRut(rut);
+            jLabel108.setText(cliente.getRazonsocial());
+            selectedEntity = plan;
+            loadGestionSalud(plan.getIdplansalud());
+            changePanel(planSaludForm);
         }
     }
     
@@ -362,6 +386,13 @@ public class Main extends javax.swing.JFrame {
             }
         });
         
+        jTable18.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                self.editarPlanSalud(evt);
+            }
+        });
+        
         Vector<TipoCapacitacion> tiposCap = new Vector<>();
         for(TipoCapacitacion t: tipoCapacitacionService.getCollection()){
             tiposCap.add(t);
@@ -378,8 +409,14 @@ public class Main extends javax.swing.JFrame {
         jTable10.getColumnModel().getColumn(7).setCellRenderer(new ButtonTableComponent("[-]"));
         jTable11.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("[ ]"));
         jTable13.getColumnModel().getColumn(5).setCellRenderer(new ButtonTableComponent("[+]"));
+        
+        jTable15.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("[-]"));
+        jTable16.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("[-]"));
+        jTable17.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("[-]"));
+        
         jTable19.getColumnModel().getColumn(5).setCellRenderer(new ButtonTableComponent("[+]"));
         jTable21.getColumnModel().getColumn(2).setCellRenderer(new ButtonTableComponent("[+]"));
+        jTable18.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("[+]"));
     }
     
     private void changePanel(JInternalFrame panel){
@@ -489,14 +526,35 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void loadGestionSalud(long planid){
-        HashMap<Long, Medico> mapMedico = new HashMap<>();        
+        this.mapMedico = new LinkedHashMap<>();        
         Medico[] medicos = medicoService.getCollection();
         for(Medico m: medicos){
-            mapMedico.put(m.getIdmedico(), m);
-            jComboBox14.addItem(m.getMailmedico());
+            this.mapMedico.put(m.getIdmedico(), m);
+            jComboBox14.addItem(m.getNombremedico());
         }
         
-        Sesion_Salud[] sesionesSalud = sesionService.getSaludCollection();        
+        this.mapSesionSalud = new LinkedHashMap<>();
+        Sesion_Salud[] sesionesSalud = sesionService.getSaludCollection();
+        for(Sesion_Salud s: sesionesSalud){
+            this.mapSesionSalud.put(s.getIdsesionsalud(),s);
+            jComboBox15.addItem(s.getDescripcionsesionsalud());
+            jComboBox16.addItem(s.getDescripcionsesionsalud());
+        }
+        
+        Usuario[] usuarios = usuarioService.getCollection();
+        this.mapUsuarios = new HashMap<>();
+        for(Usuario u: usuarios) {
+            if(u.getPerfilidperfil() != 4) continue;
+            this.mapUsuarios.put(u.getIdusuario(), u);
+        }
+        List_Asis_Salud[] asis = asistenciaTrabajadorService.getListSaludCollection();
+        this.mapAsisSalud = new HashMap<>();
+        for(List_Asis_Salud l: asis) {            
+            this.mapAsisSalud.put(l.getIdlistsalud(), l);
+        }
+        this.pacientes = listTrabajadorService.getListSaludCollection();
+        
+        //pestaña sesion
         if(sesionesSalud != null ){
             DefaultTableModel modelSession = (DefaultTableModel)jTable14.getModel();
             modelSession.setRowCount(0);
@@ -504,7 +562,7 @@ public class Main extends javax.swing.JFrame {
                 Object[] item = {                    
                     s.getCupossesion(),
                     s.getNombresesionsalud(),
-                    mapMedico.get(s.getMedicoidmedico()).getNombremedico(),
+                    this.mapMedico.get(s.getMedicoidmedico()).getNombremedico(),
                     s.getFechasesion(),
                     s.getHorainiciosalud(),
                     s.getHoraterminosalud(),
@@ -513,6 +571,18 @@ public class Main extends javax.swing.JFrame {
                 modelSession.addRow(item);
             }
         }
+        
+        //pestaña pacientes
+        int idxSalud = jComboBox19.getSelectedIndex();
+        listarPacientesSalud(idxSalud);
+        
+        //pestaña asistencia
+        int idxAsis = jComboBox9.getSelectedIndex();
+        //listarAsistenciasSalud(idxAsis);
+        
+        //pestaña certificados
+        int idxSaludCert = jComboBox10.getSelectedIndex();
+        //listaCertificadoSalud(idxSaludCert);
     }
     
     private void loadGestionCapacitacion(long capplanid){
@@ -525,7 +595,22 @@ public class Main extends javax.swing.JFrame {
             mapExpositor.put(e.getIdexpositor(), e);
             jComboBox8.addItem(e.getNombreexpositor());
         }
+        this.mapSesionCap = new LinkedHashMap<>();
+        Sesion_Cap[] sesionesCap = sesionService.getCapacitacionCollection();
+        Usuario[] usuarios = usuarioService.getCollection();
+        this.mapUsuarios = new HashMap<>();
+        for(Usuario u: usuarios) {
+            if(u.getPerfilidperfil() != 4) continue;
+            this.mapUsuarios.put(u.getIdusuario(), u);
+        }
+        List_Asis_Cap[] asis = asistenciaTrabajadorService.getListCapCollection();
+        this.mapAsisCap = new HashMap<>();
+        for(List_Asis_Cap l: asis) {            
+            this.mapAsisCap.put(l.getIdlistacap(), l);
+        }
+        this.participantes = listTrabajadorService.getListCapCollection();
         
+        //pestaña capacitacion
         if(capacitaciones != null ){
             DefaultTableModel modelCapacitacion = (DefaultTableModel)jTable8.getModel();
             modelCapacitacion.setRowCount(0);
@@ -534,6 +619,7 @@ public class Main extends javax.swing.JFrame {
                 this.mapCapcitacion.put(c.getIdcap(), c);
                 jComboBox7.addItem(c.getNombrecapacitacion());
                 jComboBox19.addItem(c.getNombrecapacitacion());
+                jComboBox10.addItem(c.getNombrecapacitacion());
                 Object[] item = {
                     c.getNombrecapacitacion(),
                     c.getTipocapidtipocap(),
@@ -543,16 +629,18 @@ public class Main extends javax.swing.JFrame {
                 };
                 modelCapacitacion.addRow(item);
             }
-        }
+        }        
         
-        Sesion_Cap[] sesionesCap = sesionService.getCapacitacionCollection();
-        Capacitacion cap = null;
+        //pestaña sesiones
+        Capacitacion cap;
         if(sesionesCap != null ){
             DefaultTableModel modelSession = (DefaultTableModel)jTable9.getModel();
             modelSession.setRowCount(0);
             for(Sesion_Cap s: sesionesCap){
                 cap = this.mapCapcitacion.get(s.getCapacitacionidcap());
                 if(cap == null) continue;
+                this.mapSesionCap.put(s.getIdsesioncap(), s);
+                jComboBox9.addItem(s.getDescripcionsesion());
                 Object[] item = {
                     cap.getNombrecapacitacion(),
                     s.getCupossesionString(),
@@ -566,6 +654,120 @@ public class Main extends javax.swing.JFrame {
                 modelSession.addRow(item);
             }
         }
+        
+        //pestaña participantes
+        int idxCap = jComboBox19.getSelectedIndex();
+        listarParticipantesCap(idxCap);
+        
+        //pestaña asistencia
+        int idxAsis = jComboBox9.getSelectedIndex();
+        listarAsistenciasCap(idxAsis);
+        
+        //pestaña certificados
+        int idxCapCert = jComboBox10.getSelectedIndex();
+        listaCertificadoCap(idxCapCert);
+    }
+    
+    private void listarParticipantesCap(int idx){
+        if(this.mapSesionCap.isEmpty()) return;
+        DefaultTableModel model = (DefaultTableModel)jTable10.getModel();
+        model.setRowCount(0);
+        long capid = (long)this.mapCapcitacion.keySet().toArray()[idx];
+        Usuario trabajador;
+        Capacitacion cap;        
+        for(List_Trab_Cap t:this.participantes) {
+            trabajador = this.mapUsuarios.get(t.getUsuarioidusuario());
+            if(this.mapSesionCap.get(mapAsisCap.get(t.getLisasiscapidlistacap()).getSesioncapidsesioncap()).getCapacitacionidcap() != capid) continue;
+            
+            Object[] item = {
+                date.format(new Date()), //TODO: falta fecha
+                jComboBox19.getSelectedItem(), //falta capacitación,
+                trabajador.getRunusuario(),
+                trabajador.getNombresusuario(),
+                trabajador.getAppaterno() + " " + trabajador.getApmaterno(),
+                trabajador.getTelusuario(),
+                trabajador.getMailusuario(),
+                trabajador,
+            };
+            model.addRow(item);
+        }
+    }
+    
+    private void listarPacientesSalud(int idx){
+        if(this.mapSesionSalud.isEmpty()) return;
+        DefaultTableModel model = (DefaultTableModel)jTable15.getModel();
+        model.setRowCount(0);
+        Usuario paciente;        
+        for(ListTrabSalud t:this.pacientes) {
+            paciente = this.mapUsuarios.get(t.getUsuarioidusuario());
+            List_Asis_Salud asistencia = mapAsisSalud.get(t.getLisasissaludidlistasalud());
+            Sesion_Salud sesion = this.mapSesionSalud.get(asistencia.getSesionsaludidsesionsalud());
+            if(sesion == null) continue;
+            Object[] item = {
+                date.format(new Date()), //TODO: falta fecha
+                paciente.getRunusuario(),
+                paciente.getNombresusuario(),
+                paciente.getAppaterno() + " " + paciente.getApmaterno(),
+                paciente.getTelusuario(),
+                paciente.getMailusuario(),
+                paciente,
+            };
+            model.addRow(item);
+        }
+    }
+    
+    private void listarAsistenciasCap(int idx){
+        DefaultTableModel model = (DefaultTableModel)jTable11.getModel();
+        model.setRowCount(0);
+        long sesid = (long)this.mapSesionCap.keySet().toArray()[idx];
+        List_Asis_Cap asistencia;
+        Usuario trabajador;
+        int count = 0;
+        for(List_Trab_Cap t:this.participantes) {
+            trabajador = this.mapUsuarios.get(t.getUsuarioidusuario());
+            asistencia = this.mapAsisCap.get(t.getLisasiscapidlistacap());
+            if(asistencia.getSesioncapidsesioncap() != sesid) continue;
+            count++;
+            Object[] item = {
+                date.format(new Date()), //TODO: falta fecha                
+                trabajador.getRunusuario(),
+                trabajador.getNombresusuario(),
+                trabajador.getAppaterno() + " " + trabajador.getApmaterno(),
+                trabajador.getTelusuario(),
+                trabajador.getMailusuario(),
+                t.getPresente()==1?"[+]":"[ ]",
+            };
+            model.addRow(item);
+        }
+        jLabel74.setText(String.valueOf(count));
+    }
+    
+    private void listaCertificadoCap(int idx){
+        if(this.mapSesionCap.isEmpty()) return;
+        DefaultTableModel model = (DefaultTableModel)jTable12.getModel();
+        long capid = (long)this.mapCapcitacion.keySet().toArray()[idx];
+        model.setRowCount(0);
+        Usuario trabajador;
+        List_Asis_Cap asistencia;
+        Certificado cert;
+        int count = 0;
+        for(List_Trab_Cap t:this.participantes) {
+            trabajador = this.mapUsuarios.get(t.getUsuarioidusuario());
+            asistencia = mapAsisCap.get(t.getLisasiscapidlistacap());
+            if(this.mapSesionCap.get(asistencia.getSesioncapidsesioncap()).getCapacitacionidcap() != capid) continue;
+            count++;
+            Object[] item = {
+                date.format(new Date()), //TODO: falta fecha                
+                trabajador.getRunusuario(),
+                trabajador.getNombresusuario(),
+                trabajador.getAppaterno() + " " + trabajador.getApmaterno(),
+                trabajador.getTelusuario(),
+                trabajador.getMailusuario(),
+                " ",
+            };
+            model.addRow(item);
+        }
+        jLabel77.setText(String.valueOf(count));
     }
 
     /**
@@ -2847,7 +3049,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel58)
                         .addComponent(jLabel59)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
                 .addContainerGap())
@@ -3024,7 +3226,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton49)
                 .addContainerGap())
@@ -3063,6 +3265,11 @@ public class Main extends javax.swing.JFrame {
         });
 
         jComboBox19.setName("com.safe.entity.Sesion_Cap.capacitacionidcap"); // NOI18N
+        jComboBox19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox19ActionPerformed(evt);
+            }
+        });
 
         jLabel139.setText("Capacitación");
 
@@ -3114,7 +3321,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jButton24)
                     .addComponent(jComboBox19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton50)
                 .addContainerGap())
@@ -3122,7 +3329,11 @@ public class Main extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Participantes", jPanel8);
 
-        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox9ActionPerformed(evt);
+            }
+        });
 
         jLabel72.setText("Sesión");
 
@@ -3194,7 +3405,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane16, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                .addComponent(jScrollPane16, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton51)
                 .addContainerGap())
@@ -3204,7 +3415,6 @@ public class Main extends javax.swing.JFrame {
 
         jLabel75.setText("Capacitación");
 
-        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox10ActionPerformed(evt);
@@ -3247,15 +3457,12 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel75)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel76)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel77)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel10Layout.createSequentialGroup()
-                    .addGap(448, 448, 448)
-                    .addComponent(jLabel76)
-                    .addGap(18, 18, 18)
-                    .addComponent(jLabel77)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3263,19 +3470,14 @@ public class Main extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel75)
-                    .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel77)
+                    .addComponent(jLabel76))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jButton52)
                 .addContainerGap())
-            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel10Layout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel76)
-                        .addComponent(jLabel77))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         jTabbedPane2.addTab("Certificados", jPanel10);
@@ -3540,7 +3742,7 @@ public class Main extends javax.swing.JFrame {
         jLabel82.setText("Cupos");
 
         jFormattedTextField10.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextField10.setName("com.safe.entity.Sesion_Salud.cupossesion"); // NOI18N
+        jFormattedTextField10.setName("com.safe.entity.Sesion_Salud.cupossesionString"); // NOI18N
 
         jLabel83.setText("Lugar");
 
@@ -3552,17 +3754,17 @@ public class Main extends javax.swing.JFrame {
 
         jLabel85.setText("Fecha");
 
-        jFormattedTextField11.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        jFormattedTextField11.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField11.setName("com.safe.entity.Sesion_Salud.fechasesion"); // NOI18N
 
         jLabel86.setText("Hora inicio");
 
         jLabel87.setText("Hora término");
 
-        jFormattedTextField12.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jFormattedTextField12.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         jFormattedTextField12.setName("com.safe.entity.Sesion_Salud.horaterminosalud"); // NOI18N
 
-        jFormattedTextField13.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jFormattedTextField13.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         jFormattedTextField13.setName("com.safe.entity.Sesion_Salud.horainiciosalud"); // NOI18N
 
         jLabel88.setText("Descripción");
@@ -3631,7 +3833,7 @@ public class Main extends javax.swing.JFrame {
                                     .addGroup(jPanel12Layout.createSequentialGroup()
                                         .addComponent(jFormattedTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(24, 24, 24)
-                                        .addComponent(jScrollPane19, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE))))
+                                        .addComponent(jScrollPane19, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE))))
                             .addGroup(jPanel12Layout.createSequentialGroup()
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel89)
@@ -3678,11 +3880,10 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jFormattedTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jFormattedTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton28)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane20, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Sesiones", jPanel12);
@@ -3740,13 +3941,10 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jButton29)
                     .addComponent(jButton30))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane21, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Participantes", jPanel13);
-
-        jComboBox15.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jTabbedPane3.addTab("Pacientes", jPanel13);
 
         jLabel92.setText("Sesión");
 
@@ -3775,21 +3973,21 @@ public class Main extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel92)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox15, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel93)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel94)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton32)
-                    .addComponent(jButton31))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane22, javax.swing.GroupLayout.PREFERRED_SIZE, 691, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane22)
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addComponent(jLabel92)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox15, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel93)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel94)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton32)
+                            .addComponent(jButton31))
+                        .addGap(0, 328, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
@@ -3805,15 +4003,13 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton32)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane22, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane22, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Asistencia", jPanel14);
 
         jLabel95.setText("Sesión");
 
-        jComboBox16.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox16ActionPerformed(evt);
@@ -3838,7 +4034,7 @@ public class Main extends javax.swing.JFrame {
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane23, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
                 .addContainerGap())
@@ -3856,10 +4052,9 @@ public class Main extends javax.swing.JFrame {
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jScrollPane23, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jScrollPane23))
             .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel15Layout.createSequentialGroup()
                     .addGap(11, 11, 11)
@@ -3868,7 +4063,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel96)
                         .addComponent(jComboBox16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel97))
-                    .addContainerGap(360, Short.MAX_VALUE)))
+                    .addContainerGap(446, Short.MAX_VALUE)))
         );
 
         jTabbedPane3.addTab("Examenes", jPanel15);
@@ -3900,8 +4095,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel108)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jTabbedPane3))
         );
 
         expositorMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -4556,7 +4750,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(239, 239, 239)
                 .addComponent(jPanelWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addContainerGap(413, Short.MAX_VALUE))
         );
 
         pack();
@@ -5123,7 +5317,9 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jComboBox10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox10ActionPerformed
-        // TODO add your handling code here:
+        // cambiar de capacitacion
+        int idxCapCert = jComboBox10.getSelectedIndex();
+        listaCertificadoCap(idxCapCert);
     }//GEN-LAST:event_jComboBox10ActionPerformed
 
     private void jComboBox16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox16ActionPerformed
@@ -5639,7 +5835,8 @@ public class Main extends javax.swing.JFrame {
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
         //agregar nueva sesion de salud        
         Sesion_Salud sesion = new Sesion_Salud();
-        Bind.setEntity(sesion, this, jPanel12);
+        Bind.setEntity(sesion, this, planSaludForm);
+        
         sesion.setEstadosesionsalud(1L);
         sesionService.saveSalud(sesion);
         Object[] item = {
@@ -5655,6 +5852,18 @@ public class Main extends javax.swing.JFrame {
         model.addRow(item);
         JOptionPane.showMessageDialog(null, "Se ha agregado una nueva sesión correctamente.");
     }//GEN-LAST:event_jButton28ActionPerformed
+
+    private void jComboBox19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox19ActionPerformed
+        // cambiar de capacitacion
+        int idxCap = jComboBox19.getSelectedIndex();
+        listarParticipantesCap(idxCap);
+    }//GEN-LAST:event_jComboBox19ActionPerformed
+
+    private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
+        // cambiar de sesion de capacitacion
+        int idxAsis = jComboBox9.getSelectedIndex();
+        listarAsistenciasCap(idxAsis);
+    }//GEN-LAST:event_jComboBox9ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame calendarMain;
