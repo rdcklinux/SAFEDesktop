@@ -22,7 +22,8 @@ public class SolicitudService {
     public static String[] TIPOS = {
         "Todos",
         "Instalación",
-        "Persona",
+        "Personal",
+        "Instalación y Personal",
     };
     
     public static String[] ESTADOS = {

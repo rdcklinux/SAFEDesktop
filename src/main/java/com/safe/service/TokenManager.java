@@ -28,6 +28,10 @@ public class TokenManager {
     public boolean getSuccessAuthentication(String username, String password){
         try {        
             usuario = userDAL.login(username, password);
+            if(usuario == null) {
+                expire();
+                return false;
+            }
         }catch(UnirestException e) {
             expire();
             return false;

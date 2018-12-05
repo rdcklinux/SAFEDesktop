@@ -270,8 +270,8 @@ public class Main extends javax.swing.JFrame {
             selectedEntity = evaluacion;
             secondEntity = solicitud;
             Cliente cliente = clienteService.getOne((int)solicitud.getClienteidcliente());
-            Bind.setComponent(cliente, this, jPanel5);
-            Bind.setComponent(solicitud, this, jPanel5);
+            Bind.setComponent(cliente, this, evaluacionForm);
+            Bind.setComponent(solicitud, this, evaluacionForm);
 
             Obs_Supervisor[] obsS = observacionService.getSupervisorCollection();
             if(obsS != null){
@@ -830,8 +830,6 @@ public class Main extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
-        jLabel23 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
@@ -1232,7 +1230,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenuAdmin.add(jMenuUsuario);
 
-        jMenuTipoCapacitacion.setText("Capacitaciones");
+        jMenuTipoCapacitacion.setText("Tipos de Capacitación");
 
         jMenuTipoCapListar.setText("Listar");
         jMenuTipoCapListar.addActionListener(new java.awt.event.ActionListener() {
@@ -1252,7 +1250,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenuAdmin.add(jMenuTipoCapacitacion);
 
-        jMenuExamen.setText("Exámenes");
+        jMenuExamen.setText("Tipos de Examen");
 
         jMenuExmListar.setText("Listar");
         jMenuExmListar.addActionListener(new java.awt.event.ActionListener() {
@@ -1436,7 +1434,7 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Creado el", "RUT", "Nombre", "Contacto", "Tipo", "Telefono", "Email", "Detalles"
+                "Creado el", "RUT", "Nombre", "Contacto", "Giro", "Telefono", "Email", "Editar"
             }
         ) {
             Class[] types = new Class [] {
@@ -1454,16 +1452,14 @@ public class Main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable4.setColumnSelectionAllowed(true);
         jTable4.getTableHeader().setReorderingAllowed(false);
         jScrollPane7.setViewportView(jTable4);
         jTable4.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         if (jTable4.getColumnModel().getColumnCount() > 0) {
-            jTable4.getColumnModel().getColumn(0).setHeaderValue("Creado el");
-            jTable4.getColumnModel().getColumn(1).setHeaderValue("RUT");
-            jTable4.getColumnModel().getColumn(3).setHeaderValue("Contacto");
-            jTable4.getColumnModel().getColumn(4).setHeaderValue("Tipo");
-            jTable4.getColumnModel().getColumn(5).setHeaderValue("Telefono");
-            jTable4.getColumnModel().getColumn(7).setHeaderValue("Editar");
+            jTable4.getColumnModel().getColumn(7).setMinWidth(100);
+            jTable4.getColumnModel().getColumn(7).setPreferredWidth(100);
+            jTable4.getColumnModel().getColumn(7).setMaxWidth(100);
         }
 
         javax.swing.GroupLayout clienteMainLayout = new javax.swing.GroupLayout(clienteMain.getContentPane());
@@ -1496,8 +1492,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jButton5)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))
         );
 
         clienteForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -1522,8 +1517,6 @@ public class Main extends javax.swing.JFrame {
         jLabel22.setText("Dirección");
 
         jTextField4.setName("com.safe.entity.Cliente.direccioncliente"); // NOI18N
-
-        jLabel23.setText("Comuna");
 
         jLabel24.setText("Fono Oficina");
 
@@ -1594,14 +1587,12 @@ public class Main extends javax.swing.JFrame {
                                 .addGroup(clienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel21)
                                     .addComponent(jLabel22)
-                                    .addComponent(jLabel23)
                                     .addComponent(jLabel20)
                                     .addComponent(jLabel19))
                                 .addGap(16, 16, 16)
                                 .addGroup(clienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextField1)
                                     .addComponent(jTextField2)
-                                    .addComponent(jTextField5)
                                     .addComponent(jTextField4)
                                     .addComponent(jTextField3))))
                         .addGap(18, 18, 18)
@@ -1665,16 +1656,11 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(clienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(clienteFormLayout.createSequentialGroup()
-                        .addGroup(clienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel23)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel29))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(clienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel24)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel29)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(clienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel24)
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(clienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
@@ -1731,6 +1717,11 @@ public class Main extends javax.swing.JFrame {
         jTable5.getTableHeader().setReorderingAllowed(false);
         jScrollPane9.setViewportView(jTable5);
         jTable5.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        if (jTable5.getColumnModel().getColumnCount() > 0) {
+            jTable5.getColumnModel().getColumn(7).setMinWidth(100);
+            jTable5.getColumnModel().getColumn(7).setPreferredWidth(100);
+            jTable5.getColumnModel().getColumn(7).setMaxWidth(100);
+        }
 
         jLabel14.setText("Filtro de Estado");
         jLabel14.setToolTipText("");
@@ -1782,8 +1773,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jComboBoxEstado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
         );
 
         usuarioForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -1976,7 +1966,7 @@ public class Main extends javax.swing.JFrame {
         );
 
         tipoCapacitacionMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-        tipoCapacitacionMain.setTitle("Capacitaciones");
+        tipoCapacitacionMain.setTitle("Tipos de Capacitación");
         tipoCapacitacionMain.setVisible(true);
 
         jButton16.setText("Buscar");
@@ -2006,7 +1996,7 @@ public class Main extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -2021,6 +2011,11 @@ public class Main extends javax.swing.JFrame {
         jTable6.getTableHeader().setReorderingAllowed(false);
         jScrollPane11.setViewportView(jTable6);
         jTable6.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        if (jTable6.getColumnModel().getColumnCount() > 0) {
+            jTable6.getColumnModel().getColumn(2).setMinWidth(100);
+            jTable6.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jTable6.getColumnModel().getColumn(2).setMaxWidth(100);
+        }
 
         jTextField29.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2058,8 +2053,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jButton16)
                     .addComponent(jTextField29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))
         );
 
         tipoCapacitacionForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -2176,7 +2170,7 @@ public class Main extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -2187,9 +2181,15 @@ public class Main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable21.setColumnSelectionAllowed(true);
         jTable21.getTableHeader().setReorderingAllowed(false);
         jScrollPane27.setViewportView(jTable21);
         jTable21.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        if (jTable21.getColumnModel().getColumnCount() > 0) {
+            jTable21.getColumnModel().getColumn(2).setMinWidth(100);
+            jTable21.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jTable21.getColumnModel().getColumn(2).setMaxWidth(100);
+        }
 
         javax.swing.GroupLayout tipoExamenMainLayout = new javax.swing.GroupLayout(tipoExamenMain.getContentPane());
         tipoExamenMain.getContentPane().setLayout(tipoExamenMainLayout);
@@ -2221,8 +2221,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jButton45)
                     .addComponent(jTextField40, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane27, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addComponent(jScrollPane27, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))
         );
 
         tipoExamenForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -2421,8 +2420,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel45)
                     .addComponent(jComboBoxTipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
         );
 
         evaluacionForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -3630,8 +3628,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel100)
                     .addComponent(jTextField27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane24, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane24, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
         );
 
         newPlanSaludForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -4692,11 +4689,6 @@ public class Main extends javax.swing.JFrame {
                 formMouseMoved(evt);
             }
         });
-        addWindowStateListener(new java.awt.event.WindowStateListener() {
-            public void windowStateChanged(java.awt.event.WindowEvent evt) {
-                formWindowStateChanged(evt);
-            }
-        });
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Perfil de usuario:");
@@ -4715,25 +4707,24 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanelWelcomeLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelWelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelWelcomeLayout.createSequentialGroup()
-                        .addGap(293, 293, 293)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelWelcomeLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabelProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelWelcomeLayout.setVerticalGroup(
             jPanelWelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelWelcomeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
                 .addGroup(jPanelWelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabelProfile))
-                .addContainerGap())
+                .addGap(273, 273, 273)
+                .addComponent(jLabel1)
+                .addContainerGap(417, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -4747,10 +4738,7 @@ public class Main extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(239, 239, 239)
-                .addComponent(jPanelWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(413, Short.MAX_VALUE))
+            .addComponent(jPanelWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -4758,17 +4746,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuEmpCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEmpCrearActionPerformed
         selectedEntity = null;
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
-        jTextField5.setText("");
-        jTextField6.setText("");
-        jTextField7.setText("");
-        jTextField8.setText("");
-        jTextField9.setText("");
-        jTextField10.setText("");
-        jTextArea2.setText("");
+        Bind.setComponent(new Cliente(), this, clienteForm);
         jButton8.setEnabled(false);
         jLabelClienteTitle.setText("Crear empresa");
         changePanel(clienteForm);
@@ -4777,10 +4755,6 @@ public class Main extends javax.swing.JFrame {
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
         session.alive();
     }//GEN-LAST:event_formMouseMoved
-
-    private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
-
-    }//GEN-LAST:event_formWindowStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // buscar planes de capacitaciones
@@ -4970,7 +4944,7 @@ public class Main extends javax.swing.JFrame {
                     c.getRutcliente(),
                     c.getRazonsocial(),
                     c.getNombrecontacto(),
-                    "TIPO", //TODO: falta tipo
+                    c.getGirocliente(),
                     c.getTeloficina(),
                     c.getMailcontacto(),
                     c,
@@ -6024,7 +5998,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
@@ -6257,7 +6230,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField40;
     private javax.swing.JTextField jTextField41;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
