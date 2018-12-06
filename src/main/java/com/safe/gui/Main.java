@@ -107,15 +107,16 @@ public class Main extends javax.swing.JFrame {
     private final String domain;
     private Object selectedEntity;
     private Object secondEntity;
-    LinkedHashMap<Long, Capacitacion> mapCapcitacion;
-    LinkedHashMap<Long, Sesion_Cap> mapSesionCap;
-    LinkedHashMap<Long, Sesion_Salud> mapSesionSalud;
-    LinkedHashMap<Long, Medico> mapMedico;
-    HashMap<Long, Usuario> mapUsuarios;
-    HashMap<Long, List_Asis_Cap> mapAsisCap;
-    HashMap<Long, List_Asis_Salud> mapAsisSalud;
-    List_Trab_Cap[] participantes;
-    ListTrabSalud[] pacientes;
+    private javax.swing.JMenuItem gotoWelcome;
+    private LinkedHashMap<Long, Capacitacion> mapCapcitacion;
+    private LinkedHashMap<Long, Sesion_Cap> mapSesionCap;
+    private LinkedHashMap<Long, Sesion_Salud> mapSesionSalud;
+    private LinkedHashMap<Long, Medico> mapMedico;
+    private HashMap<Long, Usuario> mapUsuarios;
+    private HashMap<Long, List_Asis_Cap> mapAsisCap;
+    private HashMap<Long, List_Asis_Salud> mapAsisSalud;
+    private List_Trab_Cap[] participantes;
+    private ListTrabSalud[] pacientes;
     
     private final SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
     private final SimpleDateFormat dateInverted = new SimpleDateFormat("yyyy-MM-dd");
@@ -162,7 +163,7 @@ public class Main extends javax.swing.JFrame {
         WindowComponent.centerWindow(this);
         
         session = new SessionManager(this, sessionTime);
-        initCustoms();
+        initCustoms();        
     }
     
     private String dateInvert(String d){
@@ -297,6 +298,7 @@ public class Main extends javax.swing.JFrame {
                     model.addRow(item);
                 }
             }
+            jTextArea1.setText("");
             changePanel(evaluacionForm);
         } else if(col == 7){
             this.abrirPDFEvaluacion(row);
@@ -434,8 +436,9 @@ public class Main extends javax.swing.JFrame {
     }
     
     public void signin(){
-        configureRoleMenu();        
+        configureRoleMenu();       
         jLabelProfile.setText(token.getRoleName());
+        this.gotoWelcome.doClick();
         this.setVisible(true);
         this.loginForm.setVisible(false);
         session.start();
@@ -459,9 +462,13 @@ public class Main extends javax.swing.JFrame {
         switch(token.getUserRole()){
             case "ROLE_ADMIN": currentMenu = jMenuAdmin;                
             break;            
-            case "ROLE_SUPERVISOR": currentMenu = jMenuSupervisor;
+            case "ROLE_SUPERVISOR": 
+                currentMenu = jMenuSupervisor;
+                jButton53.setVisible(false);
             break;
-            case "ROLE_ENGINEER": currentMenu =jMenuEngineer;
+            case "ROLE_ENGINEER": 
+                currentMenu =jMenuEngineer;
+                jButton53.setVisible(true);
             break;
         }
         jMenuProfile.setText(token.getUser().getFullName());
@@ -475,9 +482,9 @@ public class Main extends javax.swing.JFrame {
     private void initUserMenu(){
         jMenuProfile = new javax.swing.JMenu();
         horizontalGlue = javax.swing.Box.createHorizontalGlue();
-        javax.swing.JMenuItem item = new javax.swing.JMenuItem();
-        item.setText("Inicio");
-        item.addActionListener(new java.awt.event.ActionListener() {
+        this.gotoWelcome = new javax.swing.JMenuItem();
+        this.gotoWelcome.setText("Inicio");
+        this.gotoWelcome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Container root = getRootPane().getContentPane();
                 for(Component c: root.getComponents()){
@@ -487,9 +494,9 @@ public class Main extends javax.swing.JFrame {
                 jPanelWelcome.repaint();
             }
         });
-        jMenuProfile.add(item);
+        jMenuProfile.add(this.gotoWelcome);        
         
-        item = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem item = new javax.swing.JMenuItem();
         item.setText("Cerrar Sesión");
         item.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -668,8 +675,8 @@ public class Main extends javax.swing.JFrame {
         listaCertificadoCap(idxCapCert);
     }
     
-    private void listarParticipantesCap(int idx){
-        if(this.mapSesionCap.isEmpty()) return;
+    private void listarParticipantesCap(int idx){        
+        if(this.mapSesionCap.isEmpty() || idx < 0) return;
         DefaultTableModel model = (DefaultTableModel)jTable10.getModel();
         model.setRowCount(0);
         long capid = (long)this.mapCapcitacion.keySet().toArray()[idx];
@@ -717,6 +724,7 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void listarAsistenciasCap(int idx){
+        if(idx < 0) return;
         DefaultTableModel model = (DefaultTableModel)jTable11.getModel();
         model.setRowCount(0);
         long sesid = (long)this.mapSesionCap.keySet().toArray()[idx];
@@ -743,7 +751,7 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void listaCertificadoCap(int idx){
-        if(this.mapSesionCap.isEmpty()) return;
+        if(this.mapSesionCap.isEmpty() || idx < 0) return;
         DefaultTableModel model = (DefaultTableModel)jTable12.getModel();
         long capid = (long)this.mapCapcitacion.keySet().toArray()[idx];
         model.setRowCount(0);
@@ -795,7 +803,6 @@ public class Main extends javax.swing.JFrame {
         jMenuSupervisor = new javax.swing.JMenuBar();
         jMenuTerreno = new javax.swing.JMenu();
         jMenuTerListar = new javax.swing.JMenuItem();
-        jMenuTerCrear = new javax.swing.JMenuItem();
         jMenuPlanCap = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -944,6 +951,7 @@ public class Main extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jButton53 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -1283,14 +1291,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenuTerreno.add(jMenuTerListar);
-
-        jMenuTerCrear.setText("Crear");
-        jMenuTerCrear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuTerCrearActionPerformed(evt);
-            }
-        });
-        jMenuTerreno.add(jMenuTerCrear);
 
         jMenuSupervisor.add(jMenuTerreno);
 
@@ -2522,7 +2522,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Detalle", jPanel1);
@@ -2549,6 +2549,13 @@ public class Main extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Observaciones al supervisor");
 
+        jButton53.setText("Aprobar");
+        jButton53.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton53ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -2559,6 +2566,8 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton53)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)))
@@ -2574,7 +2583,8 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton53))
                 .addContainerGap())
         );
 
@@ -2625,9 +2635,8 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Observaciones Supervisor", jPanel3);
@@ -2677,14 +2686,18 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Observaciones Ingeniero", jPanel4);
 
         jButton54.setText("Cerrar");
+        jButton54.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuTerListarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout evaluacionFormLayout = new javax.swing.GroupLayout(evaluacionForm.getContentPane());
         evaluacionForm.getContentPane().setLayout(evaluacionFormLayout);
@@ -2706,8 +2719,8 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton54)
                 .addContainerGap())
         );
@@ -2786,7 +2799,7 @@ public class Main extends javax.swing.JFrame {
         jButton14.setText("Crear plan anual");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
 
@@ -4683,7 +4696,6 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de administración SAFE");
-        setPreferredSize(new java.awt.Dimension(960, 768));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 formMouseMoved(evt);
@@ -4780,11 +4792,6 @@ public class Main extends javax.swing.JFrame {
         jTable1.setRowSorter(sorter);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jMenuTerCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerCrearActionPerformed
-        selectedEntity = null;
-        changePanel(evaluacionForm);
-    }//GEN-LAST:event_jMenuTerCrearActionPerformed
-
     private void jMenuTerListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTerListarActionPerformed
         jMenuTerEngListarActionPerformed(evt);
     }//GEN-LAST:event_jMenuTerListarActionPerformed
@@ -4807,31 +4814,19 @@ public class Main extends javax.swing.JFrame {
         Eval_Terr[] evaluaciones = evaluacionTerrenoService.getCollection();
         if(evaluaciones != null ){
             DefaultTableModel model = (DefaultTableModel)jTable7.getModel();            
-            model.setRowCount(0);
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String createdAt, derivatedAt;
+            model.setRowCount(0);            
             Cliente cliente;
             for(Eval_Terr e: evaluaciones){
                 SoliEvalTer solicitud = solicitudService.getOne(e.getSolievalteridsolicitud().intValue());
                 cliente = clienteService.getOne((int)solicitud.getClienteidcliente());
-                try {
-                    createdAt = date.format(df.parse(solicitud.getFechacreacion()));
-                } catch (ParseException ex) {
-                    createdAt = "";
-                }
-                try {
-                    derivatedAt = date.format(df.parse(solicitud.getFechaderivacion()));
-                } catch (ParseException ex) {
-                    derivatedAt = "";
-                }
                 
                 Object[] item = {
-                    createdAt,
-                    derivatedAt,
+                    solicitud.getFechacreacion(),
+                    solicitud.getFechaderivacion(),
                     "TECNICO", //TODO: falta tecnico ,
                     cliente.getRazonsocial(),
                     SolicitudService.TIPOS[(int)solicitud.getTipovisitteridtipovister()],
-                    SolicitudService.ESTADOS[(int)solicitud.getEstadosolievalter()],
+                    SolicitudService.ESTADOS[(int)solicitud.getEstadosolievalter()],                    
                     solicitud,
                     e,
                 };
@@ -4842,7 +4837,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuTerEngListarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(token.getUserRole().equals("ROLE_SUPERVISOR")) {
+        if(token.getUserRole().equals("ROLE_ENGINEER")) {
             //derivar a ingeniero    
             Obs_Ingeniero observacion = new Obs_Ingeniero();
             observacion.setObsing(jTextArea1.getText());
@@ -4850,7 +4845,7 @@ public class Main extends javax.swing.JFrame {
             observacionService.saveIngeniero(observacion);
             
             SoliEvalTer solicitud = (SoliEvalTer)secondEntity;
-            solicitud.setEstadosolievalter(3);
+            solicitud.setEstadosolievalter(2);
             solicitudService.save(solicitud);
             
             DefaultTableModel model = (DefaultTableModel)jTable3.getModel();
@@ -4859,8 +4854,8 @@ public class Main extends javax.swing.JFrame {
                 observacion.getObsing(),
             };
             model.addRow(item);
-            
-        }else if(token.getUserRole().equals("ROLE_ENGINEER")) {
+            JOptionPane.showMessageDialog(null, "Se ha registrado la observación al supervisor correctamente.");
+        }else if(token.getUserRole().equals("ROLE_SUPERVISOR")) {
             // derivar a supervisor
             Obs_Supervisor observacion = new Obs_Supervisor();
             observacion.setObssupervisor(jTextArea1.getText());
@@ -4868,7 +4863,7 @@ public class Main extends javax.swing.JFrame {
             observacionService.saveSupervisor(observacion);
             
             SoliEvalTer solicitud = (SoliEvalTer)secondEntity;
-            solicitud.setEstadosolievalter(2);
+            solicitud.setEstadosolievalter(3);
             solicitudService.save(solicitud);
             
             DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
@@ -4877,15 +4872,17 @@ public class Main extends javax.swing.JFrame {
                 observacion.getObssupervisor(),
             };
             model.addRow(item);
+            JOptionPane.showMessageDialog(null, "Se ha registrado la observación al ingeniero correctamente.");
         }
+        jMenuTerListarActionPerformed(evt);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        //rechazar y derivar al tecnico en terreno y queda registrado en el historico del supervisor
-        Obs_Supervisor observacion = new Obs_Supervisor();
-        observacion.setObssupervisor(jTextArea1.getText());
+        //rechazar y derivar al tecnico en terreno y queda registrado en el historico para el supervisor
+        Obs_Ingeniero observacion = new Obs_Ingeniero();
+        observacion.setObsing(jTextArea1.getText());
         observacion.setEvalterridevalterr(((Eval_Terr)selectedEntity).getIdevalterr());
-        observacionService.saveSupervisor(observacion);
+        observacionService.saveIngeniero(observacion);
         
         SoliEvalTer solicitud = (SoliEvalTer)secondEntity;
         solicitud.setEstadosolievalter(5);
@@ -4893,11 +4890,11 @@ public class Main extends javax.swing.JFrame {
         
         DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
         Object[] item = {
-            observacion.getFechahoraobssupervisor(),
-            observacion.getObssupervisor(),
+            observacion.getFechahoraobsing(),
+            observacion.getObsing(),
         };
         model.addRow(item);
-        JOptionPane.showMessageDialog(null, "Se ha registrado la observacion de rechazo correctamente.");
+        JOptionPane.showMessageDialog(null, "Se ha registrado la observación de rechazo correctamente.");
         evaluacionForm.setVisible(false);
         jMenuTerEngListarActionPerformed(null);
         
@@ -5230,11 +5227,6 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField17ActionPerformed
 
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        //crear nuevo plan
-        changePanel(newPlanCapacitacionForm);
-    }//GEN-LAST:event_jButton14ActionPerformed
-
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         // buscar cliente por rut        
         Bind.setComponent(new Cliente(), this, newPlanCapacitacionForm);
@@ -5283,10 +5275,8 @@ public class Main extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // nuevo plan de capacitacion
         selectedEntity = null;
-        jLabel50.setText("");
-        jLabel51.setText("");
-        jLabel52.setText("");
-        jLabel56.setText("");
+        jTextField18.setText("");
+        Bind.setComponent(new Cliente(), this, newPlanCapacitacionForm);
         changePanel(newPlanCapacitacionForm);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -5839,6 +5829,28 @@ public class Main extends javax.swing.JFrame {
         listarAsistenciasCap(idxAsis);
     }//GEN-LAST:event_jComboBox9ActionPerformed
 
+    private void jButton53ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton53ActionPerformed
+        // aprobar evaluacion en terreno
+        Obs_Ingeniero observacion = new Obs_Ingeniero();
+        observacion.setObsing(jTextArea1.getText());
+        observacion.setEvalterridevalterr(((Eval_Terr)selectedEntity).getIdevalterr());
+        observacionService.saveIngeniero(observacion);
+        
+        SoliEvalTer solicitud = (SoliEvalTer)secondEntity;
+        solicitud.setEstadosolievalter(4);
+        solicitudService.save(solicitud);
+        
+        DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
+        Object[] item = {
+            observacion.getFechahoraobsing(),
+            observacion.getObsing(),
+        };
+        model.addRow(item);
+        JOptionPane.showMessageDialog(null, "Se ha registrado la observación de aprobación correctamente.");
+        evaluacionForm.setVisible(false);
+        jMenuTerEngListarActionPerformed(null);
+    }//GEN-LAST:event_jButton53ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame calendarMain;
     private javax.swing.JInternalFrame clienteForm;
@@ -5895,6 +5907,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton50;
     private javax.swing.JButton jButton51;
     private javax.swing.JButton jButton52;
+    private javax.swing.JButton jButton53;
     private javax.swing.JButton jButton54;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -6113,7 +6126,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuPlanCap;
     private javax.swing.JMenu jMenuPlanSalud;
     private javax.swing.JMenuBar jMenuSupervisor;
-    private javax.swing.JMenuItem jMenuTerCrear;
     private javax.swing.JMenuItem jMenuTerEngListar;
     private javax.swing.JMenuItem jMenuTerListar;
     private javax.swing.JMenu jMenuTerreno;

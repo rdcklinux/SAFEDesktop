@@ -3,6 +3,8 @@ package com.safe.entity;
 
 import com.safe.service.SolicitudService;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class SoliEvalTer implements Serializable{
     
@@ -45,6 +47,13 @@ public class SoliEvalTer implements Serializable{
     }
 
     public void setFechacreacion(String fechacreacion) {
+        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            fechacreacion = date.format(dt.parse(fechacreacion));
+        } catch (ParseException ex) {
+            fechacreacion = "";
+        }
         this.fechacreacion = fechacreacion;
     }
 
@@ -106,6 +115,13 @@ public class SoliEvalTer implements Serializable{
     }
 
     public void setFechaderivacion(String fechaderivacion) {
+        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            fechaderivacion = date.format(dt.parse(fechaderivacion));
+        } catch (ParseException ex) {
+            fechaderivacion = "";
+        }
         this.fechaderivacion = fechaderivacion;
     }
     
