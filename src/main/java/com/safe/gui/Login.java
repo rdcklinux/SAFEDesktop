@@ -170,9 +170,9 @@ public class Login extends javax.swing.JFrame {
         jLabelMessage.setText(" ");
         String user = impersonate ? impersonateUsername : jTextUserField.getText();
         String password = String.valueOf(jPasswordField.getPassword());
-        token.getSuccessAuthentication(user, password);
+        boolean success = token.getSuccessAuthentication(user, password, impersonate);
         if(impersonate) token.authenticateDebug(impersonateUserRole);
-        if(token.isAuthenticated()){
+        if(success && token.isAuthenticated()){
             main.signin();
         } else {
             jLabelMessage.setText("Usuario o contraseña incorrecto.");

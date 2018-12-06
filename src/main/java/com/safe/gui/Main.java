@@ -565,7 +565,9 @@ public class Main extends javax.swing.JFrame {
         if(sesionesSalud != null ){
             DefaultTableModel modelSession = (DefaultTableModel)jTable14.getModel();
             modelSession.setRowCount(0);
-            for(Sesion_Salud s: sesionesSalud){                
+            for(Sesion_Salud s: sesionesSalud){
+                jComboBox15.addItem(s.getNombresesionsalud());
+                jComboBox16.addItem(s.getNombresesionsalud());
                 Object[] item = {                    
                     s.getCupossesion(),
                     s.getNombresesionsalud(),
@@ -3595,7 +3597,7 @@ public class Main extends javax.swing.JFrame {
         jButton34.setText("Crear plan anual");
         jButton34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton34ActionPerformed(evt);
+                jMenuItem4ActionPerformed(evt);
             }
         });
 
@@ -3674,12 +3676,16 @@ public class Main extends javax.swing.JFrame {
         });
 
         jLabel103.setText("jLabel50");
+        jLabel103.setName("com.safe.entity.Cliente.razonsocial"); // NOI18N
 
         jLabel104.setText("jLabel51");
+        jLabel104.setName("com.safe.entity.Cliente.teloficina"); // NOI18N
 
         jLabel105.setText("jLabel52");
+        jLabel105.setName("com.safe.entity.Cliente.mailcontacto"); // NOI18N
 
         jLabel106.setText("jLabel56");
+        jLabel106.setName("com.safe.entity.Cliente.direccioncliente"); // NOI18N
 
         javax.swing.GroupLayout newPlanSaludFormLayout = new javax.swing.GroupLayout(newPlanSaludForm.getContentPane());
         newPlanSaludForm.getContentPane().setLayout(newPlanSaludFormLayout);
@@ -5326,17 +5332,12 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField27ActionPerformed
 
-    private void jButton34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton34ActionPerformed
-        // crear nuevo plan de salud        
-        changePanel(newPlanSaludForm);
-        
-    }//GEN-LAST:event_jButton34ActionPerformed
-
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
         // crear plan de salud
         Plan_Salud plan = new Plan_Salud();
         
         Cliente cliente = (Cliente)selectedEntity;
+        jLabel108.setText(cliente.getRazonsocial());
         selectedEntity = null;
         plan.setClienteidcliente(cliente.getIdcliente());
         plan.setFechacreacion(date.format(new Date()));
@@ -5346,8 +5347,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton27ActionPerformed
 
     private void jButton35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35ActionPerformed
-
-        // buscar cliente por rut        
+        // buscar cliente por rut
         Bind.setComponent(new Cliente(), this, newPlanSaludForm);
         Cliente cliente = clienteService.getOneByRut(jTextField24.getText());
         if(cliente != null) {
@@ -5559,7 +5559,7 @@ public class Main extends javax.swing.JFrame {
                 Cliente cliente = clienteService.getOne((int)p.getClienteidcliente());
                 Date fechacreado = new Date();
                 try {
-                    fechacreado = date.parse(p.getFechacreacion());
+                    fechacreado = dateInverted.parse(p.getFechacreacion());
                 } catch (ParseException ex) {}
                 Object[] item = {
                     date.format(fechacreado),
@@ -5577,8 +5577,10 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // crear plan de salud
-        changePanel(planSaludForm);
+        // crear nuevo plan de salud
+        Bind.setComponent(new Cliente(), this, newPlanSaludForm);
+        jTextField24.setText("");
+        changePanel(newPlanSaludForm);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -5814,6 +5816,8 @@ public class Main extends javax.swing.JFrame {
         };
         DefaultTableModel model = (DefaultTableModel)jTable14.getModel();
         model.addRow(item);
+        jComboBox15.addItem(sesion.getNombresesionsalud());
+        jComboBox16.addItem(sesion.getNombresesionsalud());
         JOptionPane.showMessageDialog(null, "Se ha agregado una nueva sesión correctamente.");
     }//GEN-LAST:event_jButton28ActionPerformed
 

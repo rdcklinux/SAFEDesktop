@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-classpath %classpath com.safe.gui.Login localhost impersonate c49e1867-575a-47ed-9de3-6940aa2b2930 2-7 ROLE_SUPERVISOR</exec.args>
+                <exec.args>-classpath %classpath com.safe.gui.Login localhost impersonate c49e1867-575a-47ed-9de3-6940aa2b2930 40043300-3 ROLE_SUPERVISOR</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
@@ -24,7 +24,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath com.safe.gui.Login localhost impersonate c49e1867-575a-47ed-9de3-6940aa2b2930 2-7 ROLE_SUPERVISOR</exec.args>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath com.safe.gui.Login localhost impersonate c49e1867-575a-47ed-9de3-6940aa2b2930 40043300-3 ROLE_SUPERVISOR</exec.args>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
             </properties>
@@ -39,7 +39,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-classpath %classpath com.safe.gui.Login localhost impersonate c49e1867-575a-47ed-9de3-6940aa2b2930 2-7 ROLE_SUPERVISOR</exec.args>
+                <exec.args>-classpath %classpath com.safe.gui.Login localhost impersonate c49e1867-575a-47ed-9de3-6940aa2b2930 40043300-3 ROLE_SUPERVISOR</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>

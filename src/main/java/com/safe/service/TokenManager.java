@@ -25,9 +25,13 @@ public class TokenManager {
         userDAL = new UserDAL(domain);
     }
     
-    public boolean getSuccessAuthentication(String username, String password){
-        try {        
-            usuario = userDAL.login(username, password);
+    public boolean getSuccessAuthentication(String username, String password, boolean impersonate){
+        try {
+            if(impersonate) {
+                usuario = userDAL.byRun(username);
+            } else {
+                usuario = userDAL.login(username, password);
+            }
             if(usuario == null) {
                 expire();
                 return false;

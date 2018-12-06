@@ -4066,7 +4066,7 @@
             <Property name="text" type="java.lang.String" value="Crear plan anual"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton34ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -4209,21 +4209,25 @@
         <Component class="javax.swing.JLabel" name="jLabel103">
           <Properties>
             <Property name="text" type="java.lang.String" value="jLabel50"/>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Cliente.razonsocial" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel104">
           <Properties>
             <Property name="text" type="java.lang.String" value="jLabel51"/>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Cliente.teloficina" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel105">
           <Properties>
             <Property name="text" type="java.lang.String" value="jLabel52"/>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Cliente.mailcontacto" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel106">
           <Properties>
             <Property name="text" type="java.lang.String" value="jLabel56"/>
+            <Property name="name" type="java.lang.String" value="com.safe.entity.Cliente.direccioncliente" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
