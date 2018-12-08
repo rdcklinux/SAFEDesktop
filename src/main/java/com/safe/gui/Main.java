@@ -9,6 +9,7 @@ import com.safe.entity.Capacitacion;
 import com.safe.entity.Certificado;
 import com.safe.entity.Cliente;
 import com.safe.entity.Eval_Terr;
+import com.safe.entity.Examenes;
 import com.safe.entity.Expositor;
 import com.safe.entity.ListTrabSalud;
 import com.safe.entity.List_Asis_Cap;
@@ -34,6 +35,7 @@ import com.safe.service.CertificadoService;
 import com.safe.service.TipoCapacitacionService;
 import com.safe.service.ClienteService;
 import com.safe.service.EvaluacionTerrenoService;
+import com.safe.service.ExamenesService;
 import com.safe.service.ExpositorService;
 import com.safe.service.ListTrabajadorService;
 import com.safe.service.MedicoService;
@@ -62,6 +64,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -98,6 +101,7 @@ public class Main extends javax.swing.JFrame {
     private final SesionService sesionService;
     private final ExpositorService expositorService;
     private final MedicoService medicoService;
+    private final ExamenesService examenesService;
     private final ListTrabajadorService listTrabajadorService;
     private final AsistenciaTrabajadorService asistenciaTrabajadorService;
     private final CertificadoService certificadoService;
@@ -113,9 +117,10 @@ public class Main extends javax.swing.JFrame {
     private LinkedHashMap<Long, Sesion_Cap> mapSesionCap;
     private LinkedHashMap<Long, Sesion_Salud> mapSesionSalud;
     private LinkedHashMap<Long, Medico> mapMedico;
-    private HashMap<Long, Usuario> mapUsuarios;
-    private HashMap<Long, List_Asis_Cap> mapAsisCap;
-    private HashMap<Long, List_Asis_Salud> mapAsisSalud;
+    private LinkedHashMap<Long, Examenes> mapExamenes;
+    private LinkedHashMap<Long, Usuario> mapUsuarios;
+    private LinkedHashMap<Long, List_Asis_Cap> mapAsisCap;
+    private LinkedHashMap<Long, List_Asis_Salud> mapAsisSalud;
     private List_Trab_Cap[] participantes;
     private ListTrabSalud[] pacientes;
     private String formattedSelectedValue;
@@ -152,6 +157,7 @@ public class Main extends javax.swing.JFrame {
         sesionService = new SesionService(this.domain);
         expositorService = new ExpositorService(this.domain);
         medicoService  = new MedicoService(this.domain);
+        examenesService  = new ExamenesService(this.domain);
         listTrabajadorService = new ListTrabajadorService(this.domain);
         asistenciaTrabajadorService = new AsistenciaTrabajadorService(this.domain);
         certificadoService = new CertificadoService(this.domain);
@@ -167,7 +173,7 @@ public class Main extends javax.swing.JFrame {
         WindowComponent.centerWindow(this);
         
         session = new SessionManager(this, sessionTime);
-        initCustoms();        
+        initCustoms(); 
     }
     
     private String dateInvert(String d){
@@ -227,8 +233,8 @@ public class Main extends javax.swing.JFrame {
             String rut = jTable1.getValueAt(row, 3).toString();
             Cliente cliente = clienteService.getOneByRut(rut);
             jLabel137.setText(cliente.getRazonsocial());
+            loadGestionCapacitacion(plan.getIdplancap(), cliente);
             selectedEntity = plan;
-            loadGestionCapacitacion(plan.getIdplancap());
             changePanel(planCapacitacionForm);
         }
     }
@@ -242,7 +248,7 @@ public class Main extends javax.swing.JFrame {
             Cliente cliente = clienteService.getOneByRut(rut);
             jLabel108.setText(cliente.getRazonsocial());
             selectedEntity = plan;
-            loadGestionSalud(plan.getIdplansalud());
+            loadGestionSalud(plan.getIdplansalud(), cliente);
             changePanel(planSaludForm);
         }
     }
@@ -536,7 +542,7 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
-    private void loadGestionSalud(long planid){
+    private void loadGestionSalud(long planid, Cliente cliente){
         this.mapMedico = new LinkedHashMap<>();        
         Medico[] medicos = medicoService.getCollection();
         for(Medico m: medicos){
@@ -544,32 +550,34 @@ public class Main extends javax.swing.JFrame {
             jComboBox14.addItem(m.getNombremedico());
         }
         
-        this.mapSesionSalud = new LinkedHashMap<>();
-        Sesion_Salud[] sesionesSalud = sesionService.getSaludCollection();
-        for(Sesion_Salud s: sesionesSalud){
-            this.mapSesionSalud.put(s.getIdsesionsalud(),s);
-            jComboBox15.addItem(s.getDescripcionsesionsalud());
-            jComboBox16.addItem(s.getDescripcionsesionsalud());
+        this.mapExamenes = new LinkedHashMap<>();        
+        Examenes[] examenes = examenesService.getCollection();
+        for(Examenes e: examenes){
+            this.mapExamenes.put(e.getIdexamen(), e);
+            jComboBox13.addItem(e.getNombreexamen());
         }
         
+        this.mapSesionSalud = new LinkedHashMap<>();
+        Sesion_Salud[] sesionesSalud = sesionService.getSaludCollection();
+        
         Usuario[] usuarios = usuarioService.getCollection();
-        this.mapUsuarios = new HashMap<>();
+        this.mapUsuarios = new LinkedHashMap<>();
         for(Usuario u: usuarios) {
-            if(u.getPerfilidperfil() != 4) continue;
+            if(u.getPerfilidperfil() != 4 || u.getClienteidcliente() != cliente.getIdcliente()) continue;
             this.mapUsuarios.put(u.getIdusuario(), u);
         }
         List_Asis_Salud[] asis = asistenciaTrabajadorService.getListSaludCollection();
-        this.mapAsisSalud = new HashMap<>();
+        this.mapAsisSalud = new LinkedHashMap<>();
         for(List_Asis_Salud l: asis) {            
             this.mapAsisSalud.put(l.getIdlistsalud(), l);
         }
-        this.pacientes = listTrabajadorService.getListSaludCollection();
         
         //pestaña sesion
         if(sesionesSalud != null ){
             DefaultTableModel modelSession = (DefaultTableModel)jTable14.getModel();
             modelSession.setRowCount(0);
             for(Sesion_Salud s: sesionesSalud){
+                this.mapSesionSalud.put(s.getIdsesionsalud(),s);
                 jComboBox15.addItem(s.getNombresesionsalud());
                 jComboBox16.addItem(s.getNombresesionsalud());
                 Object[] item = {                    
@@ -585,20 +593,19 @@ public class Main extends javax.swing.JFrame {
             }
         }
         
-        //pestaña pacientes
-        int idxSalud = jComboBox19.getSelectedIndex();
-        listarPacientesSalud(idxSalud);
+        //pestaña pacientes        
+        listarPacientesSalud();
         
         //pestaña asistencia
-        int idxAsis = jComboBox9.getSelectedIndex();
-        //listarAsistenciasSalud(idxAsis);
+        int idxAsis = jComboBox15.getSelectedIndex();
+        listarAsistenciasSalud(idxAsis);
         
         //pestaña certificados
-        int idxSaludCert = jComboBox10.getSelectedIndex();
-        //listaCertificadoSalud(idxSaludCert);
+        int idxSesionCert = jComboBox16.getSelectedIndex();
+        listaCertificadoSalud(idxSesionCert);
     }
     
-    private void loadGestionCapacitacion(long capplanid){
+    private void loadGestionCapacitacion(long capplanid, Cliente cliente){
         Capacitacion[] capacitaciones = capacitacionService.getCollection();
         this.mapCapcitacion = new LinkedHashMap<>();
         this.mapExpositor = new LinkedHashMap<>();
@@ -611,13 +618,13 @@ public class Main extends javax.swing.JFrame {
         this.mapSesionCap = new LinkedHashMap<>();
         Sesion_Cap[] sesionesCap = sesionService.getCapacitacionCollection();
         Usuario[] usuarios = usuarioService.getCollection();
-        this.mapUsuarios = new HashMap<>();
+        this.mapUsuarios = new LinkedHashMap<>();
         for(Usuario u: usuarios) {
-            if(u.getPerfilidperfil() != 4) continue;
+            if(u.getPerfilidperfil() != 4 || u.getClienteidcliente() != cliente.getIdcliente()) continue;
             this.mapUsuarios.put(u.getIdusuario(), u);
         }
         List_Asis_Cap[] asis = asistenciaTrabajadorService.getListCapCollection();
-        this.mapAsisCap = new HashMap<>();
+        this.mapAsisCap = new LinkedHashMap<>();
         for(List_Asis_Cap l: asis) {            
             this.mapAsisCap.put(l.getIdlistacap(), l);
         }
@@ -706,11 +713,12 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
-    private void listarPacientesSalud(int idx){
+    private void listarPacientesSalud(){
         if(this.mapSesionSalud.isEmpty()) return;
         DefaultTableModel model = (DefaultTableModel)jTable15.getModel();
         model.setRowCount(0);
-        Usuario paciente;        
+        Usuario paciente;
+        this.pacientes = listTrabajadorService.getListSaludCollection();
         for(ListTrabSalud t:this.pacientes) {
             paciente = this.mapUsuarios.get(t.getUsuarioidusuario());
             List_Asis_Salud asistencia = mapAsisSalud.get(t.getLisasissaludidlistasalud());
@@ -727,6 +735,34 @@ public class Main extends javax.swing.JFrame {
             };
             model.addRow(item);
         }
+    }
+    
+    private void listarAsistenciasSalud(int idx){
+        if(idx < 0) return;
+        DefaultTableModel model = (DefaultTableModel)jTable16.getModel();
+        model.setRowCount(0);
+        long sesid = (long)this.mapSesionSalud.keySet().toArray()[idx];
+        List_Asis_Salud asistencia;
+        Usuario trabajador;
+        int count = 0;
+        this.pacientes = listTrabajadorService.getListSaludCollection();
+        for(ListTrabSalud t:this.pacientes) {
+            trabajador = this.mapUsuarios.get(t.getUsuarioidusuario());
+            asistencia = this.mapAsisSalud.get(t.getLisasissaludidlistasalud());
+            if(asistencia.getSesionsaludidsesionsalud() != sesid) continue;
+            count++;
+            Object[] item = {
+                date.format(new Date()), //TODO: falta fecha                
+                trabajador.getRunusuario(),
+                trabajador.getNombresusuario(),
+                trabajador.getAppaterno() + " " + trabajador.getApmaterno(),
+                trabajador.getTelusuario(),
+                trabajador.getMailusuario(),
+                t.getPresenteSalud()==1?"[+]":"[ ]",
+            };
+            model.addRow(item);
+        }
+        jLabel94.setText(String.valueOf(count));
     }
     
     private void listarAsistenciasCap(int idx){
@@ -754,6 +790,37 @@ public class Main extends javax.swing.JFrame {
             model.addRow(item);
         }
         jLabel74.setText(String.valueOf(count));
+    }
+    
+    private void listaCertificadoSalud(int idx){
+        if(idx < 0) return;
+        if(this.mapSesionSalud.isEmpty()) return;
+        DefaultTableModel model = (DefaultTableModel)jTable17.getModel();
+        
+        model.setRowCount(0);
+        Usuario trabajador;
+        long sesid = (long)this.mapSesionSalud.keySet().toArray()[idx];
+        List_Asis_Salud asistencia;
+        Certificado cert;
+        int count = 0;
+        this.pacientes = listTrabajadorService.getListSaludCollection();
+        for(ListTrabSalud t:this.pacientes) {
+            trabajador = this.mapUsuarios.get(t.getUsuarioidusuario());
+            asistencia = mapAsisSalud.get(t.getLisasissaludidlistasalud());
+            if(asistencia.getSesionsaludidsesionsalud() != sesid) continue;
+            count++;
+            Object[] item = {
+                date.format(new Date()), //TODO: falta fecha                
+                trabajador.getRunusuario(),
+                trabajador.getNombresusuario(),
+                trabajador.getAppaterno() + " " + trabajador.getApmaterno(),
+                trabajador.getTelusuario(),
+                trabajador.getMailusuario(),
+                " ",
+            };
+            model.addRow(item);
+        }
+        jLabel97.setText(String.valueOf(count));
     }
     
     private void listaCertificadoCap(int idx){
@@ -1108,6 +1175,8 @@ public class Main extends javax.swing.JFrame {
         jTable14 = new javax.swing.JTable();
         jButton28 = new javax.swing.JButton();
         jLabel89 = new javax.swing.JLabel();
+        jComboBox13 = new javax.swing.JComboBox<>();
+        jLabel140 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jLabel90 = new javax.swing.JLabel();
         jTextField26 = new javax.swing.JTextField();
@@ -3429,7 +3498,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel73.setText("Inscritos:");
 
-        jLabel74.setText("99");
+        jLabel74.setText("0");
 
         jButton25.setText("Cargar asistencia");
 
@@ -3458,7 +3527,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel73)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel74)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
                         .addComponent(jButton25))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addContainerGap()
@@ -3503,7 +3572,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel76.setText("Inscritos:");
 
-        jLabel77.setText("99");
+        jLabel77.setText("0");
 
         jTable12.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -3903,6 +3972,10 @@ public class Main extends javax.swing.JFrame {
         jLabel89.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel89.setText("Añadir nueva sesión");
 
+        jComboBox13.setName("com.safe.entity.Sesion_Salud.examenesidexamenesIndex"); // NOI18N
+
+        jLabel140.setText("Examen");
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -3917,27 +3990,29 @@ public class Main extends javax.swing.JFrame {
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane20, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jFormattedTextField11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel85, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel86)
-                                    .addComponent(jFormattedTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jFormattedTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                                        .addComponent(jLabel85)
+                                        .addComponent(jComboBox13, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel140))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel12Layout.createSequentialGroup()
-                                        .addComponent(jLabel87)
+                                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel86)
+                                            .addComponent(jFormattedTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel88)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(jPanel12Layout.createSequentialGroup()
-                                        .addComponent(jFormattedTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(24, 24, 24)
-                                        .addComponent(jScrollPane19, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE))))
-                            .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel89)
+                                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                                .addComponent(jLabel87)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel88)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                                .addComponent(jFormattedTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(24, 24, 24)
+                                                .addComponent(jScrollPane19, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE))))
                                     .addGroup(jPanel12Layout.createSequentialGroup()
                                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jFormattedTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3949,8 +4024,11 @@ public class Main extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel84)
-                                            .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                            .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addComponent(jLabel89)
+                                .addGap(0, 857, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
@@ -3958,17 +4036,19 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel89)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel82)
                     .addComponent(jLabel83)
-                    .addComponent(jLabel84))
+                    .addComponent(jLabel84)
+                    .addComponent(jLabel140))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jFormattedTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel85)
                     .addComponent(jLabel86)
@@ -3984,7 +4064,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton28)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
+                .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Sesiones", jPanel12);
@@ -3992,6 +4072,11 @@ public class Main extends javax.swing.JFrame {
         jLabel90.setText("Agregar trabajador por RUN");
 
         jButton29.setText("Agregar");
+        jButton29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton29ActionPerformed(evt);
+            }
+        });
 
         jLabel91.setText("Carga masiva (CSV)");
 
@@ -4047,6 +4132,12 @@ public class Main extends javax.swing.JFrame {
 
         jTabbedPane3.addTab("Pacientes", jPanel13);
 
+        jComboBox15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox15ActionPerformed(evt);
+            }
+        });
+
         jLabel92.setText("Sesión");
 
         jTable16.setModel(new javax.swing.table.DefaultTableModel(
@@ -4061,7 +4152,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel93.setText("Inscritos:");
 
-        jLabel94.setText("99");
+        jLabel94.setText("0");
 
         jButton31.setText("Cargar asistencia");
 
@@ -4084,11 +4175,10 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel93)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel94)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 354, Short.MAX_VALUE)
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton32)
-                            .addComponent(jButton31))
-                        .addGap(0, 328, Short.MAX_VALUE)))
+                            .addComponent(jButton32, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton31, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
@@ -4119,7 +4209,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel96.setText("Inscritos:");
 
-        jLabel97.setText("99");
+        jLabel97.setText("0");
 
         jTable17.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -4137,8 +4227,12 @@ public class Main extends javax.swing.JFrame {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane23, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
+                .addComponent(jScrollPane23, javax.swing.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addGap(476, 476, 476)
+                .addComponent(jLabel97)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel15Layout.createSequentialGroup()
                     .addGap(12, 12, 12)
@@ -4147,23 +4241,22 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jComboBox16, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jLabel96)
-                    .addGap(18, 18, 18)
-                    .addComponent(jLabel97)
-                    .addContainerGap(439, Short.MAX_VALUE)))
+                    .addContainerGap(572, Short.MAX_VALUE)))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jScrollPane23))
+                .addGap(17, 17, 17)
+                .addComponent(jLabel97)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane23, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))
             .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel15Layout.createSequentialGroup()
                     .addGap(11, 11, 11)
                     .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel95)
                         .addComponent(jLabel96)
-                        .addComponent(jComboBox16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel97))
+                        .addComponent(jComboBox16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(446, Short.MAX_VALUE)))
         );
 
@@ -5392,12 +5485,11 @@ public class Main extends javax.swing.JFrame {
         PlanCapacitacion plan = new PlanCapacitacion();
         
         Cliente cliente = (Cliente)selectedEntity;
-        selectedEntity = null;
         plan.setClienteidcliente(cliente.getIdcliente());
         plan.setEstadoplancap(1);
         plan.setFechacreacion(date.format(new Date()));
         long planid = planCapacitacionService.save(plan);
-        loadGestionCapacitacion(planid);
+        loadGestionCapacitacion(planid, cliente);
         changePanel(planCapacitacionForm);
     }//GEN-LAST:event_jButton15ActionPerformed
 
@@ -5411,9 +5503,9 @@ public class Main extends javax.swing.JFrame {
         capacitacion.setTipocapidtipocap(capTipo.getIdtipocap());
         long capplanid = 1;
         capacitacion.setPlancapidplancap(capplanid);
-        
+        Cliente cliente = (Cliente)selectedEntity;
         capacitacionService.save(capacitacion);
-        loadGestionCapacitacion(capplanid);
+        loadGestionCapacitacion(capplanid, cliente);
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -5435,7 +5527,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox10ActionPerformed
 
     private void jComboBox16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox16ActionPerformed
-        // TODO add your handling code here:
+        // cambiar de sesion para certificado de salud
+        listaCertificadoSalud(jComboBox16.getSelectedIndex());
     }//GEN-LAST:event_jComboBox16ActionPerformed
 
     private void jFormattedTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField14ActionPerformed
@@ -5484,7 +5577,7 @@ public class Main extends javax.swing.JFrame {
         plan.setClienteidcliente(cliente.getIdcliente());
         plan.setFechacreacion(date.format(new Date()));
         long planid = planSaludService.save(plan);
-        loadGestionSalud(planid);
+        loadGestionSalud(planid, cliente);
         changePanel(planSaludForm);
     }//GEN-LAST:event_jButton27ActionPerformed
 
@@ -5884,6 +5977,8 @@ public class Main extends javax.swing.JFrame {
         String rut = jTextField23.getText();
         Usuario trabajador = usuarioService.getOne(rut);
         
+        //trabajador.getClienteidcliente()
+        
         if(trabajador == null || trabajador.getPerfilidperfil() != 4) {
             JOptionPane.showMessageDialog(null, "No se ha encontado al trabajador.");
             return;
@@ -5892,6 +5987,10 @@ public class Main extends javax.swing.JFrame {
         long capid = (long)this.mapCapcitacion.keySet().toArray()[idx];
         
         Sesion_Cap[] sesiones = sesionService.getCapacitacionCollection();
+        if(sesiones.length  == 0) {
+            JOptionPane.showMessageDialog(null, "Debe agregar una sesion antes.");
+            return;
+        }
         DefaultTableModel model = (DefaultTableModel)jTable10.getModel();
         for(Sesion_Cap s: sesiones) {
             if( s.getCapacitacionidcap() != capid) continue;
@@ -5950,7 +6049,13 @@ public class Main extends javax.swing.JFrame {
         Bind.setEntity(sesion, this, planSaludForm);
         
         sesion.setEstadosesionsalud(1L);
-        sesionService.saveSalud(sesion);
+        long medid = (long)this.mapMedico.keySet().toArray()[sesion.getMedicoidmedicoIndex()];
+        sesion.setMedicoidmedico(medid);
+        long exmid = (long)this.mapExamenes.keySet().toArray()[sesion.getExamenesidexamenesIndex()];
+        sesion.setExamenesidexamenes(exmid);
+        
+        long idses = sesionService.saveSalud(sesion);
+        this.mapSesionSalud.put(idses, sesion);
         Object[] item = {
            sesion.getCupossesionString(),
            sesion.getNombresesionsalud(),
@@ -6014,6 +6119,68 @@ public class Main extends javax.swing.JFrame {
         JFormattedTextField formatted = (JFormattedTextField)evt.getComponent();        
         this.formattedSelectedValue = formatted.getText();
     }//GEN-LAST:event_jFormattedTextFieldGeneralFocusGained
+
+    private void jComboBox15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox15ActionPerformed
+        // cambiar de sesion en lista de asistencia de salud
+        listarAsistenciasSalud(jComboBox15.getSelectedIndex());
+    }//GEN-LAST:event_jComboBox15ActionPerformed
+
+    private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
+        // agregar pacientes por el rut
+        String rut = jTextField26.getText();
+        Usuario trabajador = null;
+        for(Map.Entry<Long, Usuario> u: this.mapUsuarios.entrySet()){
+            if(u.getValue().getRunusuario().equals(rut)) {
+                trabajador = u.getValue();
+                break;
+            }
+        }
+        
+        if(trabajador == null || trabajador.getPerfilidperfil() != 4) {
+            JOptionPane.showMessageDialog(null, "No se ha encontado al trabajador.");
+            return;
+        }
+        
+        Sesion_Salud[] sesiones = sesionService.getSaludCollection();
+        if(sesiones.length  == 0) {
+            JOptionPane.showMessageDialog(null, "Debe agregar una sesion antes.");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel)jTable15.getModel();
+        for(Sesion_Salud s: sesiones) {            
+            ListTrabSalud list = new ListTrabSalud();
+            list.setUsuarioidusuario(trabajador.getIdusuario());
+            
+            //crear lista de asistencia para el trabajador en las sesiones
+            List_Asis_Salud asis = new List_Asis_Salud();
+            asis.setSesionsaludidsesionsalud(s.getIdsesionsalud());
+            long id_asis = asistenciaTrabajadorService.saveListSalud(asis);  //TODO falla al insertar el WS
+            if(id_asis == 0){
+                JOptionPane.showMessageDialog(null, "Trabajador ya ha sido agregado.");
+                return;
+            }
+            //asignar certifiacdo al trabajador
+            Certificado cert = new Certificado();
+            cert.setTipocertificado("Examen");
+            long id_cert = certificadoService.save(cert);  //Crear un certificado en estado 0 sin codigo
+            list.setLisasissaludidlistasalud(id_asis);
+            list.setCertificadoidcertificado(id_cert);
+            listTrabajadorService.saveListSalud(list);
+            Object[] item = {
+                date.format(new Date()),                
+                trabajador.getRunusuario(),
+                trabajador.getNombresusuario(),
+                trabajador.getAppaterno()+" "+trabajador.getApmaterno(),
+                trabajador.getTelusuario(),
+                trabajador.getMailusuario(),
+                trabajador,
+            };
+            model.addRow(item);
+            jLabel94.setText(String.valueOf(model.getRowCount()));
+            jLabel97.setText(String.valueOf(model.getRowCount()));
+            JOptionPane.showMessageDialog(null, "Trabajador agregado correctamente.");
+        }
+    }//GEN-LAST:event_jButton29ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame calendarMain;
@@ -6082,6 +6249,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox10;
     private javax.swing.JComboBox<String> jComboBox11;
     private javax.swing.JComboBox<String> jComboBox12;
+    private javax.swing.JComboBox<String> jComboBox13;
     private javax.swing.JComboBox<String> jComboBox14;
     private javax.swing.JComboBox<String> jComboBox15;
     private javax.swing.JComboBox<String> jComboBox16;
@@ -6166,6 +6334,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel138;
     private javax.swing.JLabel jLabel139;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel140;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;

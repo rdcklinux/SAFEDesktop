@@ -13,12 +13,12 @@ import java.io.Serializable;
 
 
 public class ListTrabSalud implements Serializable{
-    private long idlistrabsalud;
-    private long presenteSalud;
-    private long estadoSalud;
-    private long usuarioidusuario;
-    private long lisasissaludidlistasalud;
-    private long certificadoidcertificado;
+    private long idlistrabsalud = 0;
+    private long presenteSalud = 0;
+    private long estadoSalud = 1;
+    private long usuarioidusuario = 0;
+    private long lisasissaludidlistasalud = 0;
+    private long certificadoidcertificado = 0;
 
     public long getIdlistrabsalud() {
         return idlistrabsalud;

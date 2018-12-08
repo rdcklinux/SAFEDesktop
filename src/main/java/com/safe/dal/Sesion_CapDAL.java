@@ -64,7 +64,7 @@ public class Sesion_CapDAL extends DAL {
         .header("Content-Type", "application/json")
         .body(sesion)
         .asString();
-        
+        normalizeToApp(sesiones);
         return sesion.getIdsesioncap();
     }
     

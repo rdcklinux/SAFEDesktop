@@ -95,12 +95,28 @@ public class Sesion_Salud implements Serializable {
     public void setMedicoidmedico(long medicoidmedico) {
         this.medicoidmedico = medicoidmedico;
     }
+    
+    public int getMedicoidmedicoIndex() {
+        return (int)medicoidmedico;
+    }
+
+    public void setMedicoidmedicoIndex(int medicoidmedico) {
+        this.medicoidmedico = medicoidmedico;
+    }
 
     public long getExamenesidexamenes() {
         return examenesidexamenes;
     }
 
     public void setExamenesidexamenes(long examenesidexamenes) {
+        this.examenesidexamenes = examenesidexamenes;
+    }
+    
+    public int getExamenesidexamenesIndex() {
+        return (int)examenesidexamenes;
+    }
+
+    public void setExamenesidexamenesIndex(int examenesidexamenes) {
         this.examenesidexamenes = examenesidexamenes;
     }
 
