@@ -3,7 +3,7 @@ package com.safe.entity;
 
 import java.io.Serializable;
 
-public class Sesion_Cap implements Serializable{    
+public class Sesion_Cap implements Serializable {    
     private long idsesioncap = 0;
     private long numsesioncap = 0;
     private String nombresesion = "";
@@ -67,13 +67,22 @@ public class Sesion_Cap implements Serializable{
     public String getHorainiciocap() {
         return horainiciocap;
     }
+    
+    public String getHorainiciocapFixed() {
+        return horainiciocap.substring(11,16);
+    }
 
     public void setHorainiciocap(String horainiciocap) {
+        
         this.horainiciocap = horainiciocap;
     }
 
     public String getHoraterminocap() {
         return horaterminocap;
+    }
+    
+    public String getHoraterminocapFixed() {
+        return horaterminocap.substring(11,16);
     }
 
     public void setHoraterminocap(String horaterminocap) {
@@ -99,8 +108,16 @@ public class Sesion_Cap implements Serializable{
     public long getCapacitacionidcap() {
         return capacitacionidcap;
     }
+    
+    public int getCapacitacionidcapIndex() {
+        return (int)capacitacionidcap;
+    }
 
     public void setCapacitacionidcap(Long capacitacionidcap) {
+        this.capacitacionidcap = capacitacionidcap;
+    }
+    
+    public void setCapacitacionidcapIndex(int capacitacionidcap) {
         this.capacitacionidcap = capacitacionidcap;
     }
 
@@ -109,6 +126,14 @@ public class Sesion_Cap implements Serializable{
     }
 
     public void setExpositoridexpositor(Long expositoridexpositor) {
+        this.expositoridexpositor = expositoridexpositor;
+    }
+    
+    public int getExpositoridexpositorIndex() {
+        return (int)expositoridexpositor;
+    }
+
+    public void setExpositoridexpositorIndex(int expositoridexpositor) {
         this.expositoridexpositor = expositoridexpositor;
     }
 

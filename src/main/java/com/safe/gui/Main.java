@@ -67,6 +67,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -117,6 +118,9 @@ public class Main extends javax.swing.JFrame {
     private HashMap<Long, List_Asis_Salud> mapAsisSalud;
     private List_Trab_Cap[] participantes;
     private ListTrabSalud[] pacientes;
+    private String formattedSelectedValue;
+    private LinkedHashMap<Long, TipoCapacitacion> tiposCap;
+    private LinkedHashMap<Long, Expositor> mapExpositor;
     
     private final SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
     private final SimpleDateFormat dateInverted = new SimpleDateFormat("yyyy-MM-dd");
@@ -395,11 +399,11 @@ public class Main extends javax.swing.JFrame {
             }
         });
         
-        Vector<TipoCapacitacion> tiposCap = new Vector<>();
+        this.tiposCap = new LinkedHashMap<>();        
         for(TipoCapacitacion t: tipoCapacitacionService.getCollection()){
-            tiposCap.add(t);
+            this.tiposCap.put(t.getIdtipocap(), t);
+            jComboBox6.addItem(t.getDescripcap());
         }
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(tiposCap));
         jTable1.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("[+]"));
         jTable4.getColumnModel().getColumn(7).setCellRenderer(new ButtonTableComponent("[+]"));
         jTable5.getColumnModel().getColumn(7).setCellRenderer(new ButtonTableComponent("[+]"));
@@ -597,11 +601,11 @@ public class Main extends javax.swing.JFrame {
     private void loadGestionCapacitacion(long capplanid){
         Capacitacion[] capacitaciones = capacitacionService.getCollection();
         this.mapCapcitacion = new LinkedHashMap<>();
-        HashMap<Long, Expositor> mapExpositor = new HashMap<>();
+        this.mapExpositor = new LinkedHashMap<>();
         
         Expositor[] expositores = expositorService.getCollection();
         for(Expositor e: expositores){
-            mapExpositor.put(e.getIdexpositor(), e);
+            this.mapExpositor.put(e.getIdexpositor(), e);
             jComboBox8.addItem(e.getNombreexpositor());
         }
         this.mapSesionCap = new LinkedHashMap<>();
@@ -631,8 +635,8 @@ public class Main extends javax.swing.JFrame {
                 jComboBox10.addItem(c.getNombrecapacitacion());
                 Object[] item = {
                     c.getNombrecapacitacion(),
-                    c.getTipocapidtipocap(),
                     CapacitacionService.ESTADOS[(int)c.getEstadocapacitacion()],
+                    this.tiposCap.get(c.getTipocapidtipocap()).getDescripcap(),
                     c,
                     c,
                 };
@@ -654,7 +658,7 @@ public class Main extends javax.swing.JFrame {
                     cap.getNombrecapacitacion(),
                     s.getCupossesionString(),
                     s.getNombresesion(),
-                    mapExpositor.get(s.getExpositoridexpositor()).getNombreexpositor(),
+                    this.mapExpositor.get(s.getExpositoridexpositor()).getNombreexpositor(),
                     s.getFechasesion(),
                     s.getHorainiciocap(),
                     s.getHoraterminocap(),
@@ -933,6 +937,8 @@ public class Main extends javax.swing.JFrame {
         jComboBoxTipo1 = new javax.swing.JComboBox<>();
         jScrollPane10 = new javax.swing.JScrollPane();
         jTable7 = new javax.swing.JTable();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel81 = new javax.swing.JLabel();
         evaluacionForm = new javax.swing.JInternalFrame();
         jLabel9 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -2319,11 +2325,26 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField4.setToolTipText("dd-mm-yyyy");
+        jFormattedTextField4.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        jFormattedTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusLost(evt);
+            }
+        });
 
         jFormattedTextField5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField5.setToolTipText("dd-mm-yyyy");
+        jFormattedTextField5.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        jFormattedTextField5.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusGained(evt);
+            }
+        });
 
         jButton13.setText("Buscar");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
@@ -2332,9 +2353,11 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel37.setText("Filtro de Estado");
 
-        jLabel41.setText("Filtro de Fecha");
+        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel41.setText("Fecha derivación");
 
         jLabel44.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -2376,6 +2399,10 @@ public class Main extends javax.swing.JFrame {
             jTable7.getColumnModel().getColumn(7).setHeaderValue("PDF");
         }
 
+        jLabel23.setText("Inicio");
+
+        jLabel81.setText("Fin");
+
         javax.swing.GroupLayout evaluacionMainLayout = new javax.swing.GroupLayout(evaluacionMain.getContentPane());
         evaluacionMain.getContentPane().setLayout(evaluacionMainLayout);
         evaluacionMainLayout.setHorizontalGroup(
@@ -2389,40 +2416,49 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel45)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxTipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(131, 131, 131)
+                        .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBoxEstado2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(evaluacionMainLayout.createSequentialGroup()
-                                .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton13)))))
+                                .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel23))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel81)
+                                    .addGroup(evaluacionMainLayout.createSequentialGroup()
+                                        .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton13))))
+                            .addComponent(jComboBoxEstado2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         evaluacionMainLayout.setVerticalGroup(
             evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(evaluacionMainLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap()
                 .addComponent(jLabel44)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel81))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton13)
-                    .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel41))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel41)
+                    .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(evaluacionMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxEstado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel37)
                     .addComponent(jLabel45)
                     .addComponent(jComboBoxTipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
         );
 
         evaluacionForm.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -2730,8 +2766,17 @@ public class Main extends javax.swing.JFrame {
         planCapacitacionMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         planCapacitacionMain.setVisible(true);
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField1.setToolTipText("dd/mm/yyyy");
+        jFormattedTextField1.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        jFormattedTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusLost(evt);
+            }
+        });
         jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField1ActionPerformed(evt);
@@ -2740,6 +2785,15 @@ public class Main extends javax.swing.JFrame {
 
         jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField2.setToolTipText("dd/mm/yyyy");
+        jFormattedTextField2.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        jFormattedTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusLost(evt);
+            }
+        });
         jFormattedTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField2ActionPerformed(evt);
@@ -3001,14 +3055,27 @@ public class Main extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane12.setViewportView(jTable8);
         if (jTable8.getColumnModel().getColumnCount() > 0) {
             jTable8.getColumnModel().getColumn(0).setPreferredWidth(150);
+            jTable8.getColumnModel().getColumn(3).setMinWidth(100);
+            jTable8.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jTable8.getColumnModel().getColumn(3).setMaxWidth(100);
+            jTable8.getColumnModel().getColumn(4).setMinWidth(100);
+            jTable8.getColumnModel().getColumn(4).setPreferredWidth(100);
+            jTable8.getColumnModel().getColumn(4).setMaxWidth(100);
         }
 
         jButton3.setText("Cerrar");
@@ -3070,7 +3137,7 @@ public class Main extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Capacitaciones", jPanel6);
 
-        jComboBox7.setName("com.safe.entity.Sesion_Cap.capacitacionidcap"); // NOI18N
+        jComboBox7.setName("com.safe.entity.Sesion_Cap.capacitacionidcapIndex"); // NOI18N
 
         jLabel60.setText("Capacitación");
 
@@ -3083,7 +3150,7 @@ public class Main extends javax.swing.JFrame {
 
         jTextField22.setName("com.safe.entity.Sesion_Cap.nombresesion"); // NOI18N
 
-        jComboBox8.setName("com.safe.entity.Sesion_Cap.expositoridexpositor"); // NOI18N
+        jComboBox8.setName("com.safe.entity.Sesion_Cap.expositoridexpositorIndex"); // NOI18N
 
         jLabel63.setText("Expositor");
 
@@ -3277,7 +3344,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jComboBox19.setName("com.safe.entity.Sesion_Cap.capacitacionidcap"); // NOI18N
+        jComboBox19.setName(""); // NOI18N
         jComboBox19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox19ActionPerformed(evt);
@@ -3527,8 +3594,17 @@ public class Main extends javax.swing.JFrame {
         planSaludMain.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         planSaludMain.setVisible(true);
 
-        jFormattedTextField14.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        jFormattedTextField14.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField14.setToolTipText("dd/mm/yyyy");
+        jFormattedTextField14.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        jFormattedTextField14.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusLost(evt);
+            }
+        });
         jFormattedTextField14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField14ActionPerformed(evt);
@@ -3537,6 +3613,15 @@ public class Main extends javax.swing.JFrame {
 
         jFormattedTextField15.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField15.setToolTipText("dd/mm/yyyy");
+        jFormattedTextField15.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        jFormattedTextField15.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusLost(evt);
+            }
+        });
         jFormattedTextField15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField15ActionPerformed(evt);
@@ -4124,11 +4209,29 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jFormattedTextField16.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
+        jFormattedTextField16.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField16.setToolTipText("dd-mm-yyyy");
+        jFormattedTextField16.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        jFormattedTextField16.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusLost(evt);
+            }
+        });
 
-        jFormattedTextField17.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
+        jFormattedTextField17.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField17.setToolTipText("dd-mm-yyyy");
+        jFormattedTextField17.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        jFormattedTextField17.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusLost(evt);
+            }
+        });
 
         jButton36.setText("Buscar");
         jButton36.addActionListener(new java.awt.event.ActionListener() {
@@ -4361,9 +4464,27 @@ public class Main extends javax.swing.JFrame {
 
         jFormattedTextField18.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField18.setToolTipText("dd-mm-yyyy");
+        jFormattedTextField18.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        jFormattedTextField18.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusLost(evt);
+            }
+        });
 
         jFormattedTextField19.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedTextField19.setToolTipText("dd-mm-yyyy");
+        jFormattedTextField19.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        jFormattedTextField19.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextFieldGeneralFocusLost(evt);
+            }
+        });
 
         jButton40.setText("Buscar");
         jButton40.addActionListener(new java.awt.event.ActionListener() {
@@ -4789,8 +4910,8 @@ public class Main extends javax.swing.JFrame {
               String ffSearch = dateInvert(jFormattedTextField2.getText());
               
               return (rut.contains(rutSearch) || rutSearch.length() == 0) &&
-              (fini.equals(fiSearch) || fiSearch.length() == 0) &&
-              (ffin.equals(ffSearch) || ffSearch.length() == 0);
+              (fini.compareTo(fiSearch) >= 0 || fiSearch.length() == 0) &&
+              (ffin.compareTo(ffSearch) <= 0 || ffSearch.length() == 0);
             }
         };
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTable1.getModel());
@@ -5218,7 +5339,28 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxEstado2ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
+        // buscar evaluaciones en terreno
+        jTable7.setRowSorter(null);
+        RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
+            @Override
+            public boolean include(RowFilter.Entry entry) {
+              if(entry.getValue(1) == null) return false;
+              String fecha = dateInvert((String)entry.getValue(1));
+              String estado = (String)entry.getValue(5);
+              String visita = (String)entry.getValue(4);
+              String fiSearch = dateInvert(jFormattedTextField4.getText());
+              String ffSearch = dateInvert(jFormattedTextField5.getText());
+              
+              return 
+              (visita.equals(jComboBoxTipo1.getSelectedItem()) || jComboBoxTipo1.getSelectedIndex() == 0) &&
+              (estado.equals(jComboBoxEstado2.getSelectedItem()) || jComboBoxEstado2.getSelectedIndex() == 0) &&
+              (fecha.compareTo(fiSearch) >= 0 || fiSearch.length() == 0) &&
+              (fecha.compareTo(ffSearch) <= 0 || ffSearch.length() == 0);
+            }
+        };
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTable7.getModel());
+        sorter.setRowFilter(filter);
+        jTable7.setRowSorter(sorter);
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jFormattedTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2ActionPerformed
@@ -5319,8 +5461,8 @@ public class Main extends javax.swing.JFrame {
               String ffSearch = dateInvert(jFormattedTextField15.getText());
               
               return (rut.contains(rutSearch) || rutSearch.length() == 0) &&
-              (fini.equals(fiSearch) || fiSearch.length() == 0) &&
-              (ffin.equals(ffSearch) || ffSearch.length() == 0);
+              (fini.compareTo(fiSearch) >= 0 || fiSearch.length() == 0) &&
+              (ffin.compareTo(ffSearch) <= 0 || ffSearch.length() == 0);
             }
         };
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTable18.getModel());
@@ -5714,8 +5856,12 @@ public class Main extends javax.swing.JFrame {
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
         // crear una nueva sesion de capacitacion
         Sesion_Cap sesion = new Sesion_Cap();
-        Bind.setEntity(sesion, this, jPanel7);
-        sesion.setEstadosesioncap(1L);
+        Bind.setEntity(sesion, this, planCapacitacionForm);
+        sesion.setEstadosesioncap(1L);        
+        long expid = (long)this.mapExpositor.keySet().toArray()[(int)sesion.getExpositoridexpositor()];
+        sesion.setExpositoridexpositor(expid);
+        long capid = (long)this.mapCapcitacion.keySet().toArray()[(int)sesion.getCapacitacionidcap()];
+        sesion.setCapacitacionidcap(capid);
         sesionService.saveCapacitacion(sesion);
         Object[] item = {
            jComboBox7.getSelectedItem(),
@@ -5854,6 +6000,20 @@ public class Main extends javax.swing.JFrame {
         evaluacionForm.setVisible(false);
         jMenuTerEngListarActionPerformed(null);
     }//GEN-LAST:event_jButton53ActionPerformed
+
+    private void jFormattedTextFieldGeneralFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTextFieldGeneralFocusLost
+        JFormattedTextField formatted = (JFormattedTextField)evt.getComponent();
+        if(!formatted.isEditValid()){                        
+            if(!formatted.getText().isEmpty()){
+                formatted.setText(this.formattedSelectedValue);
+            }
+        }
+    }//GEN-LAST:event_jFormattedTextFieldGeneralFocusLost
+
+    private void jFormattedTextFieldGeneralFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTextFieldGeneralFocusGained
+        JFormattedTextField formatted = (JFormattedTextField)evt.getComponent();        
+        this.formattedSelectedValue = formatted.getText();
+    }//GEN-LAST:event_jFormattedTextFieldGeneralFocusGained
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame calendarMain;
@@ -6015,6 +6175,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
@@ -6078,6 +6239,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
+    private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel83;
     private javax.swing.JLabel jLabel84;
