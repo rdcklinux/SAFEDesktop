@@ -7,31 +7,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class SoliEvalTer implements Serializable{
-    
-    
     private long idsolicitud;
-    
-    
-    private String fechacreacion;
-    
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
     private String fechaderivacion;
-    
     private String pdf;
-    
     private String direccionvisita;
-    
-    
     private String descripcionvisita;
-    
-    
     private long clienteidcliente;
-    
-    
     private long tipovisitteridtipovister;
-    
-    
     private long estadosolievalter;
-    
     private String clientenombre;
 
     public long getIdsolicitud() {

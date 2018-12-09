@@ -8,6 +8,7 @@ public class List_Asis_Salud implements Serializable {
     private long idlistsalud = 0;
     private long estadoasistsalud = 1;
     private long sesionsaludidsesionsalud = 0;
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
 
     public long getIdlistsalud() {
         return idlistsalud;
@@ -36,6 +37,14 @@ public class List_Asis_Salud implements Serializable {
     @Override
     public String toString() {
         return "List_Asis_Salud{" + "idlistsalud=" + idlistsalud + ", estadoasistsalud=" + estadoasistsalud + ", sesionsaludidsesionsalud=" + sesionsaludidsesionsalud + '}';
+    }
+
+    public String getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(String fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
 
     

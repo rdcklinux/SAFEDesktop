@@ -10,6 +10,7 @@ public class Expositor implements Serializable{
     private String telexpositor;
     private String mailexpositor;
     private long estadoexpositor;
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
 
     public long getIdexpositor() {
         return idexpositor;
@@ -70,6 +71,14 @@ public class Expositor implements Serializable{
     @Override
     public String toString() {
         return "Expositor{" + "idexpositor=" + idexpositor + ", runexpositor=" + runexpositor + ", nombreexpositor=" + nombreexpositor + ", telexpositor=" + telexpositor + ", mailexpositor=" + mailexpositor + ", estadoexpositor=" + estadoexpositor + '}';
+    }
+
+    public String getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(String fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
     
     

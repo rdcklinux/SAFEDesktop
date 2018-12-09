@@ -11,6 +11,15 @@ public class Obs_Supervisor implements Serializable{
     private String obssupervisor;
     private long estadoObsSupervisor = 1;
     private long evalterridevalterr;
+    private long evalterridusuario;
+
+    public long getEvalterridusuario() {
+        return evalterridusuario;
+    }
+
+    public void setEvalterridusuario(long evalterridusuario) {
+        this.evalterridusuario = evalterridusuario;
+    }
 
     public long getIdobssupervisor() {
         return idobssupervisor;

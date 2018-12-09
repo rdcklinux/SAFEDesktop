@@ -7,6 +7,7 @@ public class List_Asis_Cap implements Serializable {
     private long idlistacap = 0;
     private long estadoasistcap = 1;
     private long sesioncapidsesioncap = 0;
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
 
     public long getIdlistacap() {
         return idlistacap;
@@ -35,6 +36,14 @@ public class List_Asis_Cap implements Serializable {
     @Override
     public String toString() {
         return "List_Asis_Cap{" + "idlistacap=" + idlistacap + ", estadoasistcap=" + estadoasistcap + ", sesioncapidsesioncap=" + sesioncapidsesioncap + '}';
+    }
+
+    public String getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(String fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
 
     

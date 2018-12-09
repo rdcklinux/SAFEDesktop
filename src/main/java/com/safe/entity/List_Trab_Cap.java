@@ -19,6 +19,7 @@ public class List_Trab_Cap implements Serializable {
     private long usuarioidusuario = 0;
     private long lisasiscapidlistacap = 0;
     private long certificadoidcertificado;
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
 
     public long getIdlistrabcap() {
         return idlistrabcap;
@@ -71,6 +72,14 @@ public class List_Trab_Cap implements Serializable {
     @Override
     public String toString() {
         return "List_Trab_Cap{" + "idlistrabcap=" + idlistrabcap + ", presente=" + presenteCap + ", estado=" + estadoCap + ", usuarioidusuario=" + usuarioidusuario + ", lisasiscapidlistacap=" + lisasiscapidlistacap + ", certificadoidcertificado=" + certificadoidcertificado + '}';
+    }
+
+    public String getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(String fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
     
     

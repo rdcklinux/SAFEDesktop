@@ -16,6 +16,7 @@ public class Cliente implements Serializable{
     private String cargocontacto;
     private String observacionescliente;
     private long estadocliente;
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
 
     public long getIdcliente() {
         return idcliente;
@@ -116,6 +117,14 @@ public class Cliente implements Serializable{
     @Override
     public String toString() {
         return "Cliente{" + "idcliente=" + idcliente + ", razonsocial=" + razonsocial + ", rutcliente=" + rutcliente + ", girocliente=" + girocliente + ", direccioncliente=" + direccioncliente + ", teloficina=" + teloficina + ", nombrecontacto=" + nombrecontacto + ", fonocontacto=" + fonocontacto + ", mailcontacto=" + mailcontacto + ", cargocontacto=" + cargocontacto + ", observacionescliente=" + observacionescliente + ", estadocliente=" + estadocliente + '}';
+    }
+
+    public String getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(String fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
     
         

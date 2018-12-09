@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class Plan_Salud implements Serializable {
     private long idplansalud = 0;
-    private String fechacreacion = "";
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
     private long estadoplansalud = 1;
     private long clienteidcliente = 0;
 

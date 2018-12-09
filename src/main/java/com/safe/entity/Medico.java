@@ -11,6 +11,7 @@ public class Medico implements Serializable {
     private String mailmedico;
     private String telmedico;
     private long estadomedico;
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
 
     public long getIdmedico() {
         return idmedico;
@@ -80,5 +81,13 @@ public class Medico implements Serializable {
     public String toString() {
         return "Medico{" + "idmedico=" + idmedico + ", runmedico=" + runmedico + ", nombremedico=" + nombremedico + ", universidadMed=" + universidadMed + ", mailmedico=" + mailmedico + ", telmedico=" + telmedico + ", estadomedico=" + estadomedico + '}';
     }    
+
+    public String getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(String fechacreacion) {
+        this.fechacreacion = fechacreacion;
+    }
     
 }

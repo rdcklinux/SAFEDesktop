@@ -5,17 +5,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Plan_Cap implements Serializable{
-    
-    
     private long idplancap;
-    
-    
     private Date fechacreacion;
-    
-    
     private long estadoplancap;
-    
-    
     private long clienteidcliente;
 
     public long getIdplancap() {

@@ -6,46 +6,21 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class Usuario implements Serializable{
-    
-    
+public class Usuario implements Serializable {
     private long idusuario;
-    
-    
     private String runusuario;
-    
-    
     private String nombresusuario;
-    
-    
     private String appaterno;
-    
-    
     private String apmaterno;
-    
-    
     private String fnacimientousuario;
-    
-    
     private String sexousuario;
-
-    
     private String telusuario;
-    
-    
     private String mailusuario;
-    
-    
     private long estadousuario;
-    
-    
     private String claveusuario;
-    
-    
     private long perfilidperfil;
-    
-    
     private long clienteidcliente;
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
 
     public long getIdusuario() {
         return idusuario;
@@ -215,5 +190,13 @@ public class Usuario implements Serializable{
     
     public String getFullName(){
         return nombresusuario + " " + appaterno + " " + apmaterno;
+    }
+
+    public String getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(String fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
 }

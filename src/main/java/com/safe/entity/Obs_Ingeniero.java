@@ -11,6 +11,15 @@ public class Obs_Ingeniero implements Serializable{
     private String obsing;
     private long evalterridevalterr;
     private long estadoObsIng = 1;
+    private long evalterridusuario;
+
+    public long getEvalterridusuario() {
+        return evalterridusuario;
+    }
+
+    public void setEvalterridusuario(long evalterridusuario) {
+        this.evalterridusuario = evalterridusuario;
+    }
 
     public long getIdobsingeniero() {
         return idobsingeniero;

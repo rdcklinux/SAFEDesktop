@@ -49,31 +49,34 @@ import com.safe.service.SolicitudService;
 import com.safe.service.TipoExamenService;
 import com.safe.service.UsuarioService;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -126,9 +129,11 @@ public class Main extends javax.swing.JFrame {
     private String formattedSelectedValue;
     private LinkedHashMap<Long, TipoCapacitacion> tiposCap;
     private LinkedHashMap<Long, Expositor> mapExpositor;
+    private ArrayList<JButton> jCalendarDays;
     
     private final SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
     private final SimpleDateFormat dateInverted = new SimpleDateFormat("yyyy-MM-dd");
+    private final URL iconButtonDay = getClass().getClassLoader().getResource("noty.png");
 
     
     
@@ -173,7 +178,8 @@ public class Main extends javax.swing.JFrame {
         WindowComponent.centerWindow(this);
         
         session = new SessionManager(this, sessionTime);
-        initCustoms(); 
+        initCustoms();
+        loadCalendar();
     }
     
     private String dateInvert(String d){
@@ -428,7 +434,74 @@ public class Main extends javax.swing.JFrame {
         
         jTable19.getColumnModel().getColumn(5).setCellRenderer(new ButtonTableComponent("[+]"));
         jTable21.getColumnModel().getColumn(2).setCellRenderer(new ButtonTableComponent("[+]"));
-        jTable18.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("[+]"));
+        jTable18.getColumnModel().getColumn(6).setCellRenderer(new ButtonTableComponent("[+]"));        
+    }
+    
+    public String getCurrentCalendarDate(JButton btn){
+        String day = btn.getText();
+        if(day.length() < 2) day = "0"+day;
+        String month = String.valueOf(jCalendar1.getMonthChooser().getMonth() + 1);
+        if(month.length() < 2) month = "0"+month;
+        String year  = String.valueOf(jCalendar1.getYearChooser().getYear());
+        
+        return day+"-"+month+"-"+year;
+    }
+    
+    private void buscarSesionesCalendar(java.awt.event.ActionEvent evt){
+        JButton btn = (JButton)evt.getSource();
+        jTable20.setRowSorter(null);
+        Main self = this;
+        RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
+            @Override
+            public boolean include(RowFilter.Entry entry) {
+                if(entry.getValue(0) == null) return false;
+                Object fe = (String)entry.getValue(0);
+                int te = (int)entry.getValue(1);
+                if(te != jComboBox11.getSelectedIndex() && jComboBox11.getSelectedIndex() != 2) return false;
+                String fecha = self.getCurrentCalendarDate(btn);
+
+                return fe.equals(fecha);
+            }
+        };
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTable20.getModel());
+        sorter.setRowFilter(filter);
+        jTable20.setRowSorter(sorter);
+    }
+    
+    private void loadCalendar(){
+        Component[] comp = jCalendar1.getComponents();
+        comp = ((JPanel)comp[1]).getComponents();
+        comp = ((JPanel)comp[0]).getComponents();
+        jCalendarDays = new ArrayList<>();        
+        JButton btn;
+        Main self = this;
+        for(Component b: comp){        
+            btn = (JButton)b;
+            jCalendarDays.add(btn);
+            btn.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    self.buscarSesionesCalendar(evt);
+                }
+            });
+        }
+        
+        JComboBox jComboboxCalendar = (JComboBox)jCalendar1.getMonthChooser().getComboBox();
+        jComboboxCalendar.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    int value = (int)((JComboBox)evt.getSource()).getSelectedIndex();
+                    jCalendar1.getMonthChooser().setMonth(value);
+                    jComboBox11ActionPerformed(null);
+                }
+        });
+        
+        JSpinner jSpinnerCalendar = (JSpinner)jCalendar1.getYearChooser().getSpinner();
+        jSpinnerCalendar.addChangeListener(new javax.swing.event.ChangeListener(){            
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                int value = (int)((JSpinner)evt.getSource()).getValue();
+                jCalendar1.getYearChooser().setYear(value);
+                jComboBox11ActionPerformed(null);
+            }
+        });
     }
     
     private void changePanel(JInternalFrame panel){
@@ -700,8 +773,8 @@ public class Main extends javax.swing.JFrame {
             if(this.mapSesionCap.get(mapAsisCap.get(t.getLisasiscapidlistacap()).getSesioncapidsesioncap()).getCapacitacionidcap() != capid) continue;
             
             Object[] item = {
-                date.format(new Date()), //TODO: falta fecha
-                jComboBox19.getSelectedItem(), //falta capacitación,
+                trabajador.getFechacreacion(),
+                jComboBox19.getSelectedItem(),
                 trabajador.getRunusuario(),
                 trabajador.getNombresusuario(),
                 trabajador.getAppaterno() + " " + trabajador.getApmaterno(),
@@ -725,7 +798,7 @@ public class Main extends javax.swing.JFrame {
             Sesion_Salud sesion = this.mapSesionSalud.get(asistencia.getSesionsaludidsesionsalud());
             if(sesion == null) continue;
             Object[] item = {
-                date.format(new Date()), //TODO: falta fecha
+                paciente.getFechacreacion(),
                 paciente.getRunusuario(),
                 paciente.getNombresusuario(),
                 paciente.getAppaterno() + " " + paciente.getApmaterno(),
@@ -752,7 +825,7 @@ public class Main extends javax.swing.JFrame {
             if(asistencia.getSesionsaludidsesionsalud() != sesid) continue;
             count++;
             Object[] item = {
-                date.format(new Date()), //TODO: falta fecha                
+                trabajador.getFechacreacion(),
                 trabajador.getRunusuario(),
                 trabajador.getNombresusuario(),
                 trabajador.getAppaterno() + " " + trabajador.getApmaterno(),
@@ -779,7 +852,7 @@ public class Main extends javax.swing.JFrame {
             if(asistencia.getSesioncapidsesioncap() != sesid) continue;
             count++;
             Object[] item = {
-                date.format(new Date()), //TODO: falta fecha                
+                trabajador.getFechacreacion(),
                 trabajador.getRunusuario(),
                 trabajador.getNombresusuario(),
                 trabajador.getAppaterno() + " " + trabajador.getApmaterno(),
@@ -810,7 +883,7 @@ public class Main extends javax.swing.JFrame {
             if(asistencia.getSesionsaludidsesionsalud() != sesid) continue;
             count++;
             Object[] item = {
-                date.format(new Date()), //TODO: falta fecha                
+                trabajador.getFechacreacion(),
                 trabajador.getRunusuario(),
                 trabajador.getNombresusuario(),
                 trabajador.getAppaterno() + " " + trabajador.getApmaterno(),
@@ -838,7 +911,7 @@ public class Main extends javax.swing.JFrame {
             if(this.mapSesionCap.get(asistencia.getSesioncapidsesioncap()).getCapacitacionidcap() != capid) continue;
             count++;
             Object[] item = {
-                date.format(new Date()), //TODO: falta fecha                
+                trabajador.getFechacreacion(),
                 trabajador.getRunusuario(),
                 trabajador.getNombresusuario(),
                 trabajador.getAppaterno() + " " + trabajador.getApmaterno(),
@@ -3395,6 +3468,7 @@ public class Main extends javax.swing.JFrame {
         jLabel71.setText("Carga masiva (CSV)");
 
         jButton24.setText("Cargar Archivo");
+        jButton24.setEnabled(false);
 
         jTable10.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -3501,9 +3575,11 @@ public class Main extends javax.swing.JFrame {
         jLabel74.setText("0");
 
         jButton25.setText("Cargar asistencia");
+        jButton25.setEnabled(false);
 
         jButton26.setText("Descargar asistencia");
         jButton26.setToolTipText("");
+        jButton26.setEnabled(false);
 
         jButton51.setText("Cerrar");
         jButton51.addActionListener(new java.awt.event.ActionListener() {
@@ -4081,6 +4157,7 @@ public class Main extends javax.swing.JFrame {
         jLabel91.setText("Carga masiva (CSV)");
 
         jButton30.setText("Cargar Archivo");
+        jButton30.setEnabled(false);
 
         jTable15.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -4099,7 +4176,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
+                    .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 1019, Short.MAX_VALUE)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel90)
@@ -4107,11 +4184,10 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(jTextField26, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton29)))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel91)
-                            .addComponent(jButton30))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jButton30))))
                 .addContainerGap())
         );
         jPanel13Layout.setVerticalGroup(
@@ -4127,7 +4203,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jButton29)
                     .addComponent(jButton30))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
+                .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Pacientes", jPanel13);
@@ -4155,9 +4231,16 @@ public class Main extends javax.swing.JFrame {
         jLabel94.setText("0");
 
         jButton31.setText("Cargar asistencia");
+        jButton31.setEnabled(false);
+        jButton31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton31ActionPerformed(evt);
+            }
+        });
 
         jButton32.setText("Descargar asistencia");
         jButton32.setToolTipText("");
+        jButton32.setEnabled(false);
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -4831,22 +4914,36 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Hora Inicio", "Hora Fin"
+                "fecha", "tipo", "Nombre", "Hora Inicio", "Hora Fin"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jTable20.getTableHeader().setReorderingAllowed(false);
         jScrollPane26.setViewportView(jTable20);
+        if (jTable20.getColumnModel().getColumnCount() > 0) {
+            jTable20.getColumnModel().getColumn(0).setMinWidth(0);
+            jTable20.getColumnModel().getColumn(0).setPreferredWidth(0);
+            jTable20.getColumnModel().getColumn(0).setMaxWidth(0);
+            jTable20.getColumnModel().getColumn(1).setMinWidth(0);
+            jTable20.getColumnModel().getColumn(1).setPreferredWidth(0);
+            jTable20.getColumnModel().getColumn(1).setMaxWidth(0);
+        }
 
         jLabel126.setText("RUT Cliente");
 
         jComboBox11.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Capacitación", "Salud", "Capacitación y Salud" }));
+        jComboBox11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox11ActionPerformed(evt);
+            }
+        });
 
         jLabel127.setText("Tipo Plan");
 
@@ -4887,7 +4984,7 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(calendarMainLayout.createSequentialGroup()
                         .addComponent(jLabel127)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox11, 0, 207, Short.MAX_VALUE))
+                        .addComponent(jComboBox11, 0, 285, Short.MAX_VALUE))
                     .addComponent(jScrollPane26, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -5157,7 +5254,7 @@ public class Main extends javax.swing.JFrame {
             for(Cliente c: clientes){
                 if(c.getEstadocliente() == 0) continue;
                 Object[] item = {
-                    date.format(new Date()), //TODO: falta fecha
+                    c.getFechacreacion(),
                     c.getRutcliente(),
                     c.getRazonsocial(),
                     c.getNombrecontacto(),
@@ -5268,7 +5365,7 @@ public class Main extends javax.swing.JFrame {
             model.setRowCount(0);
             for(Usuario u: usuarios){
                 Object[] item = {
-                    date.format(new Date()), //TODO: falta fecha                    
+                    u.getFechacreacion(),
                     u.getRunusuario(),
                     u.getNombresusuario(),
                     UsuarioService.PERFIL[(int)u.getPerfilidperfil()],
@@ -5827,7 +5924,7 @@ public class Main extends javax.swing.JFrame {
             model.setRowCount(0);
             for(Expositor e: expositores){
                 Object[] item = {
-                    date.format(new Date()), //TODO: falta fecha                    
+                    e.getFechacreacion(),
                     e.getNombreexpositor(),
                     e.getTelexpositor(),
                     e.getMailexpositor(),
@@ -5869,7 +5966,7 @@ public class Main extends javax.swing.JFrame {
             model.setRowCount(0);
             for(Medico m: medicos){
                 Object[] item = {
-                    date.format(new Date()), //TODO: falta fecha                    
+                    m.getFechacreacion(),
                     m.getNombremedico(),
                     m.getTelmedico(),
                     m.getMailmedico(),
@@ -5884,51 +5981,8 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // mostrar calendario
+        selectedEntity = null;
         Bind.setComponent(new Cliente(), this, calendarMain);
-        int cbindex = jComboBox11.getSelectedIndex();
-        Sesion_Cap[] capacitaciones = null;
-        Sesion_Salud[] salud = null;
-        switch(cbindex){
-            case 0: // capacitaciones
-                capacitaciones = sesionService.getCapacitacionCollection();
-                break;
-            case 1: //horas medicas                
-                salud = sesionService.getSaludCollection();
-                break;
-            case 2: // ambas
-                capacitaciones = sesionService.getCapacitacionCollection();
-                salud = sesionService.getSaludCollection();
-                break;
-        }
-        Calendar cal = Calendar.getInstance();
-        if(capacitaciones != null){
-            for(Sesion_Cap c: capacitaciones){
-                Date d;
-                try {
-                    d = dateInverted.parse(c.getFechasesion());
-                    cal.setTime(d);                    
-                    jCalendar1.setDate(d);
-                    JPanel jpanel = jCalendar1.getDayChooser().getDayPanel();
-                    Component compo[] = jpanel.getComponents();
-                    for (Component comp : compo) {
-                        if (!(comp instanceof JButton))
-                            continue;
-
-                        JButton btn = (JButton) comp;
-                        if (btn.getText().equals(String.valueOf(cal.get(Calendar.DAY_OF_MONTH))))
-                            btn.setBackground(Color.red);
-                    }
-                } catch (ParseException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        if(salud != null){
-            for(Sesion_Salud s: salud){
-                
-            }
-        }
-        
         changePanel(calendarMain);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
@@ -6000,7 +6054,7 @@ public class Main extends javax.swing.JFrame {
             //crear lista de asistencia para el trabajador en las sesiones
             List_Asis_Cap asis = new List_Asis_Cap();
             asis.setSesioncapidsesioncap(s.getIdsesioncap());
-            long id_asis = asistenciaTrabajadorService.saveListCap(asis);  //TODO falla al insertar el WS
+            long id_asis = asistenciaTrabajadorService.saveListCap(asis);
             if(id_asis == 0){
                 JOptionPane.showMessageDialog(null, "Trabajador ya ha sido agregado.");
                 return;
@@ -6010,7 +6064,7 @@ public class Main extends javax.swing.JFrame {
             cert.setTipocertificado("Capacitación");
             long id_cert = certificadoService.save(cert);  //Crear un certificado en estado 0 sin codigo
             list.setLisasiscapidlistacap(id_asis);
-            list.setCertificadoidcertificado(id_cert); //TODO debe ser nulo ya que el certificado se genera despues
+            list.setCertificadoidcertificado(id_cert);
             listTrabajadorService.saveListCap(list);
             Object[] item = {
                 date.format(new Date()),
@@ -6028,15 +6082,16 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton23ActionPerformed
 
     private void jLabel110MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel110MouseClicked
-        // TODO add your handling code here:
-        jFormattedTextField16.cut();
+        // TODO add your handling code here:        
     }//GEN-LAST:event_jLabel110MouseClicked
 
     private void jButton44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton44ActionPerformed
         // buscar cliente para calendario
         String rut = jTextField39.getText();
         Cliente cliente = clienteService.getOneByRut(rut);
+        selectedEntity = cliente;
         Bind.setComponent(cliente, this, calendarMain);
+        jComboBox11ActionPerformed(evt);
     }//GEN-LAST:event_jButton44ActionPerformed
 
     private void jTextField38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField38ActionPerformed
@@ -6154,7 +6209,8 @@ public class Main extends javax.swing.JFrame {
             //crear lista de asistencia para el trabajador en las sesiones
             List_Asis_Salud asis = new List_Asis_Salud();
             asis.setSesionsaludidsesionsalud(s.getIdsesionsalud());
-            long id_asis = asistenciaTrabajadorService.saveListSalud(asis);  //TODO falla al insertar el WS
+            
+            long id_asis = asistenciaTrabajadorService.saveListSalud(asis);
             if(id_asis == 0){
                 JOptionPane.showMessageDialog(null, "Trabajador ya ha sido agregado.");
                 return;
@@ -6181,6 +6237,81 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Trabajador agregado correctamente.");
         }
     }//GEN-LAST:event_jButton29ActionPerformed
+
+    private void jButton31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton31ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton31ActionPerformed
+
+    private void jComboBox11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox11ActionPerformed
+        // cambiar de tipo en calendario
+        if(selectedEntity == null) return;
+        
+        DefaultTableModel model = (DefaultTableModel)jTable20.getModel();
+        model.setRowCount(0);
+        
+        Sesion_Cap[] capacitaciones = null;
+        Sesion_Salud[] salud = null;
+        
+        switch(jComboBox11.getSelectedIndex()) {
+            case 0:
+                capacitaciones = sesionService.getCapacitacionCollection();        
+                break;
+            case 1:
+                salud = sesionService.getSaludCollection();
+                break;
+            case 2:
+                capacitaciones = sesionService.getCapacitacionCollection();
+                salud = sesionService.getSaludCollection();
+                break;
+        }
+        ImageIcon icon = null;
+        try {
+            Image img = ImageIO.read(iconButtonDay);
+            icon = new ImageIcon(img);
+        } catch (IOException ex) {}
+        
+        
+        LinkedHashMap<String, JButton> btnDates = new LinkedHashMap<>();
+        for(JButton btn: jCalendarDays){
+            btn.setIcon(null);
+            try {
+                Integer.parseInt(btn.getText());
+                btnDates.put(getCurrentCalendarDate(btn), btn);
+            } catch (NumberFormatException ex){}
+        }
+        JButton btn;
+        if(capacitaciones != null){
+            for(Sesion_Cap s: capacitaciones){
+                btn = btnDates.get(s.getFechasesion());
+                if(btn == null) continue;
+                btn.setIcon(icon);
+                Object[] item = {
+                    s.getFechasesion(),
+                    0,
+                    s.getDescripcionsesion(),
+                    s.getHorainiciocap(),
+                    s.getHoraterminocap()
+                };
+                model.addRow(item);
+            }
+        }
+        if(salud != null){
+            for(Sesion_Salud s: salud){
+                btn = btnDates.get(s.getFechasesion());
+                if(btn == null) continue;
+                btn.setIcon(icon);
+                Object[] item = {
+                    s.getFechasesion(),
+                    1,
+                    s.getDescripcionsesionsalud(),
+                    s.getHorainiciosalud(),
+                    s.getHoraterminosalud()
+                };
+                model.addRow(item);
+            }
+        }
+        
+    }//GEN-LAST:event_jComboBox11ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame calendarMain;

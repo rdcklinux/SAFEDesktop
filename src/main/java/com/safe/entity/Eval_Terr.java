@@ -8,10 +8,29 @@ import java.io.Serializable;
 public class Eval_Terr implements Serializable {
     private long idevalterr;
     private String obsvisita;
+    private String fechavisita;
     private long estado;
     private long solievalteridsolicitud;
     private long estadoevalterridestado;
     private long certificadoidcertificado;
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
+    private long usuariosidusuarios;
+    
+    public String getFechavisita() {
+        return fechavisita;
+    }
+
+    public void setFechavisita(String fechavisita) {
+        this.fechavisita = fechavisita;
+    }
+
+    public long getUsuariosidusuarios() {
+        return usuariosidusuarios;
+    }
+
+    public void setUsuariosidusuarios(long usuariosidusuarios) {
+        this.usuariosidusuarios = usuariosidusuarios;
+    }
 
     public long getIdevalterr() {
         return idevalterr;
@@ -59,5 +78,13 @@ public class Eval_Terr implements Serializable {
 
     public void setCertificadoidcertificado(long certificadoidcertificado) {
         this.certificadoidcertificado = certificadoidcertificado;
+    }
+
+    public String getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(String fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
 }

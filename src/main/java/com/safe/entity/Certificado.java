@@ -4,19 +4,21 @@ package com.safe.entity;
 import java.io.Serializable;
 
 public class Certificado implements Serializable{
-    
-    
     private long idcertificado;
-    
-    
     private String tipocertificado;
-    
-    
     private String codcertificado;
-    
-    
-    private long estadocert;
+    private long estadocert;    
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
+    private long clienteidcliente = 0;
 
+    public long getClienteidcliente() {
+        return clienteidcliente;
+    }
+
+    public void setClienteidcliente(long clienteidcliente) {
+        this.clienteidcliente = clienteidcliente;
+    }
+    
     public long getIdcertificado() {
         return idcertificado;
     }
@@ -52,6 +54,14 @@ public class Certificado implements Serializable{
     @Override
     public String toString() {
         return "Certificado{" + "idcertificado=" + idcertificado + ", tipocertificado=" + tipocertificado + ", codcertificado=" + codcertificado + ", estadocert=" + estadocert + '}';
+    }
+
+    public String getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(String fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
     
               

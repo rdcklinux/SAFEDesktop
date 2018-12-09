@@ -11,7 +11,7 @@ package com.safe.entity;
  */
 public class PlanCapacitacion {
     private long idplancap;
-    private String fechacreacion;
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
     private long estadoplancap;
     private long clienteidcliente;
 

@@ -46,7 +46,6 @@ public class CertificadoDAL extends DAL {
         .header("Content-Type", "application/json")
         .body(cert).asObject(Certificado[].class);
         
-        //TODO: debe retornar un ID de cliente
         return certs.getBody()[0].getIdcertificado();
     }
     

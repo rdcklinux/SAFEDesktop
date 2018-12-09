@@ -5,28 +5,13 @@ import java.io.Serializable;
 
 /**
  *
- * @author Rodrigo
+ * @author roderick
  */
-
-
-
-
-
-public class Examenes implements Serializable{
-    
-    
+public class Examenes implements Serializable {
     private long idexamen;
-    
-    
     private String nombreexamen;
-    
-    
     private long estadoexamen;
-    
-    
     private long plansaludidplansalud;
-    
-    
     private long tipoexamenidtipoexam;
 
     public long getIdexamen() {

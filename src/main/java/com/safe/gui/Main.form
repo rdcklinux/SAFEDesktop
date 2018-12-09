@@ -3455,6 +3455,7 @@
                 <Component class="javax.swing.JButton" name="jButton24">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Cargar Archivo"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane15">
@@ -3723,12 +3724,14 @@
                 <Component class="javax.swing.JButton" name="jButton25">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Cargar asistencia"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton26">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Descargar asistencia"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton51">
@@ -4658,7 +4661,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane21" alignment="0" pref="920" max="32767" attributes="0"/>
+                              <Component id="jScrollPane21" alignment="0" pref="1019" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel90" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -4668,12 +4671,11 @@
                                           <Component id="jButton29" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel91" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jButton30" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -4695,7 +4697,7 @@
                               <Component id="jButton30" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane21" pref="404" max="32767" attributes="0"/>
+                          <Component id="jScrollPane21" pref="411" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -4724,6 +4726,7 @@
                 <Component class="javax.swing.JButton" name="jButton30">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Cargar Archivo"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane21">
@@ -4946,12 +4949,17 @@
                 <Component class="javax.swing.JButton" name="jButton31">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Cargar asistencia"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton31ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton32">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Descargar asistencia"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -5980,7 +5988,7 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel127" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jComboBox11" pref="207" max="32767" attributes="0"/>
+                          <Component id="jComboBox11" pref="285" max="32767" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane26" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -6043,7 +6051,9 @@
             <Component class="javax.swing.JTable" name="jTable20">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="3" rowCount="0">
+                  <Table columnCount="5" rowCount="0">
+                    <Column editable="false" title="fecha" type="java.lang.Object"/>
+                    <Column editable="false" title="tipo" type="java.lang.Object"/>
                     <Column editable="false" title="Nombre" type="java.lang.Object"/>
                     <Column editable="false" title="Hora Inicio" type="java.lang.Object"/>
                     <Column editable="false" title="Hora Fin" type="java.lang.Object"/>
@@ -6051,6 +6061,16 @@
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
+                    <Column maxWidth="0" minWidth="0" prefWidth="0" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="0" minWidth="0" prefWidth="0" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
@@ -6069,7 +6089,7 @@
                   </TableColumnModel>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                  <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                 </Property>
               </Properties>
             </Component>
@@ -6092,6 +6112,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox11ActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>

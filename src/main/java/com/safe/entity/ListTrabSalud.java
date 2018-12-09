@@ -5,13 +5,8 @@ import java.io.Serializable;
 
 /**
  *
- * @author Rodrigo
+ * @author roderick
  */
-
-
-
-
-
 public class ListTrabSalud implements Serializable{
     private long idlistrabsalud = 0;
     private long presenteSalud = 0;
@@ -19,6 +14,7 @@ public class ListTrabSalud implements Serializable{
     private long usuarioidusuario = 0;
     private long lisasissaludidlistasalud = 0;
     private long certificadoidcertificado = 0;
+    private String fechacreacion = (new java.text.SimpleDateFormat("dd-MM-yyyy")).format(new java.util.Date());;
 
     public long getIdlistrabsalud() {
         return idlistrabsalud;
@@ -71,5 +67,13 @@ public class ListTrabSalud implements Serializable{
     @Override
     public String toString() {
         return "ListTrabSalud{" + "idlistrabsalud=" + idlistrabsalud + ", presenteSalud=" + presenteSalud + ", estadoSalud=" + estadoSalud + ", usuarioidusuario=" + usuarioidusuario + ", lisasissaludidlistasalud=" + lisasissaludidlistasalud + ", certificadoidcertificado=" + certificadoidcertificado + '}';
+    }
+
+    public String getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(String fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
 }
