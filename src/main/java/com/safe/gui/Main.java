@@ -28,6 +28,7 @@ import com.safe.entity.TipoCapacitacion;
 import com.safe.entity.TipoExamen;
 import com.safe.entity.Usuario;
 import com.safe.gui.component.Bind;
+import com.safe.gui.component.Rut;
 import com.safe.gui.component.WindowComponent;
 import com.safe.service.AsistenciaTrabajadorService;
 import com.safe.service.CapacitacionService;
@@ -5087,6 +5088,11 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // buscar planes de capacitaciones
+        String rut = jTextField17.getText();
+        if(rut.length() > 0 && !Rut.isValid(rut)){
+            JOptionPane.showMessageDialog(null, "El RUT ingresado no es válido.");
+            return;
+        }
         jTable1.setRowSorter(null);
         RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
             @Override
@@ -5231,6 +5237,11 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         //buscar por rut empresa
+        String rut = jTextField11.getText();
+        if(rut.length() > 0 && !Rut.isValid(rut)){
+            JOptionPane.showMessageDialog(null, "El RUT ingresado no es válido.");
+            return;
+        }
         jTable4.setRowSorter(null);
         RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
             public boolean include(Entry entry) {
@@ -5566,7 +5577,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField17ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        // buscar cliente por rut        
+        // buscar cliente por rut
+        String rut = jTextField18.getText();
+        if(rut.length() > 0 && !Rut.isValid(rut)){
+            JOptionPane.showMessageDialog(null, "El RUT ingresado no es válido.");
+            return;
+        }
         Bind.setComponent(new Cliente(), this, newPlanCapacitacionForm);
         Cliente cliente = clienteService.getOneByRut(jTextField18.getText());
         if(cliente != null) {
@@ -5638,6 +5654,11 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton33ActionPerformed
         // buscar planes de salud
+        String rut = jTextField27.getText();
+        if(rut.length() > 0 && !Rut.isValid(rut)){
+            JOptionPane.showMessageDialog(null, "El RUT ingresado no es válido.");
+            return;
+        }
         jTable18.setRowSorter(null);
         RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
             @Override
@@ -5680,6 +5701,11 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35ActionPerformed
         // buscar cliente por rut
+        String rut = jTextField24.getText();
+        if(!Rut.isValid(rut)){
+            JOptionPane.showMessageDialog(null, "El RUT ingresado no es válido.");
+            return;
+        }
         Bind.setComponent(new Cliente(), this, newPlanSaludForm);
         Cliente cliente = clienteService.getOneByRut(jTextField24.getText());
         if(cliente != null) {
@@ -6029,6 +6055,10 @@ public class Main extends javax.swing.JFrame {
         // agreagr trabajador a la lista de participantes
         
         String rut = jTextField23.getText();
+        if(!Rut.isValid(rut)){
+            JOptionPane.showMessageDialog(null, "El RUT ingresado no es válido.");
+            return;
+        }
         Usuario trabajador = usuarioService.getOne(rut);
         
         //trabajador.getClienteidcliente()
@@ -6088,6 +6118,10 @@ public class Main extends javax.swing.JFrame {
     private void jButton44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton44ActionPerformed
         // buscar cliente para calendario
         String rut = jTextField39.getText();
+        if(!Rut.isValid(rut)){
+            JOptionPane.showMessageDialog(null, "El RUT ingresado no es válido.");
+            return;
+        }
         Cliente cliente = clienteService.getOneByRut(rut);
         selectedEntity = cliente;
         Bind.setComponent(cliente, this, calendarMain);
@@ -6183,6 +6217,10 @@ public class Main extends javax.swing.JFrame {
     private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
         // agregar pacientes por el rut
         String rut = jTextField26.getText();
+        if(!Rut.isValid(rut)){
+            JOptionPane.showMessageDialog(null, "El RUT ingresado no es válido.");
+            return;
+        }
         Usuario trabajador = null;
         for(Map.Entry<Long, Usuario> u: this.mapUsuarios.entrySet()){
             if(u.getValue().getRunusuario().equals(rut)) {

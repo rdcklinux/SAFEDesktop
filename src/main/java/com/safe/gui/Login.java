@@ -5,6 +5,7 @@
  */
 package com.safe.gui;
 
+import com.safe.gui.component.Rut;
 import com.safe.gui.component.WindowComponent;
 import com.safe.service.TokenManager;
 import java.util.HashMap;
@@ -168,6 +169,11 @@ public class Login extends javax.swing.JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         jLabelMessage.setText(" ");
+        String rut = jTextUserField.getText();
+        if(rut.length() > 0 && !Rut.isValid(rut)){
+            jLabelMessage.setText("El RUT ingresado no es válido");
+            return;
+        }
         String user = impersonate ? impersonateUsername : jTextUserField.getText();
         String password = String.valueOf(jPasswordField.getPassword());
         boolean success = token.getSuccessAuthentication(user, password, impersonate);
